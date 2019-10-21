@@ -2,204 +2,257 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/main.css">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+    body {
+      padding-top: 50px;
+      padding-bottom: 20px;
+    }
+  </style>
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/main.css">
 
+  <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+</head>
+
+<body>
+  <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-      
-      <audio src="aaa.mp3" autoplay preload="auto"></audio>
-      <canvas id="canvas"></canvas>
-      <div id="control"> </div>
-      <div class="cronometro">
-        <div id="hms"></div>
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+          aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Project name</a>
       </div>
-      <div id ="puntos"></div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <form class="navbar-form navbar-right" role="form">
+          <div class="form-group">
+            <input type="text" placeholder="Email" class="form-control">
+          </div>
+          <div class="form-group">
+            <input type="password" placeholder="Password" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-success">Sign in</button>
+        </form>
+      </div>
+      <!--/.navbar-collapse -->
+    </div>
+  </nav>
 
-      <hr>
+  <div class="container">
+
+    <audio src="aaa.mp3" autoplay preload="auto"></audio>
+    <canvas id="canvas"></canvas>
+    <div id="control"> </div>
+    <div class="cronometro">
+      <div id="hms"></div>
+    </div>
+    <div id="puntos"></div>
+
+    <hr>
 
 
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')</script>
+  </div> <!-- /container -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+  <script>
+    window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')
+  </script>
 
-        <script src="js/vendor/bootstrap.min.js"></script>
+  <script src="js/vendor/bootstrap.min.js"></script>
 
-        <script src="js/main.js"></script>
+  <script src="js/main.js"></script>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-        </script>
-        <!-- Script para canvas-->
-        <script>
-            var canvas=document.getElementById("canvas"),
-            context = canvas.getContext("2d");
-            canvas.width = window.innerWidth;
-            
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+  <script>
+    (function (b, o, i, l, e, r) {
+      b.GoogleAnalyticsObject = l;
+      b[l] || (b[l] = function () {
+        (b[l].q = b[l].q || []).push(arguments)
+      });
+      b[l].l = +new Date;
+      e = o.createElement(i);
+      r = o.getElementsByTagName(i)[0];
+      e.src = '//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e, r);
+    }(window, document, 'script', 'ga'));
+    ga('create', 'UA-XXXXX-X', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- Script para canvas-->
+  <script>
+    var canvas = document.getElementById("canvas"),
+      context = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
 
-            function draw_circle (circleX, circleY, radius, fill) { 
-                //clear the canvas
-                context.clearRect(0,0,canvas.width, canvas.height);
 
-                context.beginPath();
-                context.fillStyle = "white";
-                context.fillRect(0, 0, window.innerWidth, 500);
-                
-                
-                var speed = 4;
-                //just a loop if you don't want it simply use `i+=speed;`
-                //(i>canvas.width-radius)?i=(radius*2):i-=speed;
-                i-=speed;
-                context.fillStyle = fill;
-                context.arc(circleX, circleY, radius, 0, Math.PI*2);
-                context.fill();
-            }
+    function draw_circle(circleX, circleY, radius, fill) {
+      //clear the canvas
+      context.clearRect(0, 0, canvas.width, canvas.height);
 
-            var i=canvas.width;
-            setInterval(function(){draw_circle(i,100, 30 , "cyan")}, 33);
-        </script>
-        <script type="text/javascript">
+      context.beginPath();
+      context.fillStyle = "white";
+      context.fillRect(0, 0, window.innerWidth, 500);
 
-        var eventoControlado = false;
-        var array = [3416, 4897, 6378, 7119, 7860, 8601, 9341, 11564, 12304, 15267, 16749];
-        var puntos = 0;
-        var elem = array[0];
-        
-        window.onload = function() { document.onkeypress = mostrarInformacionCaracter;
 
-        document.onkeyup = mostrarInformacionTecla; init(); cronometrar();  }
+      var speed = 4;
+      //just a loop if you don't want it simply use `i+=speed;`
+      //(i>canvas.width-radius)?i=(radius*2):i-=speed;
+      i -= speed;
+      context.fillStyle = fill;
+      context.arc(circleX, circleY, radius, 0, Math.PI * 2);
+      context.fill();
+    }
 
-        function mostrarInformacionCaracter(evObject) {
+    var i = canvas.width;
+    setInterval(function () {
+      draw_circle(i, 100, 30, "cyan")
+    }, 33);
+  </script>
+  <script type="text/javascript">
+    var eventoControlado = false;
+    var array = [3416, 4897, 6378, 7119, 7860, 8601, 9341, 11564, 12304, 15267, 16749];
+    var puntos = 0;
+    var elem = array[0];
 
-                        var msg = ''; var elCaracter = String.fromCharCode(evObject.which);
+    window.onload = function () {
+      document.onkeypress = mostrarInformacionCaracter;
+      document.onkeyup = mostrarInformacionTecla;
+      init();
+      cronometrar();
+    }
 
-                        if (evObject.which!=0 && evObject.which!=13) {
+    function mostrarInformacionCaracter(evObject) {
 
-                        msg = 'Tecla pulsada: ' + elCaracter;
+      var msg = '';
+      var elCaracter = String.fromCharCode(evObject.which);
 
-                        control.innerHTML += msg; }
+      if (evObject.which != 0 && evObject.which != 13) {
 
-                        else { msg = 'Pulsada tecla especial';
+        msg = 'Tecla pulsada: ' + elCaracter;
 
-                        control.innerHTML += msg; }
+        control.innerHTML += msg;
+      } else {
+        msg = 'Pulsada tecla especial';
+        control.innerHTML += msg;
+      }
 
-                        eventoControlado=true;
+      eventoControlado = true;
 
+    }
+
+
+    function mostrarInformacionTecla(evObject) {
+
+
+      var msg = '';
+      var teclaPulsada = evObject.keyCode;
+      //La tecla 32 es la barra espaciadora
+
+      if (teclaPulsada == 32) {
+        msg = document.getElementById("hms").innerHTML;
+        //window.alert("Elem:" + elem + " mss: " + mss*10);
+        if (elem == mss * 10) {
+          puntos += 10000;
+        } else if (mss * 10 >= elem - 300 && mss * 10 <= elem + 300) {
+          puntos += 5000;
         }
-        
+        document.getElementById("puntos").innerHTML = puntos;
+      }
+      control.innerHTML += teclaPulsada;
 
-        function mostrarInformacionTecla(evObject) {
-                        
-                        
-                        var msg = ''; var teclaPulsada = evObject.keyCode;
-                        //La tecla 32 es la barra espaciadora
-                        
-                        if(teclaPulsada == 32) {
-                            msg = document.getElementById("hms").innerHTML; 
-                            //window.alert("Elem:" + elem + " mss: " + mss*10);
-                            if(elem == mss*10) {
-                                puntos += 10000;
-                            }
-                            else if (mss*10 >= elem - 300 && mss*10 <= elem + 300){
-                                puntos += 5000;
-                            }
-                            document.getElementById("puntos").innerHTML = puntos;
-                        }
-                        control.innerHTML += teclaPulsada;
+      if (msg) {
+        control.innerHTML += " " + msg + "</br>";
+      }
 
-                        if (msg) {control.innerHTML += " " + msg + "</br>";}
+      eventoControlado = false;
 
-                        eventoControlado = false;
+    }
 
-        }
+    function init() {
+      h = 0;
+      m = 0;
+      s = 0;
+      ms = 0;
+      mss = 0;
+      document.getElementById("hms").innerHTML = "00:00:00:000";
+      document.getElementById("puntos").innerHTML = puntos;
+    }
 
-        function init(){
-            h = 0;
-            m = 0;
-            s = 0;
-            ms = 0;
-            mss = 0;
-            document.getElementById("hms").innerHTML="00:00:00:000";
-            document.getElementById("puntos").innerHTML=puntos;
-        }         
-        function cronometrar(){
-            escribir();
-            id = setInterval(escribir,10);
-            id2 = setInterval(descartar, 300);
-        }
-        function descartar(){
-            if(array.length > 0 && elem < mss*10 + 300){
-                elem = array.shift();
-            }
-        }
-        function escribir(){
-            var hAux, mAux, sAux, msAux;
-            ms++;
-            mss++;
-            if (ms>100){s++;ms=0;}
-            if (s>59){m++;s=0;}
-            if (m>59){h++;m=0;}
-            if (h>24){h=0;}
-            
-            if (ms<10){msAux="0"+ms;}else{msAux=ms;}
-            if (s<10){sAux="0"+s;}else{sAux=s;}
-            if (m<10){mAux="0"+m;}else{mAux=m;}
-            if (h<10){hAux="0"+h;}else{hAux=h;}
+    function cronometrar() {
+      escribir();
+      id = setInterval(escribir, 10);
+      id2 = setInterval(descartar, 300);
+    }
 
-            document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux + ":" + msAux; 
-        }
+    function descartar() {
+      if (array.length > 0 && elem < mss * 10 + 300) {
+        elem = array.shift();
+      }
+    }
 
-</script>
-    </body>
+    function escribir() {
+      var hAux, mAux, sAux, msAux;
+      ms++;
+      mss++;
+      if (ms > 100) {
+        s++;
+        ms = 0;
+      }
+      if (s > 59) {
+        m++;
+        s = 0;
+      }
+      if (m > 59) {
+        h++;
+        m = 0;
+      }
+      if (h > 24) {
+        h = 0;
+      }
+
+      if (ms < 10) {
+        msAux = "0" + ms;
+      } else {
+        msAux = ms;
+      }
+      if (s < 10) {
+        sAux = "0" + s;
+      } else {
+        sAux = s;
+      }
+      if (m < 10) {
+        mAux = "0" + m;
+      } else {
+        mAux = m;
+      }
+      if (h < 10) {
+        hAux = "0" + h;
+      } else {
+        hAux = h;
+      }
+
+      document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux + ":" + msAux;
+    }
+  </script>
+</body>
+
 </html>
