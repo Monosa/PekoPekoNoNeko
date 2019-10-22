@@ -112,36 +112,48 @@
       context.fillStyle = "white";
       context.fillRect(0, 0, window.innerWidth, 500);
 
+      context.strokeRect(100, 70, 60 ,60);
 
-      var speed = 4;
       //just a loop if you don't want it simply use `i+=speed;`
       //(i>canvas.width-radius)?i=(radius*2):i-=speed;
-      i -= speed;
+    
       context.fillStyle = fill;
       context.arc(circleX, circleY, radius, 0, Math.PI * 2);
       context.fill();
     }
 
-    var i = canvas.width;
-    setInterval(function () {
-      draw_circle(i, 100, 30, "cyan")
-    }, 33);
+    
   </script>
   <script type="text/javascript">
     var eventoControlado = false;
     var array = [3416, 4897, 6378, 7119, 7860, 8601, 9341, 11564, 12304, 15267, 16749];
     var puntos = 0;
     var elem = array[0];
+    var posCirc = 0;
 
     window.onload = function () {
+      var canvas = document.getElementById("canvas");
+      canvas.width = window.innerWidth;
       document.onkeypress = mostrarInformacionCaracter;
       document.onkeyup = mostrarInformacionTecla;
       init();
       cronometrar();
+
+      var i = canvas.width;
+      var speed = 4;
+    setInterval(function () {
+      if(i==0)
+        i = canvas.width;
+      draw_circle(i, 100, 30, "cyan");
+      posCirc = i;
+      i -= speed;
+    }, 33);
+  
     }
 
     function mostrarInformacionCaracter(evObject) {
       var msg = '';
+      control.innerHTML = msg;
       var elCaracter = String.fromCharCode(evObject.which);
 
       if (evObject.which != 0 && evObject.which != 13) {
@@ -150,6 +162,7 @@
 
         control.innerHTML += msg;
       } else {
+
         msg = 'Pulsada tecla especial';
         control.innerHTML += msg;
       }
@@ -164,22 +177,19 @@
 
 
     function mostrarInformacionTecla(evObject) {
-
-
       var msg = '';
       var teclaPulsada = evObject.keyCode;
       //La tecla 32 es la barra espaciadora
 
       if (teclaPulsada == 32) {
-        msg = document.getElementById("hms").innerHTML;
-        //window.alert("Elem:" + elem + " mss: " + mss*10);
-        if (elem == mss * 10) {
-          puntos += 10000;
-        } else if (mss * 10 >= elem - 300 && mss * 10 <= elem + 300) {
-          puntos += 5000;
-        }
-        document.getElementById("puntos").innerHTML = puntos;
+        if(posCirc > 100 && posCirc < 160)
+          puntos+= 5000;
+        else if (posCirc == 130)
+          puntos+= 10000;
+
+        document.getElementById("puntos").innerHTML = "Puntos:" + puntos;
       }
+
       control.innerHTML += teclaPulsada;
 
       if (msg) {
@@ -197,7 +207,7 @@
       ms = 0;
       mss = 0;
       document.getElementById("hms").innerHTML = "00:00:00:000";
-      document.getElementById("puntos").innerHTML = puntos;
+      document.getElementById("puntos").innerHTML = "Puntos:" + puntos;
     }
 
     function cronometrar() {
