@@ -99,29 +99,7 @@
   </script>
   <!-- Script para canvas-->
   <script>
-    var canvas = document.getElementById("canvas"),
-      context = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-
-
-    function draw_circle(circleX, circleY, radius, fill) {
-      //clear the canvas
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      context.beginPath();
-      context.fillStyle = "white";
-      context.fillRect(0, 0, window.innerWidth, 500);
-
-      context.strokeRect(100, 70, 60 ,60);
-
-      //just a loop if you don't want it simply use `i+=speed;`
-      //(i>canvas.width-radius)?i=(radius*2):i-=speed;
     
-      context.fillStyle = fill;
-      context.arc(circleX, circleY, radius, 0, Math.PI * 2);
-      context.fill();
-    }
-
     
   </script>
   <script type="text/javascript">
@@ -132,24 +110,90 @@
     var posCirc = 0;
 
     window.onload = function () {
-      var canvas = document.getElementById("canvas");
+
+      var context = canvas.getContext("2d");
       canvas.width = window.innerWidth;
+      canvas.height = 300;
+      document.body.appendChild(canvas);
+      
       document.onkeypress = mostrarInformacionCaracter;
       document.onkeyup = mostrarInformacionTecla;
       init();
       cronometrar();
 
-      var i = canvas.width;
-      var speed = 4;
-    setInterval(function () {
-      if(i==0)
-        i = canvas.width;
-      draw_circle(i, 100, 30, "cyan");
-      posCirc = i;
-      i -= speed;
-    }, 33);
-  
-    }
+
+      // No longer setting velocites as they will be random
+      // Set up object to contain particles and set some default values
+      var particles = {},
+          particleIndex = 0,
+          settings = {
+            density: 1,
+            particleSize: 15,
+            startingX: canvas.width,
+            startingY: 300,
+
+          };
+
+      // Set up a function to create multiple particles
+      function Particle() {
+        // Establish starting positions and velocities
+        this.x = settings.startingX;
+        this.y = settings.startingY;
+
+        // Determine original X-axis speed based on setting limitation
+        this.vx = 20;
+        this.vy = 150;
+
+        // Add new particle to the index
+        // Object used as it's simpler to manage that an array
+        particleIndex ++;
+        particles[particleIndex] = this;
+        this.id = particleIndex;
+      }
+
+      // Some prototype methods for the particle's "draw" function
+      Particle.prototype.draw = function() {
+        this.x -= this.vx;
+        this.y = this.vy;
+
+        // Adjust for gravity
+        //this.vy = settings.gravity;
+
+        // Age the particle
+
+        // If Particle is old, it goes in the chamber for renewal
+
+
+        // Create the shapes
+        context.clearRect(settings.leftWall, settings.groundLevel, canvas.width, canvas.height);
+        context.beginPath();
+        context.fillStyle="cyan";
+        // Draws a circle of radius 20 at the coordinates 100,100 on the canvas
+        context.arc(this.x, this.y, settings.particleSize, 0, Math.PI*2); 
+        context.closePath();
+        context.fill();
+
+      }
+
+      setInterval(function() {
+        context.fillStyle = "white";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the particles
+        for (var i = 0; i < settings.density; i++) {
+          if (Math.random() > 0.99) {
+            // Introducing a random chance of creating a particle
+            // corresponding to an chance of 1 per second,
+            // per "density" value
+            new Particle();
+          }
+        }
+
+        for (var i in particles) {
+          particles[i].draw();
+        }
+      }, 33);
+    };
 
     function mostrarInformacionCaracter(evObject) {
       var msg = '';
