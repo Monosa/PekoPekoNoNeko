@@ -60,7 +60,8 @@
 
   <div class="container">
 
-    <audio src="aaa.mp3" autoplay preload="auto"></audio>
+    <audio id = "player" src="countdown.mp3" autoplay preload="auto"></audio>
+    <audio id = "myAudio" src="aaa.mp3"></audio>
     <canvas id="canvas"></canvas>
     <hr>
     <div id="control"> </div>
@@ -79,7 +80,12 @@
   </script>
 
   <script src="js/vendor/bootstrap.min.js"></script>
-
+  <script>
+      $("#player").bind("ended", function(){
+        var x = document.getElementById("myAudio"); 
+        x.play();
+       });
+   </script>
   <script src="js/main.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -121,6 +127,8 @@
       document.onkeypress = mostrarInformacionCaracter;
       document.onkeyup = mostrarInformacionTecla;
       
+      init();
+      cronometrar();
 
 
       // No longer setting velocites as they will be random
@@ -174,7 +182,7 @@
         context.fill();
 
       }
-
+      
       setInterval(function() {
         context.fillStyle = "white";
         context.fillRect(0, 0, canvas.width, canvas.height);
@@ -189,8 +197,7 @@
           particles[i].draw();
         }
       }, 30);
-      init();
-      cronometrar();
+      
     };
 
     function mostrarInformacionCaracter(evObject) {
