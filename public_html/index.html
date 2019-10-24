@@ -62,6 +62,7 @@
 
     <audio src="aaa.mp3" autoplay preload="auto"></audio>
     <canvas id="canvas"></canvas>
+    <hr>
     <div id="control"> </div>
     <div class="cronometro">
       <div id="hms"></div>
@@ -107,6 +108,7 @@
     var array = [3416, 4897, 6378, 7119, 7860, 8601, 9341, 11564, 12304, 15267, 16749];
     var puntos = 0;
     var elem = array[0];
+    var aux = 0;
     var posCirc = 0;
 
     window.onload = function () {
@@ -118,8 +120,7 @@
       
       document.onkeypress = mostrarInformacionCaracter;
       document.onkeyup = mostrarInformacionTecla;
-      init();
-      cronometrar();
+      
 
 
       // No longer setting velocites as they will be random
@@ -128,10 +129,9 @@
           particleIndex = 0,
           settings = {
             density: 1,
-            particleSize: 15,
+            particleSize: 25,
             startingX: canvas.width,
-            startingY: 300,
-
+            startingY: 300
           };
 
       // Set up a function to create multiple particles
@@ -178,21 +178,19 @@
       setInterval(function() {
         context.fillStyle = "white";
         context.fillRect(0, 0, canvas.width, canvas.height);
-
+        context.strokeRect(150, 117, 60 ,60);
         // Draw the particles
-        for (var i = 0; i < settings.density; i++) {
-          if (Math.random() > 0.99) {
-            // Introducing a random chance of creating a particle
-            // corresponding to an chance of 1 per second,
-            // per "density" value
-            new Particle();
-          }
-        }
+        //for (var i = 0; i < settings.density; i++) {
+            window.setTimeout(function(){if(elem != aux){ new Particle(); aux = elem;}},array[0]);
+            //new Particle();
+        //}
 
         for (var i in particles) {
           particles[i].draw();
         }
-      }, 33);
+      }, 30);
+      init();
+      cronometrar();
     };
 
     function mostrarInformacionCaracter(evObject) {
@@ -257,7 +255,7 @@
     function cronometrar() {
       escribir();
       id = setInterval(escribir, 10);
-      id2 = setInterval(descartar, 300);
+      id2 = setInterval(descartar, 30);
     }
 
     function descartar() {
