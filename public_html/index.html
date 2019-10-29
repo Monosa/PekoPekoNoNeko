@@ -68,6 +68,7 @@
     <div class="cronometro">
       <div id="hms"></div>
     </div>
+    <div id="pin"></div>
     <div id="puntos"></div>
 
     <hr>
@@ -80,12 +81,7 @@
   </script>
 
   <script src="js/vendor/bootstrap.min.js"></script>
-  <script>
-      $("#player").bind("ended", function(){
-        var x = document.getElementById("myAudio"); 
-        x.play();
-       });
-   </script>
+
   <script src="js/main.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -116,6 +112,7 @@
     var elem = array[0];
     var aux = 0;
     var posCirc = 0;
+    
 
     window.onload = function () {
 
@@ -128,7 +125,6 @@
       document.onkeyup = mostrarInformacionTecla;
       
       init();
-      cronometrar();
 
 
       // No longer setting velocites as they will be random
@@ -163,7 +159,6 @@
       Particle.prototype.draw = function() {
         this.x -= this.vx;
         this.y = this.vy;
-
         // Adjust for gravity
         //this.vy = settings.gravity;
 
@@ -181,22 +176,39 @@
         context.closePath();
         context.fill();
 
-      }
-      
-      setInterval(function() {
-        context.fillStyle = "white";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.strokeRect(150, 117, 60 ,60);
-        // Draw the particles
-        //for (var i = 0; i < settings.density; i++) {
-            window.setTimeout(function(){if(elem != aux){ new Particle(); aux = elem;}},array[0]);
-            //new Particle();
-        //}
+      };
+      $("#player").bind("ended", function(){
+        var x = document.getElementById("myAudio"); 
+        x.play();
+        cronometrar();
+        setInterval(function() {
+            //context.fillStyle = "white";
+            var img = document.createElement("img");
+            img.src = "img/gatos.jpg";
+            var pat = context.createPattern(img, "repeat");
+            context.fillStyle = pat;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            var gradient = context.createLinearGradient(10, 50, 50, 10);
+            gradient.addColorStop("0", "magenta");
+            gradient.addColorStop("0.5" ,"blue");
+            gradient.addColorStop("1.0", "red");
 
-        for (var i in particles) {
-          particles[i].draw();
-        }
-      }, 30);
+            // Fill with gradient
+            context.strokeStyle = gradient;
+            context.lineWidth = 5;
+            context.strokeRect(150, 117, 60 ,60);
+            // Draw the particles
+            //for (var i = 0; i < settings.density; i++) {
+                window.setTimeout(function(){if(elem != aux){ new Particle(); aux = elem;}},array[0]);
+                //new Particle();
+            //}
+
+            for (var i in particles) {
+              particles[i].draw();
+            }
+        }, 30);
+       });
+      
       
     };
 
@@ -315,6 +327,7 @@
       document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux + ":" + msAux;
     }
   </script>
+      
 </body>
 
 </html>
