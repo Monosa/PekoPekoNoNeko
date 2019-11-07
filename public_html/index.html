@@ -108,6 +108,7 @@
   <script type="text/javascript">
     var eventoControlado = false;
     var array = [3416, 4897, 6378, 7119, 7860, 8601, 9341, 11564, 12304, 15267, 16749];
+    var array2 = [];
     var puntos = 0;
     var elem = array[0];
     var aux = 0;
@@ -154,7 +155,12 @@
         particles[particleIndex] = this;
         this.id = particleIndex;
       }
-
+      Object.defineProperty(Particle.prototype,"pos", {
+          get: function getPos(){ return this.x; }
+      });
+      Object.defineProperty(Particle.prototype,"lista", {
+          get: function getLista(){ return this; }
+      });
       // Some prototype methods for the particle's "draw" function
       Particle.prototype.draw = function() {
         this.x -= this.vx;
@@ -180,11 +186,11 @@
       $("#player").bind("ended", function(){
         var x = document.getElementById("myAudio"); 
         x.play();
-        cronometrar();
+        
         setInterval(function() {
             //context.fillStyle = "white";
             var img = document.createElement("img");
-            img.src = "img/gatos.jpg";
+            img.src = "img/rectangle.png";
             var pat = context.createPattern(img, "repeat");
             context.fillStyle = pat;
             context.fillRect(0, 0, canvas.width, canvas.height);
@@ -243,14 +249,17 @@
       //La tecla 32 es la barra espaciadora
 
       if (teclaPulsada == 32) {
-        if(posCirc > 100 && posCirc < 160)
+        window.alert(particles[0].getPos());
+        if(particles[0].getPos() > 100 && particles[0].getPos() < 160 && particles[0].getPos() != 130)
           puntos+= 5000;
-        else if (posCirc == 130)
+        else if (particles[0].getPos() == 130)
           puntos+= 10000;
-
+        if(mss > array2[0] + 2500){
+            array2.pop();
+        }
         document.getElementById("puntos").innerHTML = "Puntos:" + puntos;
       }
-
+      window.alert(teclaPulsada)
       control.innerHTML += teclaPulsada;
 
       if (msg) {
@@ -280,6 +289,7 @@
     function descartar() {
       if (array.length > 0 && elem < mss * 10 + 300) {
         elem = array.shift();
+        array2.push(elem);
       }
     }
 
