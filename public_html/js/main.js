@@ -80,7 +80,8 @@ $("#player").bind("ended", function () {
       moving:true
     });
   }
-
+  playing = particles[0];
+  
   window.requestAnimationFrame(animate);
 
   function animate(time) {
@@ -112,12 +113,8 @@ $("#player").bind("ended", function () {
 
     // if update() reported that it moved something
     // then request another animation loop
-    if (continueAnimating) {
+    if (continueAnimating)
       window.requestAnimationFrame(animate);
-    } else {
-      // otherwise report the animation is complete
-      alert('Animation is complete');
-    }
   }
 
   function update(part, elapsedTime) {
@@ -154,16 +151,10 @@ $("#player").bind("ended", function () {
 function mostrarInformacionTecla(evObject) {
   var tecla = evObject.keyCode;
   control.innerHTML = 'Tecla pulsada: ' + tecla;
-}
-
-
-
-function comprobarPuntos(evObject) {
-  var teclaPulsada = evObject.keyCode;
   //La tecla 32 es la barra espaciadora
 
-  if (teclaPulsada == 32) {
-    console.log(particles[0].x);
+  if (tecla == 32) {
+    console.log(playing == particles[0]);
     if (playing.x > 100 && playing.x < 160 && playing.x != 130)
       puntos += 5000;
     else if (playing.x == 130)
@@ -172,6 +163,7 @@ function comprobarPuntos(evObject) {
     document.getElementById("puntos").innerHTML = "Puntos:" + puntos;
   }
 }
+
 
 
 function iniciarCronometroYPuntos() {
