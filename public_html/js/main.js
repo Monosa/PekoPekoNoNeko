@@ -1,6 +1,9 @@
-var tiempos = [0,3416, 4897, 6378, 7119, 7860, 8601, 9341, 11564, 12304, 15267, 16749];
+/* global control, canvas */
+
+//La letra j es la tecla 106 y la k es la 107
+var tiempos = [[247,106],[2927,107],[4229,107],[6835,107],[9941,107],[11480,107],[13234,106],[14231,106],[17650,106],[19998,106],[21080,107],[23908,107],[25470,107],[27884,107],[28705,107],[31216,106],[32089,106],[35419,106],[37874,107],[39029,107],[40261,107],[43474,106],[45406,106],[46335,107],[48706,106],[50227,107],[52664,107],[54691,106],[57299,107],[59109,107],[61953,106],[62141,106],[65887,107],[66246,107],[69733,107],[71545,107],[72339,106],[74962,106],[76141,107],[79639,107],[80297,107],[83908,106],[85413,106],[87706,106],[88157,106],[90286,106],[92552,106],[94244,107],[97311,107],[98055,107],[101555,107],[102565,106],[105419,107],[106129,107],[108025,106],[111680,106],[112493,107],[114481,107],[117394,107],[119060,106],[120745,106],[122632,106],[124454,107],[127124,107],[128600,107],[130444,106],[133151,106],[135648,106],[137679,106],[139136,107],[140653,107],[143611,106],[145206,106],[147937,106],[149475,106],[150380,106],[153385,107],[154077,107],[156288,107],[158902,107],[161339,106],[163612,106],[164910,106],[166469,107],[168950,107],[170131,106],[172913,107],[174148,107],[176407,106],[178393,106],[181370,106],[183438,107],[185072,106],[187300,106],[188852,106],[191155,106],[193991,107],[194608,106],[196829,107],[198451,107]];
 var tiempos2 = [0, 1000, 2000];
-var array2 = [0,3416, 4897, 6378, 7119, 7860, 8601, 9341, 11564, 12304, 15267, 16749];
+//var array2 = [0,3416, 4897, 6378, 7119, 7860, 8601, 9341, 11564, 12304, 15267, 16749];
 var particles = [];
 var puntos = 0;
 var aux = 0;
@@ -26,7 +29,7 @@ window.onload = function () {
       startingX: canvas.width + 25,
       startingY: 150
     };
-}
+};
 
 //  Places a background image in a background canvas and draws the square over it
 function drawInitialCanvas() {
@@ -74,10 +77,11 @@ $("#player").bind("ended", function () {
     particles.push({ 
       x: settings.startingX,
       y: settings.startingY,
-      timing: tiempos[i],
+      timing: tiempos[i][0],
       size: settings.particleSize,
       vx: 20,
-      moving:true
+      moving:true,
+      tecla:tiempos[i][1]
     });
   }
   playing = particles[0];
@@ -140,7 +144,10 @@ $("#player").bind("ended", function () {
 
   function drawParticle(part) {
     context.beginPath();
-    context.fillStyle = "cyan";
+    if(part.tecla === 107)
+        context.fillStyle = "cyan";
+    else if(part.tecla === 106)
+        context.fillStyle = "red";
     context.arc(part.x, part.y, part.size, 0, Math.PI * 2);
     context.fill();
   }
@@ -150,14 +157,13 @@ $("#player").bind("ended", function () {
 
 function mostrarInformacionTecla(evObject) {
   var tecla = evObject.keyCode;
-  control.innerHTML = 'Tecla pulsada: ' + tecla;
+  control.innerHTML = 'Tecla pulsada: ' + tecla + " " + typeof(tecla);
   //La tecla 32 es la barra espaciadora
 
-  if (tecla == 32) {
-    console.log(playing == particles[0]);
-    if (playing.x > 100 && playing.x < 160 && playing.x != 130)
+  if (tecla === playing.tecla) {
+    if (playing.x > 120 && playing.x < 180 && playing.x !== 140)
       puntos += 5000;
-    else if (playing.x == 130)
+    else if (playing.x === 140)
       puntos += 10000;
         
     document.getElementById("puntos").innerHTML = "Puntos:" + puntos;
@@ -179,24 +185,21 @@ function iniciarCronometroYPuntos() {
 
 function cronometrar() {  
   escribir();
-  id = setInterval(escribir, 10);
-  id2 = setInterval(descartar, 30);
+  id = setInterval(escribir, 1);
+  //id2 = setInterval(descartar, 30);
   id3 = setInterval(comprueba,1);
 }
 
 
-function descartar() {
-  if (tiempos.length > 0 && elem < mss * 10 + 300) {
-    elem = tiempos.shift();
-    tiempos.push(elem);
-  }
-}
+
 
 function comprueba() {
-    if (mss >= array2[0] + 1000){
+    if (playing !== -1 && playing.x <= 100){
         actual += 1;
-        playing = particles[actual];
-        array2.pop();
+        if(actual < particles.length){
+            playing = particles[actual];
+        }
+        else playing = -1;
     }
 }
 
@@ -240,6 +243,4 @@ function escribir() {
   } else {
     hAux = h;
   }
-
-  document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux + ":" + msAux;
 }
