@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	'livesync',
     'django.contrib.staticfiles',
 	'pantallaJuego.apps.PantallajuegoConfig', 
+	'crea_nivel.apps.CreaNivelConfig',
 ]
 
 MIDDLEWARE = [

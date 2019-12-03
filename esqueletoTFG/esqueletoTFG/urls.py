@@ -26,6 +26,9 @@ from django.urls import include
 urlpatterns += [
     path('pantallaJuego/', include('pantallaJuego.urls')),
 ]
+urlpatterns += [
+    path('crea_nivel/', include('crea_nivel.urls')),
+]
 
 #Add URL maps to redirect the base URL to our application
 from django.views.generic import RedirectView
