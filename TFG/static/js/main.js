@@ -2,108 +2,7 @@
 
 // La letra j es la tecla 106 y la k es la 107
 // La letra s tiene el código 115 y la d el 100
-var tiempos = [
-  [247, [106, 115]],
-  [2927, [107, 100]],
-  [4229, [107, 100]],
-  [6835, [107, 100]],
-  [9941, [107, 100]],
-  [11480, [107, 100]],
-  [13234, [106, 115]],
-  [14231, [106, 115]],
-  [17650, [106, 115]],
-  [19998, [106, 115]],
-  [21080, [107, 100]],
-  [23908, [107, 100]],
-  [25470, [107, 100]],
-  [27884, [107, 100]],
-  [28705, [107, 100]],
-  [31216, [106, 115]],
-  [32089, [106, 115]],
-  [35419, [106, 115]],
-  [37874, [107, 100]],
-  [39029, [107, 100]],
-  [40261, [107, 100]],
-  [43474, [106, 115]],
-  [45406, [106, 115]],
-  [46335, [107, 100]],
-  [48706, [106, 115]],
-  [50227, [107, 100]],
-  [52664, [107, 100]],
-  [54691, [106, 115]],
-  [57299, [107, 100]],
-  [59109, [107, 100]],
-  [61953, [106, 115]],
-  [62141, [106, 115]],
-  [65887, [107, 100]],
-  [66246, [107, 100]],
-  [69733, [107, 100]],
-  [71545, [107, 100]],
-  [72339, [106, 115]],
-  [74962, [106, 115]],
-  [76141, [107, 100]],
-  [79639, [107, 100]],
-  [80297, [107, 100]],
-  [83908, [106, 115]],
-  [85413, [106, 115]],
-  [87706, [106, 115]],
-  [88157, [106, 115]],
-  [90286, [106, 115]],
-  [92552, [106, 115]],
-  [94244, [107, 100]],
-  [97311, [107, 100]],
-  [98055, [107, 100]],
-  [101555, [107, 100]],
-  [102565, [106, 115]],
-  [105419, [107, 100]],
-  [106129, [107, 100]],
-  [108025, [106, 115]],
-  [111680, [106, 115]],
-  [112493, [107, 100]],
-  [114481, [107, 100]],
-  [117394, [107, 100]],
-  [119060, [106, 115]],
-  [120745, [106, 115]],
-  [122632, [106, 115]],
-  [124454, [107, 100]],
-  [127124, [107, 100]],
-  [128600, [107, 100]],
-  [130444, [106, 115]],
-  [133151, [106, 115]],
-  [135648, [106, 115]],
-  [137679, [106, 115]],
-  [139136, [107, 100]],
-  [140653, [107, 100]],
-  [143611, [106, 115]],
-  [145206, [106, 115]],
-  [147937, [106, 115]],
-  [149475, [106, 115]],
-  [150380, [106, 115]],
-  [153385, [107, 100]],
-  [154077, [107, 100]],
-  [156288, [107, 100]],
-  [158902, [107, 100]],
-  [161339, [106, 115]],
-  [163612, [106, 115]],
-  [164910, [106, 115]],
-  [166469, [107, 100]],
-  [168950, [107, 100]],
-  [170131, [106, 115]],
-  [172913, [107, 100]],
-  [174148, [107, 100]],
-  [176407, [106, 115]],
-  [178393, [106, 115]],
-  [181370, [106, 115]],
-  [183438, [107, 100]],
-  [185072, [106, 115]],
-  [187300, [106, 115]],
-  [188852, [106, 115]],
-  [191155, [106, 115]],
-  [193991, [107, 100]],
-  [194608, [106, 115]],
-  [196829, [107, 100]],
-  [198451, [107, 100]]
-];
+var tiempos = [{tiempo : 239, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 2820, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 5567, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 6064, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 9634, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 10359, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 13864, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 14767, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 17053, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 19239, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 21054, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 23362, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 24258, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 26939, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 28574, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 30563, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 32058, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 35653, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 36746, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 38632, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 40080, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 43988, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 45058, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 47421, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 49391, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 51352, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 52788, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 54971, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 57787, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 58687, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 61893, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 62255, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 64470, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 66076, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 69041, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 70318, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 73411, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 75302, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 77449, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 78780, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 80498, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 82379, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 84085, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 87318, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 89890, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 90749, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 93245, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 94954, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 96649, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 98863, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 101351, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 103997, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 104101, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 106530, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 108718, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 110627, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 113313, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 114187, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 116161, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 118496, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 121506, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 122744, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 124561, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 126337, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 128504, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 131635, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 132801, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 134735, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 136487, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 138985, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 140104, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 142820, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 144874, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 146377, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 149598, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 150705, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 153589, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 154424, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 157302, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 158215, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 160542, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 162456, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 165286, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 167001, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 168013, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 171625, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 173646, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 174754, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 176048, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 179871, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 180200, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 183893, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 184200, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 187933, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 189256, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 190053, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 193169, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 194366, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 196555, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 199554, tecla : 106, tecla2 : 100, tipo : 50}];
 var particles = [];
 var puntos = 0,
   puntos2 = 0;
@@ -111,6 +10,8 @@ var startTime;
 var actual = 0;
 var playing;
 var multiplayer = true;
+var contadorBien = 0;
+var contadorMal = 0;
 
 
 window.onload = function () {
@@ -202,10 +103,11 @@ $("#player").bind("ended", function () {
       x: settings.startingX,
       y: settings.startingY,
       timing: tiempos[i][0],
-      size: settings.particleSize,
+      size: tiempos[i].tipo,
       vx: 20,
       moving: true,
-      tecla: tiempos[i][1]
+      tecla: tiempos[i].tecla,
+	  tecla2: tiempos[i].tecla2,
     });
   }
   playing = particles[0];
@@ -270,18 +172,18 @@ $("#player").bind("ended", function () {
 
   function drawParticle(part) {
     context.beginPath();
-    if (part.tecla[0] === 107)
+    if (part.tecla === 107)
       context.fillStyle = "cyan";
-    else if (part.tecla[0] === 106)
+    else if (part.tecla === 106)
       context.fillStyle = "red";
     context.arc(part.x, part.y, part.size, 0, Math.PI * 2);
     context.fill();
 
     if (multiplayer) {
       context2.beginPath();
-      if (part.tecla[0] === 107)
+      if (part.tecla2 === 107)
         context2.fillStyle = "cyan";
-      else if (part.tecla[0] === 106)
+      else if (part.tecla2 === 106)
         context2.fillStyle = "red";
       context2.arc(part.x, part.y, part.size, 0, Math.PI * 2);
       context2.fill();
@@ -296,7 +198,7 @@ function mostrarInformacionTecla(evObject) {
   //control.innerHTML = 'Tecla pulsada: ' + tecla + " " + typeof(tecla);
   //La tecla 32 es la barra espaciadora
 
-  if (tecla === playing.tecla[0]) {
+  if (tecla === playing.tecla) {
     //De 135 a 165 es pleno
     if ((playing.x >= 96 && playing.x =< 139) || (playing.x >= 161 && playing.x <= 204)){
       contadorBien++;
@@ -325,12 +227,27 @@ function mostrarInformacionTecla(evObject) {
   }
 
   if (multiplayer) {
-    if (tecla === playing.tecla[1]) {
+    if (tecla === playing.tecla2) {
       //De 135 a 165 es pleno
-      if ((playing.x > 101 && playing.x < 135) || (playing.x > 165 && playing.x < 199))
-        puntos2 += 5000;
-      else if (playing.x >= 135 && playing.x <= 165)
-        puntos2 += 10000;
+      if ((playing.x >= 96 && playing.x =< 139) || (playing.x >= 161 && playing.x <= 204)){
+      contadorBien++;
+	  if(contadorBien >= 10)
+		puntos += 50*2;
+	  else puntos += 50;
+	}
+    else if (playing.x >= 140 && playing.x <= 160){
+	  contadorBien++;
+	  if(contadorBien >= 10)
+		puntos += 100*2.5;
+	  else puntos += 100;
+	  
+	}
+    else{
+		contadorMal++;
+		contadorBien = 0;
+		if(contadorMal >= 5)
+			puntos -= 25;
+	}
 
       document.getElementById("puntos-p2").innerHTML = "Puntos jugador 2: " + puntos2;
     }
