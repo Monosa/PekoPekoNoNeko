@@ -9,7 +9,7 @@ var puntos = 0,
 var startTime;
 var actual = 0;
 var playing;
-var multiplayer = true;
+var multiplayer = false;
 var contadorBien = 0;
 var contadorMal = 0;
 
@@ -99,10 +99,11 @@ $("#player").bind("ended", function () {
   }
 
   for (var i = 0; i < tiempos.length; i++) {
+	console.log(tiempos[i].tiempo);
     particles.push({
       x: settings.startingX,
       y: settings.startingY,
-      timing: tiempos[i][0],
+      timing: tiempos[i].tiempo,
       size: tiempos[i].tipo,
       vx: 20,
       moving: true,
@@ -110,7 +111,9 @@ $("#player").bind("ended", function () {
 	  tecla2: tiempos[i].tecla2,
     });
   }
+  console.log(particles);
   playing = particles[0];
+  
 
   window.requestAnimationFrame(animate);
 
@@ -197,10 +200,10 @@ function mostrarInformacionTecla(evObject) {
   var tecla = evObject.keyCode;
   //control.innerHTML = 'Tecla pulsada: ' + tecla + " " + typeof(tecla);
   //La tecla 32 es la barra espaciadora
-
+  
   if (tecla === playing.tecla) {
     //De 135 a 165 es pleno
-    if ((playing.x >= 96 && playing.x =< 139) || (playing.x >= 161 && playing.x <= 204)){
+    if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)){
       contadorBien++;
 	  if(contadorBien >= 10)
 		puntos += 50*2;
@@ -229,7 +232,7 @@ function mostrarInformacionTecla(evObject) {
   if (multiplayer) {
     if (tecla === playing.tecla2) {
       //De 135 a 165 es pleno
-      if ((playing.x >= 96 && playing.x =< 139) || (playing.x >= 161 && playing.x <= 204)){
+      if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)){
       contadorBien++;
 	  if(contadorBien >= 10)
 		puntos += 50*2;
