@@ -34,3 +34,9 @@ def crea(request):
         request,
         'crea.html',
     )
+	
+def sube(request):
+	return render(
+		request,
+		'subeCancion.html',
+	)

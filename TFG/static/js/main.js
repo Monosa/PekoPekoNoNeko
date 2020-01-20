@@ -99,7 +99,6 @@ $("#player").bind("ended", function () {
   }
 
   for (var i = 0; i < tiempos.length; i++) {
-	console.log(tiempos[i].tiempo);
     particles.push({
       x: settings.startingX,
       y: settings.startingY,
@@ -111,7 +110,6 @@ $("#player").bind("ended", function () {
 	  tecla2: tiempos[i].tecla2,
     });
   }
-  console.log(particles);
   playing = particles[0];
   
 
@@ -154,8 +152,8 @@ $("#player").bind("ended", function () {
 
   function update(part, elapsedTime) {
     // has this arc's animation delay been reached by elapsedTime
-    console.log("tiempo de particula: " + part.timing);
-    console.log("Elapsed time: " + elapsedTime);
+    //console.log("tiempo de particula: " + part.timing);
+    //console.log("Elapsed time: " + elapsedTime);
     if (elapsedTime >= part.timing) {
       // is this arc still visible on the canvas
       if (part.x > -part.size) {
@@ -168,7 +166,7 @@ $("#player").bind("ended", function () {
         return (true);
       }
     }
-    console.log("fin bucle con " + elapsedTime + " - " + part.timing);
+    //console.log("fin bucle con " + elapsedTime + " - " + part.timing);
     // report that we didn't move this arc
     return (false);
   }

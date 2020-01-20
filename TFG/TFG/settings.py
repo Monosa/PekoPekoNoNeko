@@ -136,3 +136,4 @@ STATICFILES_FINDERS = (
 )
 MEDIA_ROOT=os.path.join(BASE_DIR,'media').replace('\\', '/')
 MEDIA_URL='/media/'
+ADMIN_MEDIA_PREFIX = '/media/' 
