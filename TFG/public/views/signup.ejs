@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Registro - Peko Peko No Neko</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/signup.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            Peko Peko No Neko
+        </div>
+        <div class="data-container">
+
+            <form class="signup_user" method="post" action="/users/signup" enctype="multipart/form-data">
+                <div class="data email_signup">
+                    <div class="texto">
+                        <h2> Email: </h2>
+                        <input type="text" name="email_user">
+                    </div>
+                </div>
+
+                <div class="data contraseña_signup">
+                    <div class="texto">
+                        <h2> Contraseña: </h2>
+                        <input type="password" name="password_user">
+                    </div>
+                </div>
+
+                <div class="data nombre_completo">
+                    <div class="texto">
+                        <h2> Nombre completo: </h2>
+                        <input type="text" name="name_user">
+                    </div>
+                </div>
+
+                <div class="data nickname">
+                    <div class="texto">
+                        <h2> Nickname: </h2>
+                        <input type="text" name="nickname_user">
+                    </div>
+                </div>
+
+                <div class="data imagen_perfil">
+                    <div class="texto">
+                        <h2> Imagen de perfil: </h2>
+                        <input type="file" name="user_img">
+                    </div>
+                </div>
+
+                <button class="boton_aceptar" type="submit"> Registrarse </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
