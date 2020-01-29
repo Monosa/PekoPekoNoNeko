@@ -2,6 +2,6 @@
 
 $(function() {
     document.onkeypress = function() {
-        document.location.href = "/play"
+        document.location.href = "/canciones"
     }
 })
