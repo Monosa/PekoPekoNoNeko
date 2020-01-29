@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Short+Stack&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Short Stack', cursive;
+    background-image: url("../img/titlescreencats.jpg");
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #33a79e;
+}
+
+.icon{
+    width: 6%;
+    height: 6%;
+    border-radius: 50%;
+}
+
+img{
+    width: 10%;
+    height: 10%;
+}

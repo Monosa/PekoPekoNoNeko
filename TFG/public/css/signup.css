@@ -14,6 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 10%;
 }
 
 .title{
@@ -56,4 +57,5 @@ button{
     border-radius: 2%;
     background-color: #33a79e;
     padding: 1%;
+    margin-left: 38%;
 }

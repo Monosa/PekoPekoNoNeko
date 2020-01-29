@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="utf-8">
     <title>Registro - Peko Peko No Neko</title>
@@ -50,7 +51,16 @@
 
                 <button class="boton_aceptar" type="submit"> Registrarse </button>
             </form>
+
+            <% if (errorMsg !== null ) { %> 
+                <div class="mensaje_error">
+                    <h4>
+                     <%= errorMsg %>
+                    </h4>
+                </div>
+             <% } %>
         </div>
     </div>
 </body>
+
 </html>
