@@ -52,6 +52,26 @@ class DAOUsers{
         });
     }
 
+    //  Comprueba que no existe un usuario en la base de datos con el nickname "nickname"
+    checkUser(nickname, callback){
+        this.pool.getConnection(function(err, connection){
+            if(err){
+                callback(new Error("Error de conexión a la base de datos"), null);
+            }else{
+                const sql = `SELECT * FROM user WHERE nickname = ?`;
+
+                connection.query(sql, [nickname], function(err, resultado){
+                    connection.release();
+                    if(err){
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    }else{
+                        callback(null, resultado);
+                    }
+                });
+            }
+        });
+    }
+
     /*Obtiene el nombre del fichero de la imagen del usuario con id = "id"*/
     getUserImage(id, callback){
         pool.getConnection(function (err, connection) {

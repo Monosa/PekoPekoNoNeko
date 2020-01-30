@@ -12,10 +12,29 @@ const users = express.Router(); // Crea la aplicación 'users' con sus propias r
 const pool = mysql.createPool(config.mysqlConfig);
 const daoUsers = new DAOUsers(pool);
 
+// Middleware que limita el acceso a la sesión sin estar loggeado
+function middlewareLogin(request, response, next) {
+    if (request.session.currentUserNickname !== undefined) {
+        next();
+    }
+    else {
+        response.redirect("/users/signin");
+    }
+}
+
+function middlewareLogged(request, response, next){
+    if(request.session.currentUserNickname !== undefined){
+        response.redirect("/users/sesion");
+    }
+    else{
+        next();
+    }
+}
+
 const multerFactory = multer({ storage: multer.memoryStorage() });
 
 // Registro de usuario
-users.get("/signup", function(request, response){
+users.get("/signup", middlewareLogged, function(request, response){
     response.status(200);
     response.render("signup", {errorMsg: null});
 });
@@ -47,22 +66,32 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                 user.image = request.file.buffer;
             }
 
-            daoUsers.insertUser(user, function (error, id) {
-                if (error) {
+            daoUsers.checkUser(user.nickname, function(err, usersWithNickname){
+                if(err){
                     response.status(500);
                     response.render("signup", { errorMsg: `${error.message}` });
-                } else {
-                    user.id = id;
+                }if(usersWithNickname.length !== 0){
                     response.status(200);
-                    request.session.currentUserNickname = user.nickname;
-                    request.session.currentUserId = user.id;
-                    if(user.image !== null)
-                        request.session.currentUserImg = true;
-                    else
-                        request.session.currentUserImg = false;
-                    response.redirect("/users/sesion");
+                    response.render("signup", { errorMsg: "Ese nickname ya está cogido. Por favor, elige otro." });
+                }else{
+                    daoUsers.insertUser(user, function (error, id) {
+                        if (error) {
+                            response.status(500);
+                            response.render("signup", { errorMsg: `${error.message}` });
+                        } else {
+                            user.id = id;
+                            response.status(200);
+                            request.session.currentUserNickname = user.nickname;
+                            request.session.currentUserId = user.id;
+                            if(user.image !== null)
+                                request.session.currentUserImg = true;
+                            else
+                                request.session.currentUserImg = false;
+                            response.redirect("/users/sesion");
+                        }
+                    });
                 }
-            });
+            });            
         } else {
             response.status(200);
             //Se meten todos los mensajes de error en un array
@@ -74,7 +103,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
 
 
 // Perfil de usuario
-users.get("/sesion", function(request, response){
+users.get("/sesion", middlewareLogin, function(request, response){
     daoUsers.getUser(request.session.currentUserId, function(error, user){
         if(error){
             response.status(500);
