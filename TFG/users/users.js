@@ -18,7 +18,7 @@ function middlewareLogin(request, response, next) {
         next();
     }
     else {
-        response.redirect("/users/signin");
+        response.redirect("/users/login");
     }
 }
 
@@ -136,6 +136,65 @@ users.get("/image/:id", function (request, response) {
 // En caso de que el usuario no tenga imagen de perfil, se le asigna una imagen por defecto
 users.get("/no_profile_pic", function (request, response) {
     response.sendFile(path.join(__dirname, "../profile_imgs", "no_pic.png"));
+});
+
+//  Login de usuario
+users.get("/login", middlewareLogged, function(request, response){
+    response.status(200);
+    response.render("login", {errorMsg: null});
+});
+
+users.post("/login", function(request, response){
+    request.checkBody("nickname_user", "El nickname del usuario está vacío").notEmpty();
+    request.checkBody("password_user", "La constraseña del usuario está vacía").notEmpty();
+
+    request.getValidationResult().then(function (result) {
+        // El método isEmpty() devuelve true si las comprobaciones
+        // no han detectado ningún error
+        if (result.isEmpty()) {
+            let user = {};
+
+            user.nickname = request.body.nickname_user;
+            user.password = request.body.password_user;
+            user.image = null;
+
+            daoUsers.isUserCorrect(user.nickname, user.password, function(err, result){
+                if(err){
+                    response.status(500);
+                    response.render("login", { errorMsg: `${error.message}` });
+                }if(result === undefined){
+                    response.status(200);
+                    response.render("login", { errorMsg: "El nickname o la contraseña no son correctos. Por favor, inténtelo de nuevo." });
+                }else{
+                    response.status(200);
+                    user.id = result.id;
+                    user.image = result.image;
+
+                    request.session.currentUserId = user.id;
+                    request.session.currentUserNickname = user.nickname;
+
+                    if(user.image !== null)
+                        request.session.currentUserImg = true;
+                    else
+                        request.session.currentUserImg = false;
+                    
+                    response.redirect("/users/sesion");
+                }
+            });            
+        } else {
+            response.status(200);
+            //Se meten todos los mensajes de error en un array
+            let mensaje = result.array().map(n => " " + n.msg);
+            response.render("login", { errorMsg: mensaje });
+        }
+    });
+});
+
+// Logout de usuario
+users.get("/logout", middlewareLogin, function (request, response) {
+    response.status(200);
+    request.session.destroy();
+    response.redirect("/");
 });
 
 module.exports = users;

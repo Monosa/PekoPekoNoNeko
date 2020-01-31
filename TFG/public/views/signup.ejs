@@ -6,11 +6,24 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../css/signup.css" />
 </head>
 
+<div class="header">
+    <div class="titulo">
+        <h1>PekoPekoNoNeko</h1>
+    </div>
+
+    <div class="nav">
+        <div class="enlace entrar"> <a href="/users/login">Entrar</a> </div>
+        <div class="enlace nuevo_usuario"> <a href="/users/signup">Nuevo usuario</a> </div>
+    </div>
+</div>
+
 <body>
     <div class="container">
+
         <div class="title">
-            Peko Peko No Neko
+            <h2>Registro</h2>
         </div>
+
         <div class="data-container">
 
             <form class="signup_user" method="post" action="/users/signup" enctype="multipart/form-data">
@@ -50,17 +63,19 @@
                 </div>
 
                 <button class="boton_aceptar" type="submit"> Registrarse </button>
-            </form>
 
-            <% if (errorMsg !== null ) { %> 
-                <div class="mensaje_error">
-                    <h4>
-                     <%= errorMsg %>
-                    </h4>
-                </div>
-             <% } %>
+                <% if (errorMsg !== null ) { %> 
+                    <div class="mensaje_error">
+                        <h4>
+                         <%= errorMsg %>
+                        </h4>
+                    </div>
+                 <% } %>
+
+            </form>
         </div>
-    </div>
+    </div
+    >
 </body>
 
 </html>
