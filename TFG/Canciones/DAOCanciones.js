@@ -1,5 +1,3 @@
-"use strict";
-
 class DAOSelectionScreen{
     constructor(pool) {
         this.pool = pool;
