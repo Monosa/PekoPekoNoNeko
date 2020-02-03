@@ -6,7 +6,7 @@ class DAOSelectionScreen{
     getListaCanciones(callback) {
         this.pool.getConnection(function (err, connection) {
             if (err)
-            callback(new Error("Error de conexión a la base de datos"), null);
+                callback(new Error("Error de conexión a la base de datos"), null);
             else {
                 const sql = `SELECT id, nombre, autor
                 FROM songs`;

@@ -68,3 +68,21 @@ nav.navbar {
     left: 0;
     top: 0;
 }
+
+.mdc-typography{
+    text-align: center;
+}
+
+.mdc-button {
+    color: teal !important;
+}
+
+.mdc-card {
+    height: auto;
+    width: 23%;
+    padding: 1%;
+}
+
+.mdc-card__actions{
+    justify-content: center !important;
+}

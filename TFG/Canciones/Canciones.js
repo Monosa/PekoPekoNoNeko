@@ -12,11 +12,16 @@ const pool = mysql.createPool(config.mysqlConfig);
 const daoCanciones = new DAOCanciones(pool);
 
 Canciones.get("/", function (request, response) {
-    
-	daoCanciones.getListaCanciones(function (error, listaCanciones) {
+
+    daoCanciones.getListaCanciones(function (error, listaCanciones) {
         //Faltan las comprobaciones
-        response.status(200);
-        response.render("songSelection", { canciones: listaCanciones, errorMsg: null});
+        if (error) {
+            response.status(500);
+            console.log(`${error.message}`);
+        } else {
+            response.status(200);
+            response.render("songSelection", { canciones: listaCanciones, errorMsg: null });
+        }
     })
 });
 

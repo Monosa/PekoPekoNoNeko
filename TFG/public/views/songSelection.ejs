@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <title>Peko Peko No Neko</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
-    <link rel="stylesheet" href="../../bundle.css">
-    <script src="../js/vendor/jquery-1.11.2.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">    
+    <link href="../css/material-components-web.min.css" rel="stylesheet">
+    <script src="../js/material-components-web.min.js"></script>
+    
 </head>
 
 <body>
@@ -19,11 +20,11 @@
                       <h2 class="mdc-typography mdc-typography--headline6"><%= cancion.nombre %></h2>
                       <h3 class="mdc-typography mdc-typography--subtitle2"><%= cancion.autor %></h3>
                     </div>
-                    <div class="mdc-card__actions">
-                      <div class="mdc-card__action-buttons">
-                        <button class="mdc-button mdc-card__action mdc-card__action--button">  <span class="mdc-button__ripple"></span>Elegir</button>
-                      </div>
-                    </div>  
+                </div>
+                <div class="mdc-card__actions">
+                  <div class="mdc-card__action-buttons">
+                    <button class="mdc-button mdc-card__action mdc-card__action--button">  <span class="mdc-button__ripple"></span>Elegir</button>
+                  </div>
                 </div>  
               </div>
               <% }); %>
