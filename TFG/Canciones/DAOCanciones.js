@@ -27,7 +27,7 @@ class DAOSelectionScreen{
             if (err)
             callback(new Error("Error de conexión a la base de datos"), null);
             else {
-                const sql = `SELECT son.nombre, son.autor, GROUP_CONCAT(sec.value)
+                const sql = `SELECT son.nombre, son.autor, GROUP_CONCAT(sec.value) as tiempos
                 FROM songs son, secuencias sec
 				WHERE son.id = ? AND sec.parent = ?`;
 				const elems = [id, id];

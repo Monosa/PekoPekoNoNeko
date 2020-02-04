@@ -4,7 +4,7 @@ const path = require("path");
 const multer = require("multer");
 const DAOCanciones = require("./DAOCanciones.js");
 const config = require("../config");
-const main = require("../public/js/main.js");
+//const main = require("../public/js/main.js");
 const bodyParser = require("body-parser");
 
 const Canciones = express.Router();
@@ -28,13 +28,14 @@ Canciones.get("/", function (request, response) {
 });
 
 Canciones.get("/play", function(request, response){
-    daoCanciones.getCancion(function(error, cancion){
+    let idcancion = request.query.idcancion;
+    daoCanciones.getCancion(idcancion,function(error, cancion){
         if(error){
             response.status(500);
             response.render("songSelection", { canciones: null, errorMsg: `${error.message}`});
         }else{
             response.status(200);
-            response.json(cancion);
+            response.render("game", {tiempos: cancion.tiempos, errorMsg:null });
         }
     });
 });

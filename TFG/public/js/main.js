@@ -317,4 +317,4 @@ function comprueba() {
   }
 }
 
-module.exports = main;
+//module.exports = this;
