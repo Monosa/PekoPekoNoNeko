@@ -36,7 +36,7 @@ class DAOSelectionScreen{
 						callback(new Error("Error de acceso a la base de datos en el getListaCanciones"), null);
                     else {
                         console.log("Respuestas leídas correctamentes");
-						callback(null, listado);
+						callback(null, listado[0]);
                     }
                 })       
             }

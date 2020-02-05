@@ -34,8 +34,10 @@ Canciones.get("/play", function(request, response){
             response.status(500);
             response.render("songSelection", { canciones: null, errorMsg: `${error.message}`});
         }else{
-            response.status(200);
-            response.render("game", {tiempos: cancion.tiempos, errorMsg:null });
+            // Incluir campos ocultos en el html, leer esos campos desde el .js
+            response.status(200);            
+            console.log(cancion.tiempos);
+            response.render("game", { tiempos: cancion.tiempos, errorMsg: null });
         }
     });
 });
