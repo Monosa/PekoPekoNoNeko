@@ -175,9 +175,9 @@ function cargarJuego() {
 
     function drawParticle(part) {
       context.beginPath();
-      if (part.tecla[1] === 107 || part.tecla[1] === 100)
+      if (part.tecla[0] === 107 || part.tecla[0] === 100)
         context.fillStyle = "cyan";
-      else if (part.tecla[1] === 106 || part.tecla[1] === 102)
+      else if (part.tecla[0] === 106 || part.tecla[0] === 102)
         context.fillStyle = "red";
       context.arc(part.x, part.y, part.size, 0, Math.PI * 2);
       context.fill();
@@ -199,8 +199,8 @@ function cargarJuego() {
 
 function clic(evObject) {
   var tecla = evObject.keyCode;
-  console.log(tecla, playing.tecla[1]);
-  if (tecla === playing.tecla[1] || tecla === playing.tecla[2]) {
+  console.log(tecla, playing.tecla[0]);
+  if (tecla === playing.tecla[0] || tecla === playing.tecla[1]) {
     //De 135 a 165 es pleno
     if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)) {
       contadorBien++;
