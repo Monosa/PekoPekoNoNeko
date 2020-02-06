@@ -48,6 +48,8 @@ nav.navbar {
 #bg-player1 {
     position: relative;
     top: 190px;
+    width: 80%;
+    margin: auto;
 }
 
 #bg-player1>canvas {
