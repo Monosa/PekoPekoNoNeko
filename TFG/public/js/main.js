@@ -200,7 +200,7 @@ function cargarJuego() {
 function clic(evObject) {
   var tecla = evObject.keyCode;
   console.log(tecla, playing.tecla);
-  if (tecla === playing.tecla) {
+  if (tecla === playing.tecla[1] || tecla === playing.tecla[2]) {
     //De 135 a 165 es pleno
     if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)) {
       contadorBien++;
