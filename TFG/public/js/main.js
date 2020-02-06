@@ -13,8 +13,8 @@ var contadorBien = 0;
 var contadorMal = 0;
 var canvas;
 
-$(function () {
-  document.onkeypress = this.mostrarInformacionTecla;
+window.onload = function () {
+  document.onkeypress = this.clic;
   document.onkeyup = this.comprobarPuntos;
 
   iniciarPuntos();
@@ -31,7 +31,7 @@ $(function () {
   tiempos = JSON.parse(stringTiempos).tiempos;
   cargarJuego();
 
-});
+};
 
 //  Places a background image in a background canvas and draws the square over it
 function drawInitialCanvas() {
@@ -101,9 +101,7 @@ function cargarJuego() {
       canvas2 = document.getElementById("canvas-2");
       context2 = canvas2.getContext("2d");
     }
-    console.log("tiempos en main.js: " + tiempos);
-    console.log("Tiempo: " + tiempos[0]);
-    console.log("Tamaño de tiempos: " + tiempos.length);
+    
     for (var i = 0; i < tiempos.length; i++) {
       particles.push({
         x: settings.startingX,
@@ -117,7 +115,7 @@ function cargarJuego() {
       });
     }
     playing = particles[0];
-    console.log("Playing: " + playing);
+    
 
 
     window.requestAnimationFrame(animate);
@@ -158,9 +156,7 @@ function cargarJuego() {
     }
 
     function update(part, elapsedTime) {
-      // has this arc's animation delay been reached by elapsedTime
-      //console.log("tiempo de particula: " + part.timing);
-      //console.log("Elapsed time: " + elapsedTime);
+      
       if (elapsedTime >= part.timing) {
         // is this arc still visible on the canvas
         if (part.x > -part.size) {
@@ -173,8 +169,7 @@ function cargarJuego() {
           return (true);
         }
       }
-      //console.log("fin bucle con " + elapsedTime + " - " + part.timing);
-      // report that we didn't move this arc
+      
       return (false);
     }
 
@@ -202,10 +197,8 @@ function cargarJuego() {
 
 }
 
-function mostrarInformacionTecla(evObject) {
+function clic(evObject) {
   var tecla = evObject.keyCode;
-  //control.innerHTML = 'Tecla pulsada: ' + tecla + " " + typeof(tecla);
-  //La tecla 32 es la barra espaciadora
 
   if (tecla === playing.tecla) {
     //De 135 a 165 es pleno
@@ -284,5 +277,3 @@ function comprueba() {
     } else playing = -1;
   }
 }
-
-//module.exports = this;
