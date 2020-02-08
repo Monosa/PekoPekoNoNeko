@@ -22,9 +22,8 @@ window.onload = function () {
 
   settings = {
     density: 1,
-    particleSize: 25,
-    startingX: canvas.width + 25,
-    startingY: 150
+    startingX: canvas.width + 25
+    //startingY: 0
   };
 
   var stringTiempos = document.getElementById("tiempos").innerHTML;
@@ -40,7 +39,7 @@ function drawInitialCanvas() {
   canvasBg.width = window.innerWidth;
   canvasBg.height = 300;
   var bgImg = new Image();
-
+  
   bgImg.src = "../img/gatos.jpg";
   bgImg.onload = function () {
     drawPattern(contextBg, canvasBg, bgImg);
@@ -96,6 +95,19 @@ function cargarJuego() {
     var canvas2, context2;
     var canvas = document.getElementById("canvas-1");
     var context = canvas.getContext("2d");
+    var rCanvas = document.createElement('canvas');
+    var rCtx = rCanvas.getContext('2d');
+    rCanvas.width = canvas.width;
+    rCanvas.height = canvas.height;
+    //Canvas azul
+    var aCanvas = document.createElement('canvas');
+    var aCtx = aCanvas.getContext('2d');
+    aCanvas.width = canvas.width;
+    aCanvas.height = canvas.height;
+    
+
+    loadDorayakis(canvas, context, aCanvas, rCanvas);
+    
 
     if (multiplayer) {
       canvas2 = document.getElementById("canvas-2");
@@ -105,7 +117,7 @@ function cargarJuego() {
     for (var i = 0; i < tiempos.length; i++) {
       particles.push({
         x: settings.startingX,
-        y: settings.startingY,
+        //y: settings.startingY,
         timing: tiempos[i].tiempo,
         size: tiempos[i].tipo,
         vx: 20,
@@ -173,14 +185,50 @@ function cargarJuego() {
       return (false);
     }
 
+    function loadDorayakis(canvas, context, aCanvas, rCanvas){
+          // a ghost canvas that will keep our original image
+      //Canvas rojo
+     
+      //img c es por chiquito r es por rojo, g es por grande, a es por azul
+      var imgcr = new Image();
+      var imgca = new Image();
+
+      imgcr.onload = function() {
+        context.drawImage(imgcr, 0, 0, canvas.width, canvas.height);
+        rCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+        requestAnimationFrame(animate);
+      }
+      imgca.src = "../img/RojoChiquito.png";
+  
+      imgca.onload = function() {
+        context.drawImage(imgca, 0, 0, canvas.width, canvas.height);
+        aCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+        requestAnimationFrame(animate);
+      }
+      imgca.src = "../img/RojoChiquito.png";
+    
+    }
     function drawParticle(part) {
       context.beginPath();
-      if (part.tecla[0] === 107 || part.tecla[0] === 100)
-        context.fillStyle = "cyan";
-      else if (part.tecla[0] === 106 || part.tecla[0] === 102)
-        context.fillStyle = "red";
-      context.arc(part.x, part.y, part.size, 0, Math.PI * 2);
-      context.fill();
+      var tam = [0,0];
+      var y = 0;
+      //Aun no esta desarrollado el tema de la doble pulsacion por lo que la derecha son pequeños y la izquierda son grandes
+      if(part.tecla[0] === 107 || part.tecla[0] === 106){
+          tam = [300,250];
+          y = 25;
+      }
+      else{
+        tam = [600,500];
+        y = -95;
+      }
+      if (part.tecla[0] === 107 || part.tecla[0] === 100){
+        context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
+      }
+      else if (part.tecla[0] === 106 || part.tecla[0] === 102){
+        context.drawImage(rCanvas, part.x, part.y, tam[0], tam[1]);
+      }
+      //context.arc(part.x, part.y, part.size, 0, Math.PI * 2);
+      //context.fill();
 
       if (multiplayer) {
         context2.beginPath();
@@ -277,3 +325,5 @@ function comprueba() {
     } else playing = -1;
   }
 }
+
+
