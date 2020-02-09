@@ -12,10 +12,11 @@ var multiplayer = false;
 var contadorBien = 0;
 var contadorMal = 0;
 var canvas;
+var keys = [];
 
 window.onload = function () {
-  document.onkeypress = this.clic;
-  document.onkeyup = this.comprobarPuntos;
+  document.onkeydown = this.clic;
+  document.onkeyup = this.keysReleased;
 
   iniciarPuntos();
   drawInitialCanvas();
@@ -212,19 +213,22 @@ function cargarJuego() {
       context.beginPath();
       var tam = [0,0];
       var y = 0;
-      //Aun no esta desarrollado el tema de la doble pulsacion por lo que la derecha son pequeños y la izquierda son grandes
-      if(part.tecla[0] === 107 || part.tecla[0] === 106){
+      //Si el primer elemento de tecla es 100 o 102 se dibijan las cosas en pequeño
+      if(part.tecla[0] === 68 || part.tecla[0] === 70){
           tam = [300,250];
           y = 25;
       }
+      //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
       else{
         tam = [600,500];
         y = -95;
       }
-      if (part.tecla[0] === 107 || part.tecla[0] === 100){
+      //En este caso se dibujan sushis
+      if (part.tecla[0] === 75 || part.tecla[0] === 68){
         context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
       }
-      else if (part.tecla[0] === 106 || part.tecla[0] === 102){
+      //En este caso se dibujan dorayakis
+      else if (part.tecla[0] === 70 || part.tecla[0] === 74){
         context.drawImage(rCanvas, part.x, part.y, tam[0], tam[1]);
       }
       //context.arc(part.x, part.y, part.size, 0, Math.PI * 2);
@@ -245,33 +249,63 @@ function cargarJuego() {
 
 }
 
-function clic(evObject) {
+
+function clic (evt) { 
+
+  //Se supone que se dibujan las cosas en pequeño si son las teclas 100 y 102 la primera tecla
+  keys[evt.keyCode] = true;
+  console.log(keys);
+  //Si se requiere pequeño
+  if(playing.tecla[0] === 68 || playing.tecla[0] === 70){
+    //Si se pulsa alguna de las teclas y es pequeño, acertamos
+    if (keys[playing.tecla[0]] || keys[playing.tecla[1]])
+      compruebaAcierto(); 
+  }
+  //Si se requiere grande
+  else if(playing.tecla[0] === 74 || playing.tecla[0] === 75){
+    //Si se pulsan las dos teclas requeridas para grande y es grande acertamos
+    if (keys[playing.tecla[0]] && keys[playing.tecla[1]])
+      compruebaAcierto();
+  }
+}
+
+function keysReleased(e) {
+	// mark keys that were released
+	keys[e.keyCode] = false;
+}
+
+function compruebaAcierto(){
+  if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)) {
+    contadorBien++;
+    if (contadorBien >= 10)
+      puntos += 50 * 2;
+    else puntos += 50;
+  } else if (playing.x >= 140 && playing.x <= 160) {
+    contadorBien++;
+    if (contadorBien >= 10)
+      puntos += 100 * 2.5;
+    else puntos += 100;
+
+  } else {
+    contadorMal++;
+    contadorBien = 0;
+    if (contadorMal >= 5)
+      puntos -= 25;
+  }
+
+  document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
+  
+
+  //if (multiplayer)
+    //document.getElementById("puntos-p1").innerHTML = "Puntos jugador 1: " + puntos;
+}
+
+/*function clic(evObject) {
   var tecla = evObject.keyCode;
   console.log(tecla, playing.tecla[0]);
   if (tecla === playing.tecla[0] || tecla === playing.tecla[1]) {
     //De 135 a 165 es pleno
-    if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)) {
-      contadorBien++;
-      if (contadorBien >= 10)
-        puntos += 50 * 2;
-      else puntos += 50;
-    } else if (playing.x >= 140 && playing.x <= 160) {
-      contadorBien++;
-      if (contadorBien >= 10)
-        puntos += 100 * 2.5;
-      else puntos += 100;
-
-    } else {
-      contadorMal++;
-      contadorBien = 0;
-      if (contadorMal >= 5)
-        puntos -= 25;
-    }
-
-    document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
-
-    if (multiplayer)
-      document.getElementById("puntos-p1").innerHTML = "Puntos jugador 1: " + puntos;
+    
   }
 
   if (multiplayer) {
@@ -298,7 +332,7 @@ function clic(evObject) {
       document.getElementById("puntos-p2").innerHTML = "Puntos jugador 2: " + puntos2;
     }
   }
-}
+}*/
 
 
 function iniciarPuntos() {
