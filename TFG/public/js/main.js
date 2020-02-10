@@ -199,14 +199,14 @@ function cargarJuego() {
         rCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
         requestAnimationFrame(animate);
       }
-      imgca.src = "../img/RojoChiquito.png";
+      imgcr.src = "../img/RojoChiquito.png";
   
       imgca.onload = function() {
         context.drawImage(imgca, 0, 0, canvas.width, canvas.height);
         aCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
         requestAnimationFrame(animate);
       }
-      imgca.src = "../img/RojoChiquito.png";
+      imgca.src = "../img/Azul.png";
     
     }
     function drawParticle(part) {
