@@ -84,6 +84,7 @@ function drawPattern(context, canvas, bgImg) {
   context.strokeStyle = gradient;
   context.lineWidth = 5;
   context.strokeRect(150, 117, 60, 60);
+
 }
 
 
@@ -121,7 +122,7 @@ function cargarJuego() {
         //y: settings.startingY,
         timing: tiempos[i].tiempo,
         size: tiempos[i].tipo,
-        vx: 20,
+        vx: 10,
         moving: true,
         tecla: tiempos[i].tecla,
         tecla2: tiempos[i].tecla2,
@@ -186,7 +187,7 @@ function cargarJuego() {
       return (false);
     }
 
-    function loadDorayakis(canvas, context, aCanvas, rCanvas){
+    function loadDorayakis(canvas, context){
           // a ghost canvas that will keep our original image
       //Canvas rojo
      
@@ -202,7 +203,7 @@ function cargarJuego() {
       imgcr.src = "../img/RojoChiquito.png";
   
       imgca.onload = function() {
-        context.drawImage(imgca, 0, 0, canvas.width, canvas.height);
+        context.drawImage(imgca, 0, 0, 300,100);
         aCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
         requestAnimationFrame(animate);
       }
@@ -210,26 +211,30 @@ function cargarJuego() {
     
     }
     function drawParticle(part) {
+      //74 y 70 son sushis, 75 68 son dorayakis
       context.beginPath();
       var tam = [0,0];
       var y = 0;
       //Si el primer elemento de tecla es 100 o 102 se dibijan las cosas en pequeño
       if(part.tecla[0] === 68 || part.tecla[0] === 70){
           tam = [300,250];
-          y = 25;
+          if(part.tecla[0] === 68)
+            y = 25;
+          else y = 100;
       }
       //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
       else{
-        tam = [600,500];
-        y = -95;
+        tam = [600,500];        
+        if(part.tecla[0] === 75) y = -95;
+        else y = 50;
       }
       //En este caso se dibujan sushis
       if (part.tecla[0] === 75 || part.tecla[0] === 68){
-        context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
+        context.drawImage(rCanvas, part.x, y, tam[0], tam[1]);
       }
       //En este caso se dibujan dorayakis
       else if (part.tecla[0] === 70 || part.tecla[0] === 74){
-        context.drawImage(rCanvas, part.x, part.y, tam[0], tam[1]);
+        context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
       }
       //context.arc(part.x, part.y, part.size, 0, Math.PI * 2);
       //context.fill();
