@@ -77,14 +77,16 @@ function drawPattern(context, canvas, bgImg) {
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   //  Creates the square
-  var gradient = context.createLinearGradient(10, 50, 50, 10);
+  /*var gradient = context.createLinearGradient(10, 50, 50, 10);
   gradient.addColorStop("0", "magenta");
   gradient.addColorStop("0.5", "blue");
   gradient.addColorStop("1.0", "red");
   context.strokeStyle = gradient;
   context.lineWidth = 5;
   context.strokeRect(150, 117, 60, 60);
-
+  */
+  var gifCanvas = document.getElementById("gifCanvas");
+  gifler('../img/gatocome2.gif').animate(gifCanvas);
 }
 
 
