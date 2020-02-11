@@ -108,7 +108,7 @@ function cargarJuego() {
     aCanvas.height = canvas.height;
     
 
-    loadDorayakis(canvas, context, aCanvas, rCanvas);
+    loadDorayakis(canvas, context);
     
 
     if (multiplayer) {
@@ -143,7 +143,7 @@ function cargarJuego() {
       var elapsedTime = time - startTime;
 
       context.clearRect(0, 0, canvas.width, canvas.height);
-
+      
       if (multiplayer)
         context2.clearRect(0, 0, canvas2.width, canvas2.height);
 
@@ -200,14 +200,14 @@ function cargarJuego() {
         rCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
         requestAnimationFrame(animate);
       }
-      imgcr.src = "../img/RojoChiquito.png";
+      imgcr.src = "../img/RojoChiquito2.png";
   
       imgca.onload = function() {
-        context.drawImage(imgca, 0, 0, 300,100);
+        context.drawImage(imgca, 0, 0, canvas.width, canvas.height);
         aCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
         requestAnimationFrame(animate);
       }
-      imgca.src = "../img/Azul.png";
+      imgca.src = "../img/Azul2.png";
     
     }
     function drawParticle(part) {
@@ -217,20 +217,25 @@ function cargarJuego() {
       var y = 0;
       //Si el primer elemento de tecla es 100 o 102 se dibijan las cosas en pequeño
       if(part.tecla[0] === 68 || part.tecla[0] === 70){
-          tam = [300,250];
-          if(part.tecla[0] === 68)
-            y = 25;
-          else y = 100;
+        if(part.tecla[0] === 70)
+          tam = [60,60];
+        else tam = [60,60];
+        if(part.tecla[0] === 68)
+          y = 120;
+        else y = 120;
       }
       //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
       else{
-        tam = [600,500];        
-        if(part.tecla[0] === 75) y = -95;
-        else y = 50;
+        if(part.tecla[0] === 74)
+          tam = [100,100];      
+        else tam = [100,100];  
+        if(part.tecla[0] === 75) y = 100;
+        else y = 100;
       }
       //En este caso se dibujan sushis
       if (part.tecla[0] === 75 || part.tecla[0] === 68){
         context.drawImage(rCanvas, part.x, y, tam[0], tam[1]);
+              
       }
       //En este caso se dibujan dorayakis
       else if (part.tecla[0] === 70 || part.tecla[0] === 74){
@@ -262,24 +267,26 @@ function clic (evt) {
   console.log(keys);
   //Si se requiere pequeño
   if(playing.tecla[0] === 68 || playing.tecla[0] === 70){
+    console.log(playing.tecla[0], keys[playing.tecla[0]]);
     //Si se pulsa alguna de las teclas y es pequeño, acertamos
     if (keys[playing.tecla[0]] || keys[playing.tecla[1]])
-      compruebaAcierto(); 
+      compruebaAcierto(evt); 
   }
   //Si se requiere grande
   else if(playing.tecla[0] === 74 || playing.tecla[0] === 75){
     //Si se pulsan las dos teclas requeridas para grande y es grande acertamos
     if (keys[playing.tecla[0]] && keys[playing.tecla[1]])
-      compruebaAcierto();
+      compruebaAcierto(evt);
   }
 }
 
-function keysReleased(e) {
+/*function keysReleased(e) {
 	// mark keys that were released
 	keys[e.keyCode] = false;
-}
+}*/
 
-function compruebaAcierto(){
+function compruebaAcierto(e){
+  console.log("X: ", playing.x);
   if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)) {
     contadorBien++;
     if (contadorBien >= 10)
@@ -299,7 +306,7 @@ function compruebaAcierto(){
   }
 
   document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
-  
+  keys[e.keyCode] = false;
 
   //if (multiplayer)
     //document.getElementById("puntos-p1").innerHTML = "Puntos jugador 1: " + puntos;
