@@ -77,14 +77,14 @@ function drawPattern(context, canvas, bgImg) {
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   //  Creates the square
-  /*var gradient = context.createLinearGradient(10, 50, 50, 10);
+  var gradient = context.createLinearGradient(10, 50, 50, 10);
   gradient.addColorStop("0", "magenta");
   gradient.addColorStop("0.5", "blue");
   gradient.addColorStop("1.0", "red");
   context.strokeStyle = gradient;
   context.lineWidth = 5;
   context.strokeRect(150, 117, 60, 60);
-  */
+  
   var gifCanvas = document.getElementById("gifCanvas");
   gifler('../img/gatocome2.gif').animate(gifCanvas);
 }
@@ -93,6 +93,8 @@ function drawPattern(context, canvas, bgImg) {
 function cargarJuego() {
   $("#player").bind("ended", function () {
     var x = document.getElementById("myAudio");
+    //Aqui vamos a poner el audio que necesitamos
+    //x.src = '../media/' + 
     x.play();
     comprobar();
 
@@ -124,7 +126,7 @@ function cargarJuego() {
         //y: settings.startingY,
         timing: tiempos[i].tiempo,
         size: tiempos[i].tipo,
-        vx: 10,
+        vx: 5,
         moving: true,
         tecla: tiempos[i].tecla,
         tecla2: tiempos[i].tecla2,
@@ -209,7 +211,7 @@ function cargarJuego() {
         aCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
         requestAnimationFrame(animate);
       }
-      imgca.src = "../img/Azul2.png";
+      imgca.src = "../img/AzulEscalado.png";
     
     }
     function drawParticle(part) {
@@ -266,27 +268,35 @@ function clic (evt) {
 
   //Se supone que se dibujan las cosas en pequeño si son las teclas 100 y 102 la primera tecla
   keys[evt.keyCode] = true;
-  console.log(keys);
   //Si se requiere pequeño
   if(playing.tecla[0] === 68 || playing.tecla[0] === 70){
-    console.log(playing.tecla[0], keys[playing.tecla[0]]);
     //Si se pulsa alguna de las teclas y es pequeño, acertamos
-    if (keys[playing.tecla[0]] || keys[playing.tecla[1]])
+    if (keys[playing.tecla[0]] || keys[playing.tecla[1]]){
       compruebaAcierto(evt); 
+      ponAFalse(keys);
+    }
   }
   //Si se requiere grande
   else if(playing.tecla[0] === 74 || playing.tecla[0] === 75){
     //Si se pulsan las dos teclas requeridas para grande y es grande acertamos
-    if (keys[playing.tecla[0]] && keys[playing.tecla[1]])
+    if (keys[playing.tecla[0]] && keys[playing.tecla[1]]){
       compruebaAcierto(evt);
+      ponAFalse(keys);
+    }
   }
+  
 }
 
 /*function keysReleased(e) {
 	// mark keys that were released
 	keys[e.keyCode] = false;
 }*/
-
+function ponAFalse(keys){
+  keys[68] = false;
+  keys[70] = false;
+  keys[74] = false;
+  keys[75] = false;
+}
 function compruebaAcierto(e){
   console.log("X: ", playing.x);
   if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)) {
@@ -308,7 +318,7 @@ function compruebaAcierto(e){
   }
 
   document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
-  keys[e.keyCode] = false;
+  
 
   //if (multiplayer)
     //document.getElementById("puntos-p1").innerHTML = "Puntos jugador 1: " + puntos;
