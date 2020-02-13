@@ -7,8 +7,8 @@ canvas{
     padding-left: 15,5%;
     position: relative;
     display: flex;
-    align-items: center;
-    max-width: 100%;
+    
+    max-width: 82%;
 }
 
 nav.navbar {
@@ -30,7 +30,10 @@ nav.navbar {
     font-size: x-large;
     margin-left: 60px;
 }
-
+#info{
+    width: 18%;
+    height: 242px;
+}
 #puntos {
     font-size: x-large;
     margin-left: 60px;
@@ -47,14 +50,14 @@ nav.navbar {
 
 #bg-player1 {
     position: relative;
-    top: 190px;
-    width: 80%;
-    margin: auto;
+    top: 75px;
+    width: 100%;
+    
 }
 
 #bg-player1>canvas {
     position: absolute;
-    left: 0;
+    left: 18%;
     top: 0;
 }
 
@@ -65,7 +68,7 @@ nav.navbar {
 
 #bg-player2>canvas {
     position: absolute;
-    left: 0;
+    left: 18%;
     top: 0;
 }
 
