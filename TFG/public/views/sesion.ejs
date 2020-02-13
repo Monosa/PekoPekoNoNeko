@@ -4,7 +4,7 @@
 <head lang="es-ES">
     <meta charset="utf-8" />
     <title>
-        <%= user.nombre %> - PekoPekoNoNeko</title>
+        <%= user.name %> - PekoPekoNoNeko</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/sesion.css" />
 </head>
 
@@ -17,7 +17,7 @@
             <div class="nav">
                 <div class="enlaces"> 
                     <div class="enlace perfil"> <a href="/users/sesion"> Perfil </a> </div>
-                    <div class="enlace desconectar"> <a href="/users/signout"> Desconectar </a> </div>
+                    <div class="enlace desconectar"> <a href="/users/logout"> Desconectar </a> </div>
                 </div>
                 <div class="user_icon">
                      <% if(user.image){ %>

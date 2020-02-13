@@ -21,14 +21,14 @@ body {
     background-image: url("../img/titlescreencats.jpg");
 }
 
-.container{
+.contenedor_ventana{
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 10%;
 }
 
-.title{
+.titulo_ventana{
     display: flex;
     justify-content: center;
     color: #d5d8e9;
@@ -36,21 +36,23 @@ body {
     font-weight: bold;
 }
 
-.data-container{
+.contenedor_datos{
     display: flex;
     justify-content: center;
 }
 
-.signup_user{
+.login_user{
     background-color: #d5d8e9;
     border-radius: 3%;
     padding: 3%;
     width: 35%;
 }
 
-.data{
+.elem{
     padding-top: 2%;
     padding-bottom: 2%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .texto{
@@ -64,13 +66,10 @@ input{
 
 button{
     font-family: 'Short Stack', cursive;
-    justify-self: center;
     border-radius: 2%;
     background-color: #33a79e;
     padding: 1%;
-    margin-left: 38%;
-}
-
-.mensaje_error{
-    margin-top: 7%;
+    margin-top: 5%;
+    margin-left: 39%;
+    width: 20%;
 }

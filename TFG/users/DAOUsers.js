@@ -72,23 +72,44 @@ class DAOUsers{
         });
     }
 
-    /*Obtiene el nombre del fichero de la imagen del usuario con id = "id"*/
+    //  Obtiene el nombre del fichero de la imagen del usuario con id = "id"
     getUserImage(id, callback){
-        pool.getConnection(function (err, connection) {
+        this.pool.getConnection(function (err, connection) {
             if (err) {
-                callback(err);
+                callback(new Error("Error de conexión a la base de datos"), null);
             } else {
                 let sql = `SELECT image FROM user WHERE id = ?`;
+
                 connection.query(sql, [id], function (err, result) {
                     connection.release();
                     if (err) {
-                        callback(err);
+                        callback(err, null);
                     } else {
                         if (result.length === 0) {
                             callback("No existe");
                         } else {
                             callback(null, result[0].image);
                         }
+                    }
+                });
+            }
+        });
+    }
+
+    //  Comprueba que el nickname y la contraseña introducidos son correctos
+    isUserCorrect(nickname, password, callback){
+        this.pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(new Error("Error de conexión a la base de datos"), null);
+            } else {
+                let sql = `SELECT * FROM user WHERE nickname = ? AND password = ?`;
+
+                connection.query(sql, [nickname, password], function (err, result) {
+                    connection.release();
+                    if (err) {
+                        callback(new Error("Error de acceso a la base de datos"), null);
+                    } else {
+                        callback(null, result[0]);
                     }
                 });
             }
