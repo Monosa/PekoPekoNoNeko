@@ -1,7 +1,6 @@
-"use strict";
-
 const path = require("path");
 const express = require("express");
+const canciones = require("./Canciones/Canciones.js");
 const app = express();
 
 app.set("view engine", "ejs");  // Configura EJS como motor de plantillas
@@ -10,6 +9,7 @@ app.set("views", path.join(__dirname, "public", "views"));    // Definición del
 // Ficheros estáticos
 const ficherosEstaticos = path.join(__dirname, "public");
 app.use(express.static(ficherosEstaticos));
+app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
 
 app.get("/", function (request, response) {
     response.status(200);

@@ -1,3 +1,4 @@
+
 * {
     padding: 0;
     margin: 0;
@@ -20,6 +21,7 @@ nav.navbar {
 }
 
 .project-name {
+
     color: whitesmoke;
     text-decoration: none;
 }
@@ -46,7 +48,8 @@ nav.navbar {
 #bg-player1 {
     position: relative;
     top: 190px;
-    left: -196px;
+    width: 80%;
+    margin: auto;
 }
 
 #bg-player1>canvas {
@@ -58,11 +61,28 @@ nav.navbar {
 #bg-player2 {
     position: relative;
     top: 515px;
-    left: -196px;
 }
 
 #bg-player2>canvas {
     position: absolute;
     left: 0;
     top: 0;
+}
+
+.mdc-typography{
+    text-align: center;
+}
+
+.mdc-button {
+    color: teal !important;
+}
+
+.mdc-card {
+    height: auto;
+    width: 23%;
+    padding: 1%;
+}
+
+.mdc-card__actions{
+    justify-content: center !important;
 }
