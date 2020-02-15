@@ -4,8 +4,6 @@
     margin: 0;
 }
 canvas{
-    padding-left: 15,5%;
-    position: relative;
     display: flex;
     
     max-width: 82%;
@@ -49,8 +47,8 @@ nav.navbar {
 }
 
 #bg-player1 {
-    position: relative;
-    top: 75px;
+    position: absolute;
+    top: 35%;
     width: 100%;
     
 }
@@ -62,7 +60,7 @@ nav.navbar {
 }
 
 #bg-player2 {
-    position: relative;
+    position: absolute;
     top: 515px;
 }
 

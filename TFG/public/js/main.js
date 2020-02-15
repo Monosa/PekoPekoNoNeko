@@ -11,6 +11,7 @@ var settings;
 var multiplayer = false;
 var contadorBien = 0;
 var contadorMal = 0;
+var racha = 0;
 var canvas;
 var keys = [];
 
@@ -18,7 +19,7 @@ window.onload = function () {
   document.onkeydown = this.clic;
   document.onkeyup = this.keysReleased;
 
-  iniciarPuntos();
+  iniciarPuntosyRacha();
   drawInitialCanvas();
 
   settings = {
@@ -41,8 +42,9 @@ function drawInitialCanvas() {
   canvasBg.height = 300;
   var bgImg = new Image();
   
-  bgImg.src = "../img/gatos.jpg";
+  bgImg.src = "../img/fondo.png";
   bgImg.onload = function () {
+    //contextBg.drawImage(bgImg, 0, 0);
     drawPattern(contextBg, canvasBg, bgImg);
   }
 
@@ -58,7 +60,7 @@ function drawInitialCanvas() {
     canvasBg2.height = 300;
     var bgImg2 = new Image();
 
-    bgImg2.src = "../img/gatos.jpg";
+    bgImg2.src = "../img/fondo.png";
     bgImg2.onload = function () {
       drawPattern(contextBg2, canvasBg2, bgImg2);
     }
@@ -83,7 +85,7 @@ function drawPattern(context, canvas, bgImg) {
   gradient.addColorStop("1.0", "red");
   context.strokeStyle = gradient;
   context.lineWidth = 5;
-  context.strokeRect(150, 117, 60, 60);
+  context.strokeRect(30, 100, 100, 100);
   
   var gifCanvas = document.getElementById("gifCanvas");
   gifler('../img/gatocome2.gif').animate(gifCanvas);
@@ -221,20 +223,14 @@ function cargarJuego() {
       var y = 0;
       //Si el primer elemento de tecla es 100 o 102 se dibijan las cosas en pequeño
       if(part.tecla[0] === 68 || part.tecla[0] === 70){
-        if(part.tecla[0] === 70)
-          tam = [60,60];
-        else tam = [60,60];
-        if(part.tecla[0] === 68)
-          y = 120;
-        else y = 120;
+        tam = [100,100];
+        y = 100;
       }
       //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
       else{
         if(part.tecla[0] === 74)
-          tam = [100,100];      
-        else tam = [100,100];  
-        if(part.tecla[0] === 75) y = 100;
-        else y = 100;
+          tam = [170,170];  
+          y = 60;
       }
       //En este caso se dibujan sushis
       if (part.tecla[0] === 75 || part.tecla[0] === 68){
@@ -265,7 +261,6 @@ function cargarJuego() {
 
 
 function clic (evt) { 
-
   //Se supone que se dibujan las cosas en pequeño si son las teclas 100 y 102 la primera tecla
   keys[evt.keyCode] = true;
   //Si se requiere pequeño
@@ -298,32 +293,44 @@ function ponAFalse(keys){
   keys[75] = false;
 }
 function compruebaAcierto(e){
-  console.log("X: ", playing.x);
-  if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)) {
+  if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
     contadorBien++;
-    if (contadorBien >= 10)
-      puntos += 50 * 2;
-    else puntos += 50;
-  } else if (playing.x >= 140 && playing.x <= 160) {
+    res = rachas(50, contadorBien);
+    racha = res[0];
+    puntos += res[1];
+  } else if (playing.x >= 70 && playing.x <= 90) {
     contadorBien++;
-    if (contadorBien >= 10)
-      puntos += 100 * 2.5;
-    else puntos += 100;
-
+    res = rachas(100, contadorBien);
+    racha = res[0];
+    puntos += res[1];
   } else {
     contadorMal++;
     contadorBien = 0;
+    racha = 1;
     if (contadorMal >= 5)
       puntos -= 25;
   }
 
   document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
-  
+  document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
 
   //if (multiplayer)
     //document.getElementById("puntos-p1").innerHTML = "Puntos jugador 1: " + puntos;
 }
-
+//Devuelve el computo de puntos y la racha
+function rachas(puntos, contadorBien){
+  if(contadorBien>= 2 && contadorBien < 6)
+    return [2,puntos * 2];
+  else if(contadorBien >= 6 && contadorBien < 10)
+    return [3,puntos * 3];
+  else if(contadorBien>=10 && contadorBien < 15)
+    return [4,puntos * 4];
+  else if(contadorBien>= 15 && contadorBien< 20)
+    return [5,puntos * 5];
+  else if(contadorBien>= 20)
+    return [10,puntos * 10];
+  else return [1,puntos];
+}
 /*function clic(evObject) {
   var tecla = evObject.keyCode;
   console.log(tecla, playing.tecla[0]);
@@ -359,9 +366,9 @@ function compruebaAcierto(e){
 }*/
 
 
-function iniciarPuntos() {
+function iniciarPuntosyRacha() {
   document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
-
+  document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
   if (multiplayer) {
     document.getElementById("puntos-p1").innerHTML = "Puntos jugador 1: " + puntos;
     var p2 = document.getElementById("puntos-p2");
@@ -376,7 +383,7 @@ function comprobar() {
 }
 
 function comprueba() {
-  if (playing !== -1 && playing.x <= 100) {
+  if (playing !== -1 && playing.x <= 0) {
     actual += 1;
     if (actual < particles.length) {
       playing = particles[actual];
