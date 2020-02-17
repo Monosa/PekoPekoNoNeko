@@ -1,3 +1,5 @@
+/** Fichero que contiene la configuración de la BD */
+
 module.exports = {
    mysqlConfig: {
            host: "localhost",     // Ordenador que ejecuta el SGBD
