@@ -16,13 +16,50 @@ body {
     background-color: #33a79e;
 }
 
-.icon{
-    width: 6%;
-    height: 6%;
-    border-radius: 50%;
+.nav {
+    display: flex;
+    width: 15%;
+    justify-content: space-between;
 }
 
-img{
-    width: 10%;
-    height: 10%;
+.user_icon > img{
+    width: 65%;
+    height: 80%;
+    border-radius: 50%;
+} 
+
+.contenedor_ventana{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.titulo_ventana{
+    display: flex;
+    justify-content: center;
+    color: #d5d8e9;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.contenedor_datos{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding-top: 3%;
+    align-self: center;
+    border-radius: 3%;
+    background-color: #d5d8e9;
+}
+
+.imagen_usuario{
+    display: flex;
+    justify-content: center;
+}
+
+.imagen_usuario > img{
+    width: 40%;
+    height: 85%;
 }
