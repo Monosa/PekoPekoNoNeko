@@ -1,11 +1,10 @@
-"use strict";
-
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const session = require("express-session");
 const mysqlSession = require("express-mysql-session");
+const canciones = require("./Canciones/Canciones.js");
 const app = express();
 const config = require("./config.js");
 const users = require("./users/users.js");
@@ -16,6 +15,7 @@ app.set("views", path.join(__dirname, "public", "views")); // Definición del di
 // Ficheros estáticos
 const ficherosEstaticos = path.join(__dirname, "public");
 app.use(express.static(ficherosEstaticos));
+app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
 
 // Middlewares
 app.use(expressValidator());

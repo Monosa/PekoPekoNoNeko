@@ -1,5 +1,3 @@
-"use strict";
-
 //La letra j es la tecla 106 y la k es la 107
 var tiempos = [];
 

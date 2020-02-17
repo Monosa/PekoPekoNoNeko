@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Peko Peko No Neko</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">    
+    <link href="../css/material-components-web.min.css" rel="stylesheet">
+    <script src="../js/material-components-web.min.js"></script>
+    
+</head>
+
+<body>
+    <div class="contenedor">
+        <% if(canciones !== null) { %>
+            <% canciones.forEach(function(cancion) { %>
+              <div class="mdc-card">
+                <div class="mdc-card__primary-action demo-card__primary-action" tabindex="0">
+                  <!--<div class="mdc-card__media mdc-card__media--16-9" style="background-image: url(&quot;../img/<%= cancion.image %>&quot;);"></div>
+                  -->
+                  <div class="mdc-card__media mdc-card__media--16-9" style="background-image: url(&quot;../img/hqdefault.jpg&quot;);"></div>
+                    <div>
+                      <h2 class="mdc-typography mdc-typography--headline6"><%= cancion.nombre %></h2>
+                      <h3 class="mdc-typography mdc-typography--subtitle2"><%= cancion.autor %></h3>
+                    </div>
+                </div>
+                <div class="mdc-card__actions">
+                  <div class="mdc-card__action-buttons">
+                    <form action="/canciones/play" method="get">
+                      <input type="hidden" name="idcancion" value=<%= cancion.id %>>
+                      <input type="hidden" name="iddificultad" value="1">
+                      <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Fácil</button>
+                    </form>
+                    <form action="/canciones/play" method="get">
+                      <input type="hidden" name="idcancion" value=<%= cancion.id %>>
+                      <input type="hidden" name="iddificultad" value="2">
+                      <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Medio</button>
+                    </form>
+                    <form action="/canciones/play" method="get">
+                      <input type="hidden" name="idcancion" value=<%= cancion.id %>>
+                      <input type="hidden" name="iddificultad" value="3">
+                      <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Difícil</button>
+                    </form>
+                  </div>
+                </div>  
+              </div>
+              <% }); %>
+        <% } %>
+    </div>
+</body>
+
+</html>
