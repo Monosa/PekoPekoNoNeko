@@ -28,8 +28,8 @@ window.onload = function () {
     //startingY: 0
   };
 
-  var stringTiempos = document.getElementById("tiempos").innerHTML;
-  tiempos = JSON.parse(stringTiempos).tiempos;
+  var tiempo = document.getElementById("tiempos").innerHTML;
+  tiempos = JSON.parse(tiempo);
   cargarJuego();
 
 };

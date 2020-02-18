@@ -1,9 +1,20 @@
 class DAOSelectionScreen{
-    constructor(pool) {
-        this.pool = pool;
+    //constructor(pool) {
+        //this.pool = pool;
+    //}
+    
+    getListaCanciones(MongoClient, url, callback) {
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("PekoPekoNoNeko");
+            dbo.collection("Songs").find({}).toArray(function(err, result) {
+                if (err) throw err;
+                callback(null, result);
+                db.close();
+            });
+        });
     }
-
-    getListaCanciones(callback) {
+    /*getListaCanciones(callback) {
         this.pool.getConnection(function (err, connection) {
             if (err)
                 callback(new Error("Error de conexión a la base de datos"), null);
@@ -21,9 +32,22 @@ class DAOSelectionScreen{
                 })       
             }
         })
-    }
-	getCancion(id, callback){
-		this.pool.getConnection(function (err, connection) {
+    }*/
+	getCancion(MongoClient, url,id,iddif, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("PekoPekoNoNeko");
+            dbo.collection("Songs").find({"Songid":parseInt(id)}).toArray(function(err, result) {
+                if (err) throw err;
+               
+                dbo.collection("Secuencias").find({$and: [{'Songparent':result[0]['Songid']},{'Secid':parseInt(iddif)}]}).toArray(function(err,result2){
+                    if (err) throw err;
+                    
+                    callback(null, result2[0]);
+                });
+            });
+        });
+		/*this.pool.getConnection(function (err, connection) {
             if (err)
             callback(new Error("Error de conexión a la base de datos"), null);
             else {
@@ -40,13 +64,13 @@ class DAOSelectionScreen{
                     }
                 })       
             }
-        })
+        })*/
 	}
     actualizaCancion(id, callback) {} //No tengo claro por que habria que actualizar alguna cancion
 	setCancion(){}
 
 
-}   
+}
 
 
 module.exports = DAOSelectionScreen;
