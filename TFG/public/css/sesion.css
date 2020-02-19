@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Short+Stack&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Short Stack', cursive;
+    background-image: url("../img/titlescreencats.jpg");
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #33a79e;
+}
+
+.nav {
+    display: flex;
+    width: 15%;
+    justify-content: space-between;
+}
+
+.user_icon > img{
+    width: 65%;
+    height: 80%;
+    border-radius: 50%;
+} 
+
+.contenedor_ventana{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.titulo_ventana{
+    display: flex;
+    justify-content: center;
+    color: #d5d8e9;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.contenedor_datos{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding-top: 3%;
+    align-self: center;
+    border-radius: 3%;
+    background-color: #d5d8e9;
+}
+
+.imagen_usuario{
+    display: flex;
+    justify-content: center;
+}
+
+.imagen_usuario > img{
+    width: 40%;
+    height: 85%;
+}
