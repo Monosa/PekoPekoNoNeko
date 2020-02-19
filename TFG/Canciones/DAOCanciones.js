@@ -42,8 +42,8 @@ class DAOSelectionScreen{
                
                 dbo.collection("Secuencias").find({$and: [{'Songparent':result[0]['Songid']},{'Secid':parseInt(iddif)}]}).toArray(function(err,result2){
                     if (err) throw err;
-                    
-                    callback(null, result2[0]);
+                    var devolver = [result[0],result2[0]];
+                    callback(null, devolver);
                 });
             });
         });
