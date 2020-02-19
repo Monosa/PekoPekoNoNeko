@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="es-ES">
+    <meta charset="utf-8" />
+    <title>Bienvenido - PekoPekoNoNeko</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/login.css" />
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="header">
+            <div class="titulo">
+                <h1>PekoPekoNoNeko</h1>
+            </div>
+
+            <div class="nav">
+                <div class="enlace entrar"> <a href="/users/login">Entrar</a> </div>
+                <div class="enlace nuevo_usuario"> <a href="/users/signup">Nuevo usuario</a> </div>
+            </div>
+        </div>
+
+        <div class="body">
+
+            <div class="contenedor_ventana">
+
+                <div class="titulo_ventana">
+                    <h2>Entrar</h2>
+                </div>
+
+                <div class="contenedor_datos">
+
+                    <form class="login_user" method="post" action="/users/login">
+                        <div class="elem nickname_login">
+                            <div class="texto">
+                                <h2> Nickname: </h2>
+                            </div>
+                            <input type="text" name="nickname_user" placeholder="Introduzca su nickname">
+                        </div>
+
+                        <div class="elem contraseña_signin">
+                            <div class="texto">
+                                <h2> Contraseña: </h2>
+                            </div>
+                            <input type="password" name="password_user" placeholder="Introduzca su contraseña">
+                        </div>
+
+                        <button class="boton_aceptar" type="submit"> Log in </button>
+                    </form>
+                    
+                    <% if (errorMsg !== null ) { %>
+                    <div class="mensaje_error">
+                        <h4>
+                            <%= errorMsg %>
+                        </h4>
+                    </div>
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
