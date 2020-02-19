@@ -42,7 +42,7 @@ function drawInitialCanvas() {
   canvasBg.height = 300;
   var bgImg = new Image();
   
-  bgImg.src = "../img/fondo.png";
+  bgImg.src = "../img/image.png";
   bgImg.onload = function () {
     //contextBg.drawImage(bgImg, 0, 0);
     drawPattern(contextBg, canvasBg, bgImg);
@@ -60,7 +60,7 @@ function drawInitialCanvas() {
     canvasBg2.height = 300;
     var bgImg2 = new Image();
 
-    bgImg2.src = "../img/fondo.png";
+    bgImg2.src = "../img/image.png";
     bgImg2.onload = function () {
       drawPattern(contextBg2, canvasBg2, bgImg2);
     }
