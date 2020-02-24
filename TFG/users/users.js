@@ -2,15 +2,16 @@
 
 const express = require("express");
 const path = require("path");
-const mysql = require("mysql");
+//const mysql = require("mysql");
+const MongoClient=require('mongodb');
 const multer = require("multer");
 const config = require("../config.js");
 const DAOUsers = require("./DAOUsers.js");
 
 const users = express.Router(); // Crea la aplicación 'users' con sus propias rutas (empezando por /users)
 
-const pool = mysql.createPool(config.mysqlConfig);
-const daoUsers = new DAOUsers(pool);
+//const pool = mysql.createPool(config.mysqlConfig);
+const daoUsers = new DAOUsers();
 
 // Middleware que limita el acceso a la sesión sin estar loggeado
 function middlewareLogin(request, response, next) {
@@ -66,15 +67,15 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                 user.image = request.file.buffer;
             }
 
-            daoUsers.checkUser(user.nickname, function(err, usersWithNickname){
+            /*daoUsers.checkUser(MongoClient, config.url, config.name, user.nickname, function(err, usersWithNickname){
                 if(err){
                     response.status(500);
                     response.render("signup", { errorMsg: `${error.message}` });
                 }if(usersWithNickname.length !== 0){
                     response.status(200);
                     response.render("signup", { errorMsg: "Ese nickname ya está cogido. Por favor, elige otro." });
-                }else{
-                    daoUsers.insertUser(user, function (error, id) {
+                }else{*/
+                    daoUsers.insertUser(MongoClient, config.url, config.name, user, function (error, id) {
                         if (error) {
                             response.status(500);
                             response.render("signup", { errorMsg: `${error.message}` });
@@ -90,8 +91,8 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                             response.redirect("/users/sesion");
                         }
                     });
-                }
-            });            
+                //}
+            //});            
         } else {
             response.status(200);
             //Se meten todos los mensajes de error en un array

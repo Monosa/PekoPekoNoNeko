@@ -3,7 +3,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const session = require("express-session");
-const mysqlSession = require("express-mysql-session");
+const MongoClient = require('mongodb');
+//const mysqlSession = require("express-mysql-session");
+const MongoStore = require('connect-mongo')(session);
 const canciones = require("./Canciones/Canciones.js");
 const app = express();
 const config = require("./config.js");
@@ -20,19 +22,15 @@ app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
 // Middlewares
 app.use(expressValidator());
 app.use(bodyParser.urlencoded({extended: true})); //body-parser
-const MySQLStore = mysqlSession(session);
-const sessionStore = new MySQLStore({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "tfg"
-});
+
 
 const middlewareSession = session({
     saveUninitialized: false,
     secret: "foobar34",
     resave: false,
-    store: sessionStore
+    store: new MongoStore({
+        url: config.url 
+    })
 });
 
 app.use(middlewareSession);
@@ -50,10 +48,10 @@ app.get("/play", function (request, response) {
     response.sendFile(path.join(__dirname, "public", "game.html"));
 })
 
-app.listen(config.port, function (err) {
+app.listen(3000, function (err) {
     if (err) {
         console.error("No se pudo inicializar el servidor: " + err.message);
     } else {
-        console.log(`Servidor arrancado en el puerto ${config.port}`);
+        console.log("Servidor arrancado en el puerto 3000");
     }
 });

@@ -1,31 +1,36 @@
 "use strict";
 
 class DAOUsers{
-    constructor(pool){
-        this.pool = pool;
-    }
+    
 
     // Inserta un usuario en la base de datos
-    insertUser(user, callback){
-        this.pool.getConnection(function(err, connection){
-            if(err){
-                callback(new Error("Error de conexión a la base de datos"), null);
-            }else{
+    insertUser(MongoClient, url, name, user, callback){
+        MongoClient.connect(url, function(err, db){
+            if(err) throw err;
+            else{
 
                 if(user.email === "" || user.name === "" || user.password === "" || user.nickname === ""){
                     callback(new Error("Se deben llenar los campos obligatorios"), null);
                 }
 
-                const sql = `INSERT INTO user (id, name, nickname, email, password, image)`
+                var dbo = db.db(name);
+                dbo.collection("Users").insertOne({
+                    "Name": user.name,
+                    "Nickname": user.nickname,
+                    "Email": user.email,
+                    "Password": user.password
+                }, function(err, resultado) {
+               /* const sql = `INSERT INTO user (id, name, nickname, email, password, image)`
                  + `VALUES (?,?,?,?,?,?)`;
                  let elems = [user.id, user.name, user.nickname, user.email, user.password, user.image];
 
                  connection.query(sql, elems, function(err, resultado){
-                    connection.release();
+                    connection.release();*/
                     if(err){
-                        callback(new Error("Error en el proceso de registro"), null);
+                        throw err;
                     }else{
-                        callback(null, resultado.insertId);
+                        callback(null, resultado.insertedId);
+                        db.close();
                     }
                  });
             }
