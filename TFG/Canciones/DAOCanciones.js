@@ -3,10 +3,10 @@ class DAOSelectionScreen{
         //this.pool = pool;
     //}
     
-    getListaCanciones(MongoClient, url, callback) {
+    getListaCanciones(MongoClient, url, name, callback) {
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
-            var dbo = db.db("PekoPekoNoNeko");
+            var dbo = db.db(name);
             dbo.collection("Songs").find({}).toArray(function(err, result) {
                 if (err) throw err;
                 callback(null, result);
@@ -33,10 +33,10 @@ class DAOSelectionScreen{
             }
         })
     }*/
-	getCancion(MongoClient, url,id,iddif, callback){
+	getCancion(MongoClient, url, name, id,iddif, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
-            var dbo = db.db("PekoPekoNoNeko");
+            var dbo = db.db(name);
             dbo.collection("Songs").find({"Songid":parseInt(id)}).toArray(function(err, result) {
                 if (err) throw err;
                

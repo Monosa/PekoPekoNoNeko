@@ -1,5 +1,11 @@
 const path = require("path");
 const express = require("express");
+const bodyParser = require("body-parser");
+const expressValidator = require("express-validator");
+const session = require("express-session");
+const MongoClient = require('mongodb');
+//const mysqlSession = require("express-mysql-session");
+const MongoStore = require('connect-mongo')(session);
 const canciones = require("./Canciones/Canciones.js");
 const app = express();
 
@@ -10,6 +16,25 @@ app.set("views", path.join(__dirname, "public", "views"));    // Definición del
 const ficherosEstaticos = path.join(__dirname, "public");
 app.use(express.static(ficherosEstaticos));
 app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
+
+// Middlewares
+app.use(expressValidator());
+app.use(bodyParser.urlencoded({extended: true})); //body-parser
+
+
+const middlewareSession = session({
+    saveUninitialized: false,
+    secret: "foobar34",
+    resave: false,
+    store: new MongoStore({
+        url: config.url 
+    })
+});
+
+app.use(middlewareSession);
+
+// Manejadores de ruta de usuarios
+app.use("/users", users);
 
 app.get("/", function (request, response) {
     response.status(200);
