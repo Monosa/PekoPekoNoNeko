@@ -27,6 +27,11 @@ window.onload = function () {
     startingX: canvas.width + 25
     //startingY: 0
   };
+  var alrededor = new this.Image();
+  alrededor.src = "../img/alrededor.png";
+  alrededor.onload = function(){
+
+  }
 
   var tiempo = document.getElementById("tiempos").innerHTML;
   tiempos = JSON.parse(tiempo);
@@ -46,6 +51,11 @@ function drawInitialCanvas() {
   bgImg.onload = function () {
     //contextBg.drawImage(bgImg, 0, 0);
     drawPattern(contextBg, canvasBg, bgImg);
+  }
+  var alrededor = new Image();
+  alrededor.src = "../img/alrededor.png";
+  alrededor.onload = function(){
+    contextBg.drawImage(alrededor,30,60);
   }
 
   //  Sets the width and height of the canvas in which the circles are going to be drawn
@@ -93,7 +103,8 @@ function drawPattern(context, canvas, bgImg) {
     context.drawImage(plato,30,60);
   }
   var gifCanvas = document.getElementById("gifCanvas");
-  gifler('../img/gatocome2.gif').animate(gifCanvas);
+  
+  gifler('../img/Gatete.gif').animate(gifCanvas);
 }
 
 

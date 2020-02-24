@@ -1,3 +1,7 @@
 body{
     background-image: url('../img/Fondo.png');
 }
+#gifCanvas{
+    width: 68% !important;
+    padding-left: 27% !important;
+}
