@@ -29,6 +29,7 @@ class DAOUsers{
                     if(err){
                         throw err;
                     }else{
+                        console.log(resultado);
                         callback(null, resultado.insertedId);
                         db.close();
                     }
@@ -38,28 +39,34 @@ class DAOUsers{
     }
 
     // Lee un usuario de la base de datos
-    getUser(id, callback){
-        this.pool.getConnection(function(err, connection){
-            if(err){
-                callback(new Error("Error de conexión a la base de datos"), null);
-            }else{
-                const sql = `SELECT * FROM user WHERE id = ?`;
+    getUser(MongoClient, url, name, id, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            
+            var o_id = new MongoClient.ObjectID(id);
+            
+            var dbo = db.db(name);
+            dbo.collection("Users").find({"_id":o_id}).toArray(function(err, result) {
+                if(err) throw err;
+                /*else{
+                    const sql = `SELECT * FROM user WHERE id = ?`;
 
-                connection.query(sql, [id], function(err, resultado){
-                    connection.release();
-                    if(err){
-                        callback(new Error("Error de acceso a la base de datos"), null);
-                    }else{
-                        callback(null, resultado[0]);
-                    }
-                });
-            }
+                    connection.query(sql, [id], function(err, resultado){
+                        connection.release();
+                        if(err){
+                            callback(new Error("Error de acceso a la base de datos"), null);
+                        }
+                else{*/
+                console.log(result[0]);
+                callback(null, result[0]);
+                db.close();
+            });
         });
     }
 
     //  Comprueba que no existe un usuario en la base de datos con el nickname "nickname"
-    checkUser(nickname, callback){
-        this.pool.getConnection(function(err, connection){
+    checkUser(MongoClient, url, name, nickname, callback){
+        /*this.pool.getConnection(function(err, connection){
             if(err){
                 callback(new Error("Error de conexión a la base de datos"), null);
             }else{
@@ -69,11 +76,15 @@ class DAOUsers{
                     connection.release();
                     if(err){
                         callback(new Error("Error de acceso a la base de datos"), null);
-                    }else{
-                        callback(null, resultado);
-                    }
-                });
-            }
+                    }else{*/
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db(name);
+            dbo.collection("Users").find({"Nickname":nickname}).toArray(function(err, result) {
+                if(err) throw err;
+                callback(null, result);
+                db.close();
+            });
         });
     }
 
@@ -102,8 +113,17 @@ class DAOUsers{
     }
 
     //  Comprueba que el nickname y la contraseña introducidos son correctos
-    isUserCorrect(nickname, password, callback){
-        this.pool.getConnection(function (err, connection) {
+    isUserCorrect(MongoClient, url, name, nickname, password, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db(name);
+            dbo.collection("Users").find({$and: [{"Nickname":nickname},{"Password":password}]}).toArray(function(err, result) {
+                if(err) throw err;
+                callback(null, result[0]);
+                db.close();
+            });
+        });
+        /*this.pool.getConnection(function (err, connection) {
             if (err) {
                 callback(new Error("Error de conexión a la base de datos"), null);
             } else {
@@ -118,7 +138,7 @@ class DAOUsers{
                     }
                 });
             }
-        });
+        });*/
     }
 }
 

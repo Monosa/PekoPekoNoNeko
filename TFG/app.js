@@ -8,6 +8,8 @@ const MongoClient = require('mongodb');
 const MongoStore = require('connect-mongo')(session);
 const canciones = require("./Canciones/Canciones.js");
 const app = express();
+const config = require("./config.js");
+const users = require("./users/users.js");
 
 app.set("view engine", "ejs");  // Configura EJS como motor de plantillas
 app.set("views", path.join(__dirname, "public", "views"));    // Definición del directorio donde se encuentran las plantillas
