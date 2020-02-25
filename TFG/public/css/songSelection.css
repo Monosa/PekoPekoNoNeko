@@ -1,4 +1,9 @@
 body{
     background-image: url('../img/fondoSongSelection.png');
     background-size: 100%;
+    background-repeat: no-repeat;
+}
+#boxes{
+    padding-top: 10%;
+    width: 85%;
 }
