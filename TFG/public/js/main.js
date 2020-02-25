@@ -4,7 +4,7 @@
 var tiempos;
 var particles = [];
 var puntos = 0, puntos2 = 0;
-var startTime;
+var startTime = null;
 var actual = 0;
 var playing;
 var settings;
@@ -12,6 +12,7 @@ var multiplayer = false;
 var contadorBien = 0;
 var contadorMal = 0;
 var racha = 0;
+var contadorCirculos = 0;
 var canvas;
 var keys = [];
 
@@ -35,6 +36,7 @@ window.onload = function () {
 
   var tiempo = document.getElementById("tiempos").innerHTML;
   tiempos = JSON.parse(tiempo);
+  console.log(tiempos);
   cargarJuego();
 
 };
@@ -146,10 +148,13 @@ function cargarJuego() {
         size: tiempos[i].tipo,
         vx: 5,
         moving: true,
+        clicked: false,
         tecla: tiempos[i].tecla,
         tecla2: tiempos[i].tecla2,
       });
+      
     }
+    
     playing = particles[0];
     
 
@@ -158,7 +163,8 @@ function cargarJuego() {
 
     function animate(time) {
       // set startTime if it isn't already set
-      if (!startTime) {
+      
+      if (startTime === null) {
         startTime = time;
       }
       // calc elapsedTime
@@ -172,9 +178,11 @@ function cargarJuego() {
       // assume no further animating is necessary
       // The for-loop may change the assumption 
       var continueAnimating = false;
+      
       for (var i = 0; i < particles.length; i++) {
         var part = particles[i];
-
+        if(i === 4)
+          console.log("Drawing");
         // update this circle & report if it wasMoved
         var wasMoved = update(part, elapsedTime);
         // if it wasMoved, then change assumption to continueAnimating
@@ -279,6 +287,7 @@ function cargarJuego() {
 
 function clic (evt) { 
   //Se supone que se dibujan las cosas en pequeño si son las teclas 100 y 102 la primera tecla
+  playing.clicked=true;
   keys[evt.keyCode] = true;
   //Si se requiere pequeño
   if(playing.tecla[0] === 68 || playing.tecla[0] === 70){
@@ -323,7 +332,7 @@ function compruebaAcierto(e){
   } else {
     contadorMal++;
     contadorBien = 0;
-    racha = 1;
+    racha = 0;
     if (contadorMal >= 5)
       puntos -= 25;
   }
@@ -402,6 +411,13 @@ function comprobar() {
 function comprueba() {
   if (playing !== -1 && playing.x <= 0) {
     actual += 1;
+    contadorCirculos += 1;
+    document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
+    if(!playing.clicked){
+      racha = 0;
+      contadorBien = 0;
+      document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
+    }
     if (actual < particles.length) {
       playing = particles[actual];
     } else playing = -1;
