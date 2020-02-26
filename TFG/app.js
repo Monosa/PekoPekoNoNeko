@@ -10,6 +10,7 @@ const canciones = require("./Canciones/Canciones.js");
 const app = express();
 const config = require("./config.js");
 const users = require("./users/users.js");
+const score = require("./score/score.js");
 
 app.set("view engine", "ejs");  // Configura EJS como motor de plantillas
 app.set("views", path.join(__dirname, "public", "views"));    // Definición del directorio donde se encuentran las plantillas
@@ -37,6 +38,9 @@ app.use(middlewareSession);
 
 // Manejadores de ruta de usuarios
 app.use("/users", users);
+
+// Manejadores de ruta de Scores
+app.use("/score", score);
 
 app.get("/", function (request, response) {
     response.status(200);

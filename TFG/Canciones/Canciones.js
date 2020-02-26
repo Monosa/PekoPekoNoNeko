@@ -41,8 +41,8 @@ Canciones.get("/play", function(request, response){
         }else{
             // Incluir campos ocultos en el html, leer esos campos desde el .js
             response.status(200);            
-            console.log(cancion[0]['Cancion']);
-            response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0]['Cancion'], errorMsg: null });
+            
+            response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0]['Cancion'], songid: idcancion, difid: iddificultad, errorMsg: null });
         }
     });
 });

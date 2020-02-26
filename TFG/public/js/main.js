@@ -1,3 +1,5 @@
+//import { request } from "express";
+
 var tiempos;
 var particles = [];
 var puntos = 0, puntos2 = 0;
@@ -279,6 +281,13 @@ function cargarJuego() {
      
     }
 
+  });
+  $("#myAudio").bind("ended", function(){
+      var songid = document.getElementById("songid").innerHTML;
+      var difid= document.getElementById("difid").innerHTML;
+      console.log(songid, difid);
+      request.session.puntuacion = [songid, difid, puntos];
+      document.location.href = "/score/"
   });
 
 }
