@@ -1,4 +1,3 @@
-"use strict";
 class DAOScores{
    insertScore(MongoClient, url, name, datos, callback){
         MongoClient.connect(url, function(err, db){
@@ -7,9 +6,9 @@ class DAOScores{
 
                 var dbo = db.db(name);
                 dbo.collection("Scores").insertOne({
-                    "IdCancion": datos[0],
-                    "IdDificultad": datos[1],
-                    "Puntos": datos[2]
+                    "IdCancion": songid,
+                    "IdDificultad": difid,
+                    "Puntos": puntos
                 }, function(err, resultado) {
                /* const sql = `INSERT INTO user (id, name, nickname, email, password, image)`
                  + `VALUES (?,?,?,?,?,?)`;
