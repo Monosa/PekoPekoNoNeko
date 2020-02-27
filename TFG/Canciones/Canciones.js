@@ -1,6 +1,7 @@
 const express = require("express");
 //const mysql = require("mysql");
 const MongoClient=require('mongodb');
+var cookieParser = require('cookie-parser');
 const path = require("path");
 const multer = require("multer");
 const DAOCanciones = require("./DAOCanciones.js");
@@ -15,6 +16,7 @@ const Canciones = express.Router();
 const daoCanciones = new DAOCanciones();
 
 Canciones.use(bodyParser.json());
+Canciones.use(cookieParser('secret'));
 
 Canciones.get("/", function (request, response) {
     daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
@@ -41,7 +43,8 @@ Canciones.get("/play", function(request, response){
         }else{
             // Incluir campos ocultos en el html, leer esos campos desde el .js
             response.status(200);            
-            
+            //response.cookie("songid", idcancion, { signed: true });
+            //response.cookie("difid", iddificultad, { signed: true });
             response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0]['Cancion'], songid: idcancion, difid: iddificultad, errorMsg: null });
         }
     });

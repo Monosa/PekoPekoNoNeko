@@ -282,9 +282,15 @@ function cargarJuego() {
     }
 
   });
+
   $("#myAudio").bind("ended", function(){
       songid = document.getElementById("songid").innerHTML;
       difid= document.getElementById("difid").innerHTML;
+      console.log("SongId en main.js: " + songid);
+      document.cookie = "songid=" + songid + "; path=/score";
+      document.cookie = "difid=" + difid + "; path=/score";
+      document.cookie = "puntos=" + puntos + "; path=/score";
+      console.log(document.cookie);
       document.location.href = "/score";
   });
 
