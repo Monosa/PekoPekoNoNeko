@@ -286,10 +286,10 @@ function cargarJuego() {
   $("#myAudio").bind("ended", function(){
       songid = document.getElementById("songid").innerHTML;
       difid= document.getElementById("difid").innerHTML;
-      console.log("SongId en main.js: " + songid);
-      document.cookie = "songid=" + songid + "; path=/score";
-      document.cookie = "difid=" + difid + "; path=/score";
-      document.cookie = "puntos=" + puntos + "; path=/score";
+      //alert("SongId en main.js: " + songid);
+      document.cookie = "songid=" + songid + "; Path=/;";
+      document.cookie = "difid=" + difid + "; Path=/;";
+      document.cookie = "puntos=" + puntos + "; Path=/;";
       console.log(document.cookie);
       document.location.href = "/score";
   });

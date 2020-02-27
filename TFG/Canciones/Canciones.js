@@ -11,7 +11,8 @@ const bodyParser = require("body-parser");
 //var MongoClient = require('mongodb').MongoClient;
 //hola
 const Canciones = express.Router();
-
+Canciones.use(bodyParser.json()); // support json encoded bodies
+Canciones.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 //const pool = mysql.createPool(config.mysqlConfig);
 const daoCanciones = new DAOCanciones();
 
@@ -31,10 +32,9 @@ Canciones.get("/", function (request, response) {
     })
 });
 
-Canciones.get("/play", function(request, response){
-    let idcancion = request.query.idcancion;
-    let iddificultad = request.query.iddificultad;
-
+Canciones.post("/play", function(request, response){
+    let idcancion = request.body.idcancion;
+    let iddificultad = request.body.iddificultad;
     daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion,iddificultad,function(error, cancion){
 
         if(error){

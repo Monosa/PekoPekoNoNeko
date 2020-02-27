@@ -37,9 +37,10 @@ class DAOSelectionScreen{
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
             var dbo = db.db(name);
+            console.log(id);
             dbo.collection("Songs").find({"Songid":parseInt(id)}).toArray(function(err, result) {
                 if (err) throw err;
-               
+                
                 dbo.collection("Secuencias").find({$and: [{'Songparent':result[0]['Songid']},{'Secid':parseInt(iddif)}]}).toArray(function(err,result2){
                     if (err) throw err;
                     var devolver = [result[0],result2[0]];

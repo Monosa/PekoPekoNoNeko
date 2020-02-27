@@ -17,8 +17,8 @@ const daoScores = new DAOScores();
 Scores.use(bodyParser.json());
 
 Scores.get("/", function(request, response){
-    let datos = request.session.puntuacion;
-    
+    let datos = request.cookies["puntos"];
+    console.log(datos);
     daoScores.insertScore(MongoClient, config.url, config.name, datos,function(error, id){
 
         if(error){
