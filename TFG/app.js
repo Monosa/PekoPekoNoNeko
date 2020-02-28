@@ -18,7 +18,7 @@ app.set("views", path.join(__dirname, "public", "views"));    // Definición del
 // Ficheros estáticos
 const ficherosEstaticos = path.join(__dirname, "public");
 app.use(express.static(ficherosEstaticos));
-app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
+
 
 // Middlewares
 app.use(expressValidator());
@@ -35,7 +35,7 @@ const middlewareSession = session({
 });
 
 app.use(middlewareSession);
-
+app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
 // Manejadores de ruta de usuarios
 app.use("/users", users);
 

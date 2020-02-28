@@ -35,6 +35,7 @@ Canciones.get("/", function (request, response) {
 Canciones.post("/play", function(request, response){
     let idcancion = request.body.idcancion;
     let iddificultad = request.body.iddificultad;
+    let user = request.session.currentUserId;
     daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion, iddificultad, function(error, cancion){
 
         if(error){
@@ -43,7 +44,7 @@ Canciones.post("/play", function(request, response){
         }else{
             // Incluir campos ocultos en el html, leer esos campos desde el .js
             response.status(200);
-            response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0]['Cancion'], songid: idcancion, difid: iddificultad, errorMsg: null });
+            response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0]['Cancion'], songid: idcancion, difid: iddificultad, userid: user, errorMsg: null });
         }
     });
 });
