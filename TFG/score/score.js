@@ -16,9 +16,13 @@ const daoScores = new DAOScores();
 
 Scores.use(bodyParser.json());
 
-Scores.get("/", function(request, response){
-    let datos = request.cookies["puntos"];
-    console.log(datos);
+Scores.post("/", function(request, response){
+    let songid = request.body.idcancion;
+    let difid = request.body.iddificultad;
+    let puntos = request.body.points;
+    let user = request.body.user;
+    let datos = [songid, difid, puntos, user];
+    console.log(user);
     daoScores.insertScore(MongoClient, config.url, config.name, datos,function(error, id){
 
         if(error){
@@ -28,7 +32,7 @@ Scores.get("/", function(request, response){
             // Incluir campos ocultos en el html, leer esos campos desde el .js
             response.status(200);            
             console.log(id);
-            response.render("score", { data:datos, errorMsg: null });
+            response.render("scoreScreen", { data:datos, errorMsg: null });
         }
     });
 });

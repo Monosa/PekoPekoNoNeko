@@ -18,13 +18,7 @@
     <%=tiempos%>
     
   </div>
-  <div id="songid" style="display: none;">
-    <%=songid%>
-    
-  </div>
-  <div id="difid" style="display: none;">
-    <%=difid%>
-    
+  
   </div>  
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -82,7 +76,13 @@
       <canvas id="bg_canvas_2"></canvas>
       <canvas id="canvas-2"></canvas>
     </div>
-
+    <form name="submitScore" action="/score" method="post">
+      <input type="hidden" name="idcancion" value="<%= songid %>">
+      <input type="hidden" name="iddificultad" value="<%= difid %>">
+      <input type="hidden" id="usePoints" name="points" value=''>
+      <input type="hidden" name="user" value="<%=user%>"">
+      <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Difícil</button>
+    </form>
     
   </div> <!-- /container -->
 </body>

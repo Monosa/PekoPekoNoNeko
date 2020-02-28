@@ -6,9 +6,10 @@ class DAOScores{
 
                 var dbo = db.db(name);
                 dbo.collection("Scores").insertOne({
-                    "IdCancion": songid,
-                    "IdDificultad": difid,
-                    "Puntos": puntos
+                    "UserId":  new MongoClient.ObjectID(datos[3]),
+                    "IdCancion": parseInt(datos[0]),
+                    "IdDificultad": parseInt(datos[1]),
+                    "Puntos": parseInt(datos[2])
                 }, function(err, resultado) {
                /* const sql = `INSERT INTO user (id, name, nickname, email, password, image)`
                  + `VALUES (?,?,?,?,?,?)`;

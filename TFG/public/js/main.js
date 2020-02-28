@@ -284,14 +284,13 @@ function cargarJuego() {
   });
 
   $("#myAudio").bind("ended", function(){
-      songid = document.getElementById("songid").innerHTML;
-      difid= document.getElementById("difid").innerHTML;
-      //alert("SongId en main.js: " + songid);
-      document.cookie = "songid=" + songid + "; Path=/;";
-      document.cookie = "difid=" + difid + "; Path=/;";
-      document.cookie = "puntos=" + puntos + "; Path=/;";
-      console.log(document.cookie);
-      document.location.href = "/score";
+      document.getElementById("usePoints").value = puntos;
+      
+      //document.cookie = "songid=" + songid + "; Path=/;";
+      //document.cookie = "difid=" + difid + "; Path=/;";
+      //document.cookie = "puntos=" + puntos + "; Path=/;";
+      
+      document.forms["submitScore"].submit();
   });
 
 }
