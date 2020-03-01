@@ -20,6 +20,10 @@ class DAOScores{
                                 });
                                 
                             }
+                            else {
+                                callback(null, result[0]._id);
+                                db.close();
+                            }
                         }
                         else{
                             dbo.collection("Scores").insertOne({

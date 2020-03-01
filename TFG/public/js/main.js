@@ -286,10 +286,6 @@ function cargarJuego() {
   $("#myAudio").bind("ended", function(){
       document.getElementById("usePoints").value = puntos;
       
-      //document.cookie = "songid=" + songid + "; Path=/;";
-      //document.cookie = "difid=" + difid + "; Path=/;";
-      //document.cookie = "puntos=" + puntos + "; Path=/;";
-      
       document.forms["submitScore"].submit();
   });
 

@@ -21,7 +21,8 @@ Scores.post("/", function(request, response){
     let difid = request.body.iddificultad;
     let puntos = request.body.points;
     let user = request.body.user;
-    let datos = [songid, difid, puntos, user];
+    let imagen = request.body.imagen;
+    let datos = [songid, difid, puntos, user,imagen];
     console.log(user);
     daoScores.insertScore(MongoClient, config.url, config.name, datos,function(error, id){
 
