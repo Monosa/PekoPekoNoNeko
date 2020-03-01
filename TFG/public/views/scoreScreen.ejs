@@ -4,17 +4,80 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Playing</title>
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">  
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/game.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/scoreScreen.css">  
   <script src="../js/jquery-3.3.1.min.js"></script>
   <script src="../js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
 
 <body>
-    <div>
-        <h1>Puntos: <%=data[2]%></h1>
-        <h1>¡Muy Bien!</h1>
+  <div class="card">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="panel top">
+      <div class="rank">Points</div>
+      <div class="suit"><%=data[2]%></div>
+      <div class="icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" width="#{width}" height="#{height}"
+          viewBox="0 0 18.2 17" enable-background="new 0 0 18.2 17" xml:space="preserve">
+          <path fill="#d64c4c"
+            d="M18.2,4.5c0-2.5-2-4.5-4.5-4.5c-2.5,0-4.5,2-4.5,4.5h0C9.1,2,7,0,4.5,0C2,0,0,2,0,4.5 c0,1.2,0.5,2.4,1.3,3.2h0L9.1,17l7.8-9.3h0C17.7,6.9,18.2,5.8,18.2,4.5z" />
+          </svg></div>
     </div>
+    <div class="content #{className}">
+      <div><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" width="123px" height="75px"
+          viewBox="0 0 61.1 37.2" enable-background="new 0 0 61.1 37.2" xml:space="preserve">
+          <polygon id="XMLID_16_" fill="#E55125" points="46.8,23 42.5,17 61.1,3.7" />
+          <polygon id="XMLID_15_" fill="#F57E20" points="14.4,23 0,3.7 18.6,17" />
+          <polygon id="XMLID_14_" fill="#FEBB18" points="8.8,37.2 0,3.7 14.4,23 30.6,0 30.6,37.2" />
+          <polygon id="XMLID_13_" fill="#F49221" points="52.3,37.2 61.1,3.7 46.8,23 30.6,0 30.6,37.2" />
+          <g>
+            <polygon id="XMLID_12_" fill="#F15753" points="30.6,23 23.9,23 27.2,27.9" />
+            <polygon id="XMLID_11_" fill="#F37B7B" points="23.9,23 30.6,23 27.2,18.1" />
+            <polygon id="XMLID_10_" fill="#F59090" points="27.2,18.1 30.6,23 30.6,18.1 30.6,13.1" />
+            <polygon id="XMLID_9_" fill="#EB5451" points="30.6,13.1 30.6,18.1 30.6,23 33.9,18.1" />
+            <polygon id="XMLID_8_" fill="#B62026" points="37.3,23 30.6,23 33.9,27.9" />
+            <polygon id="XMLID_7_" fill="#e43532" points="30.6,23 37.3,23 33.9,18.1" />
+            <polygon id="XMLID_6_" fill="#E14E4B" points="27.2,27.9 30.6,32.9 30.6,27.9 30.6,23" />
+            <polygon id="XMLID_5_" fill="#A81F23" points="30.6,23 30.6,27.9 30.6,32.9 33.9,27.9" />
+          </g>
+          <polygon id="XMLID_3_" fill="#E38825" points="37.3,23 30.6,32.9 30.6,37.2 46.3,37.2" />
+          <path id="XMLID_2_" fill="#FFFFFF"
+            d="M30.6,19.8c-1.8,0-3.3-1.5-3.3-3.3c0,1.8-1.5,3.3-3.3,3.3c1.8,0,3.3,1.5,3.3,3.3 C27.3,21.2,28.8,19.8,30.6,19.8z" />
+        </svg><span class="#{color}"></span><svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px"
+          y="0px" width="123px" height="75px" viewBox="0 0 61.1 37.2" enable-background="new 0 0 61.1 37.2"
+          xml:space="preserve">
+          <polygon id="XMLID_16_" fill="#E55125" points="46.8,23 42.5,17 61.1,3.7" />
+          <polygon id="XMLID_15_" fill="#F57E20" points="14.4,23 0,3.7 18.6,17" />
+          <polygon id="XMLID_14_" fill="#FEBB18" points="8.8,37.2 0,3.7 14.4,23 30.6,0 30.6,37.2" />
+          <polygon id="XMLID_13_" fill="#F49221" points="52.3,37.2 61.1,3.7 46.8,23 30.6,0 30.6,37.2" />
+          <g>
+            <polygon id="XMLID_12_" fill="#F15753" points="30.6,23 23.9,23 27.2,27.9" />
+            <polygon id="XMLID_11_" fill="#F37B7B" points="23.9,23 30.6,23 27.2,18.1" />
+            <polygon id="XMLID_10_" fill="#F59090" points="27.2,18.1 30.6,23 30.6,18.1 30.6,13.1" />
+            <polygon id="XMLID_9_" fill="#EB5451" points="30.6,13.1 30.6,18.1 30.6,23 33.9,18.1" />
+            <polygon id="XMLID_8_" fill="#B62026" points="37.3,23 30.6,23 33.9,27.9" />
+            <polygon id="XMLID_7_" fill="#e43532" points="30.6,23 37.3,23 33.9,18.1" />
+            <polygon id="XMLID_6_" fill="#E14E4B" points="27.2,27.9 30.6,32.9 30.6,27.9 30.6,23" />
+            <polygon id="XMLID_5_" fill="#A81F23" points="30.6,23 30.6,27.9 30.6,32.9 33.9,27.9" />
+          </g>
+          <polygon id="XMLID_3_" fill="#E38825" points="37.3,23 30.6,32.9 30.6,37.2 46.3,37.2" />
+          <path id="XMLID_2_" fill="#FFFFFF"
+            d="M30.6,19.8c-1.8,0-3.3-1.5-3.3-3.3c0,1.8-1.5,3.3-3.3,3.3c1.8,0,3.3,1.5,3.3,3.3 C27.3,21.2,28.8,19.8,30.6,19.8z" />
+        </svg></div>
+    </div>
+    <div class="panel bottom">
+      <div class="rank">Points</div>
+      <div class="suit"><%=data[2]%></div>
+      <div class="icon"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" width="#{width}" height="#{height}"
+          viewBox="0 0 18.2 17" enable-background="new 0 0 18.2 17" xml:space="preserve">
+          <path fill="#d64c4c"
+            d="M18.2,4.5c0-2.5-2-4.5-4.5-4.5c-2.5,0-4.5,2-4.5,4.5h0C9.1,2,7,0,4.5,0C2,0,0,2,0,4.5 c0,1.2,0.5,2.4,1.3,3.2h0L9.1,17l7.8-9.3h0C17.7,6.9,18.2,5.8,18.2,4.5z" />
+          </svg></div>
+    </div>
+  </div>      
 </body>
 
 </html>
