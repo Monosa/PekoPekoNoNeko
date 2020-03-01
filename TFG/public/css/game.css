@@ -1,7 +1,6 @@
 body{
     background-image: url('../img/FondoSong.png');
     background-size: 100%;
-    background-repeat: no-repeat;
 }
 #gifCanvas{
     width: 68% !important;
