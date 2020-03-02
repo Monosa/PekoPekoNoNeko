@@ -11,6 +11,7 @@ const app = express();
 const config = require("./config.js");
 const users = require("./users/users.js");
 const score = require("./score/score.js");
+const crea = require("./crea/crea.js");
 
 app.set("view engine", "ejs");  // Configura EJS como motor de plantillas
 app.set("views", path.join(__dirname, "public", "views"));    // Definición del directorio donde se encuentran las plantillas
@@ -38,7 +39,7 @@ app.use(middlewareSession);
 app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
 // Manejadores de ruta de usuarios
 app.use("/users", users);
-
+app.use("/crea", crea);
 // Manejadores de ruta de Scores
 app.use("/score", score);
 

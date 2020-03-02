@@ -1,4 +1,4 @@
-class DAOSelectionScreen{
+class DAOCanciones{
     //constructor(pool) {
         //this.pool = pool;
     //}
@@ -48,30 +48,48 @@ class DAOSelectionScreen{
                 });
             });
         });
-		/*this.pool.getConnection(function (err, connection) {
-            if (err)
-            callback(new Error("Error de conexión a la base de datos"), null);
-            else {
-                const sql = `SELECT son.nombre, son.autor, son.image, GROUP_CONCAT(sec.value) as tiempos
-                FROM songs son, secuencias sec
-				WHERE son.id = ? AND sec.parent = ?`;
-				const elems = [id, id];
-                connection.query(sql, elems, function (err, listado) {
-                    if (err)
-						callback(new Error("Error de acceso a la base de datos en el getListaCanciones"), null);
-                    else {
-                        console.log("Respuestas leídas correctamentes");
-						callback(null, listado[0]);
-                    }
-                })       
-            }
-        })*/
 	}
     actualizaCancion(id, callback) {} //No tengo claro por que habria que actualizar alguna cancion
-	setCancion(){}
+	insertSong(MongoClient, url, name, datos, callback){
+        MongoClient.connect(url, function(err, db){
+            if(err) throw err;
+            else{
+                var dbo = db.db(name);
+                dbo.collection("Songs").find({$and: [{'Nombre':datos[0]},{'Autor':datos[1]}]}).toArray(function(err,result){
+                    if (err) throw err;
+                    else{
+                        if(result.length > 0){
+                            //Si existe esa combinacion ya existe la cancion
+                            
+                            callback(null, result[0]._id);
+                            db.close();
+                        }
+                        
+                        else{
+                            dbo.collection("Songs").insertOne({
+                                "Nombre":  datos[0],
+                                "Autor": datos[1],
+                                "Imagen": datos[2],
+                                "Cancion": datos[3]
+                            }, function(err, resultado) {
+                                if(err){
+                                    throw err;
+                                }else{
+                                    console.log(resultado);
+                                    //Tenemos que devolver SongId
+                                    callback(null, resultado.insertedId);
+                                    db.close();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
 
 
 }
 
 
-module.exports = DAOSelectionScreen;
+module.exports = DAOCanciones;

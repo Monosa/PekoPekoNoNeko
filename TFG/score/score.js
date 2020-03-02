@@ -1,17 +1,9 @@
 const express = require("express");
-//const mysql = require("mysql");
 const MongoClient=require('mongodb');
-const path = require("path");
-const multer = require("multer");
 const DAOScores = require("./DAOScores.js");
 const config = require("../config");
-//const main = require("../public/js/main.js");
 const bodyParser = require("body-parser");
-//var MongoClient = require('mongodb').MongoClient;
-//hola
 const Scores = express.Router();
-
-//const pool = mysql.createPool(config.mysqlConfig);
 const daoScores = new DAOScores();
 
 Scores.use(bodyParser.json());
