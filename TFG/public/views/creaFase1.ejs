@@ -7,34 +7,49 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/crea.css">
     </head>
 
     <body>
         <div class="container">
-            <form action="crea/Fase2" method="post" enctype="multipart/form-data" target="_blank">
-                <p>
-            
-                    Nombre de la cancion:
+            <form action="crea/Fase2" method="post" class="centred-form">
+                <div class="field">
+                    <input type="text" name="namesong" class="field-input" required>
+                    <label for="namesong" class="field-label">Nombre de la canción</label>
+                </div>
+                <div class="field">
+                    <input type="text" name="nameauthor" class="field-input" required>
+                    <label for="nameauthor" class="field-label">Nombre del autor de la canción</label>
+                </div>
+                <div class="field">           
+                    <input class="field-input" name="Imagen" type="text" readonly/>    
+                    <label for="Imagen" class="field-label" id="img">Imagen</label>     
+                    <div class="image-upload">
+                        <label for="image-input"><img src="../img/attach_file-24px.svg"/></label>
+                        <input type="file" id="image-input" name="imagen" accept="image/*" required>                      
+                    </div>
+                </div>
+                <div class="field">           
+                    <input class="field-input" name="Cancion" type="text" readonly/>   
+                    <label for="Cancion" class="field-label" id="mp3">Cancion</label>        
+                    <div class="image-upload">
+                        <label for="song-input"><img src="../img/attach_file-24px.svg"/></label>
+                        <input type="file" id="song-input" name="song" accept="audio/*" required>                      
+                    </div>
+                </div>
                 
-                    <input type="text" name="namesong">
-                    
-                    Nombre del autor de la canción:
-
-                    <input type="text" name="nameauthor">
-                    
-                    Imagen que quieres que se muestre:
-
-                    <input type="file" name="imagen">
-
-                    Archivo de audio de la cancion:
-
-                    <input type="file" name="song">
-            
-                    <input type="submit" value="Enviar datos">
-                           
-                </p>
+                <input type="submit" value="Enviar datos">
             
             </form>
         </div>
     </body>
+    <script>
+        document.getElementById("image-input").onchange = function () {
+            document.getElementById("img").innerHTML = this.files[0].name;
+        };
+        document.getElementById("song-input").onchange = function () {
+            document.getElementById("mp3").innerHTML = this.files[0].name;
+            
+        };
+    </script>
 </html>
