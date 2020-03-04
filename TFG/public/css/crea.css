@@ -1,5 +1,7 @@
 @import "https://fonts.googleapis.com/css?family=Roboto";
 
+
+
 *,
 *::before,
 *::after {
@@ -10,6 +12,8 @@ body {
   font-family: Roboto;
   font-size: 16px;
   color: #212121;
+  background-image: url("../img/FondoCrea.png");
+  background-size: 100%;
 }
 
 .centred-form {

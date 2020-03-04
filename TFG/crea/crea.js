@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const MongoClient=require('mongodb');
 const DAOCanciones = require("../Canciones/DAOCanciones.js");
@@ -6,15 +7,16 @@ const bodyParser = require("body-parser");
 const Crea = express.Router();
 const daoCanciones = new DAOCanciones();
 const multer = require("multer");
-var path = require("path");
-var relative = path.relative();
+const fs = require('fs');
+
+var relative = "../TFG/public/uploads";
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, relative + '/public/uploads')
+      cb(null, relative);
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      cb(null, file.originalname);
     }
   });
 var upload = multer({ storage: storage });
@@ -32,11 +34,18 @@ Crea.post("/Fase2", cpUpload,function(request, response){
   console.log("Entra");
   let songname = request.body.namesong;
   let authorname = request.body.nameauthor;
-  let image = request.files['imagen'].originalname;
-  console.log(image);
+  let image = request.files['imagen'][0].originalname;
+  let audio = request.files['song'][0].originalname;
+  fs.rename(request.files['imagen'][0].path, "../TFG/public/img/"+image, function (err) {
+    if (err) throw err;
+  });
+  fs.rename(request.files['song'][0].path, "../TFG/public/media/"+audio, function (err) {
+    if (err) throw err;
+  });
   //let user = request.body.user;
-  let audio = request.body.song;
+  
   let datos = [songname, authorname, image, audio];
+  
   daoCanciones.insertSong(MongoClient, config.url, config.name, datos,function(error, result){
 
       if(error){

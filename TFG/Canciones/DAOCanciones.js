@@ -54,6 +54,7 @@ class DAOCanciones{
         MongoClient.connect(url, function(err, db){
             if(err) throw err;
             else{
+                console.log("Hola",datos);
                 var dbo = db.db(name);
                 dbo.collection("Songs").find({$and: [{'Nombre':datos[0]},{'Autor':datos[1]}]}).toArray(function(err,result){
                     if (err) throw err;
