@@ -9,7 +9,10 @@
     padding: 1%;
     display: flex;
     justify-content: space-between;
-    background-color: #33a79e;
+    background-color:rgba(0, 0, 0, 0.0);;
+}
+a{
+    color: #d5d8e9 !important;
 }
 
 .titulo{
@@ -19,6 +22,7 @@
 body {
     font-family: 'Short Stack', cursive;
     background-image: url("../img/titlescreencats.jpg");
+    background-size: 100%;
 }
 
 .contenedor_ventana{

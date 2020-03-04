@@ -7,6 +7,14 @@ body{
     padding-top: 10%;
     width: 85%;
 }
+.carousel-control-prev-icon{
+    width:50px!important;
+    height:50px!important;
+}
+.carousel-control-next-icon{
+    width:50px!important;
+    height:50px!important;
+}
 .rkmd-btn {
     display: inline-block;
     position: relative;

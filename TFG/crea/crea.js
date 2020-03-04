@@ -6,8 +6,19 @@ const bodyParser = require("body-parser");
 const Crea = express.Router();
 const daoCanciones = new DAOCanciones();
 const multer = require("multer");
-var upload = multer({ dest: './public/uploads/' });
-var uploadAudio = multer({ dest: './public/media/' });
+var path = require("path");
+var relative = path.relative();
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, relative + '/public/uploads')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+  });
+var upload = multer({ storage: storage });
+//var uploadAudio = multer({ dest: './public/media/' });
 var cpUpload = upload.fields([{ name: 'imagen', maxCount: 1 },{ name: 'song', maxCount: 1},{ name: 'namesong', maxCount: 1 }, { name: 'nameauthor', maxCount: 1 }]);
 
 Crea.use(bodyParser.json());
@@ -21,7 +32,8 @@ Crea.post("/Fase2", cpUpload,function(request, response){
   console.log("Entra");
   let songname = request.body.namesong;
   let authorname = request.body.nameauthor;
-  let image = request.files[''][0];
+  let image = request.files['imagen'].originalname;
+  console.log(image);
   //let user = request.body.user;
   let audio = request.body.song;
   let datos = [songname, authorname, image, audio];
