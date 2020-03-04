@@ -12,7 +12,7 @@
 
     <body>
         <div class="container">
-            <form action="crea/Fase2" method="post" class="centred-form">
+            <form action="crea/Fase2" method="post" class="centred-form" enctype="multipart/form-data">
                 <div class="field">
                     <input type="text" name="namesong" class="field-input" required>
                     <label for="namesong" class="field-label">Nombre de la canción</label>
@@ -37,7 +37,7 @@
                         <input type="file" id="song-input" name="song" accept="audio/*" required>                      
                     </div>
                 </div>
-                
+                <br><br><br>
                 <input type="submit" value="Enviar datos">
             
             </form>

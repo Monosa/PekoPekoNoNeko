@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const session = require("express-session");
 const MongoClient = require('mongodb');
-//const mysqlSession = require("express-mysql-session");
+
 const MongoStore = require('connect-mongo')(session);
 const canciones = require("./Canciones/Canciones.js");
 const app = express();
