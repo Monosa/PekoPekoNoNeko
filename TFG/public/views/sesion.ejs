@@ -50,21 +50,21 @@
                         <div class="datos">
                             <div class="elem nombre_usuario">
                                 <h3>
-                                    <%= user.name %>
+                                    <%= user.Name %>
                                 </h3>
                             </div>
                             <div class="elem nickname_usuario">
                                 <h4>
-                                    <%= user.nickname %> </h4>
+                                    @<%= user.Nickname %> </h4>
                             </div>
                         </div>
                     </div>
-                    <div class="image-upload">
+                    <!--<form action="/canciones">
                         <label a href="/canciones" for="play"><img src="../img/BotonJugar.png"/></label>
-                        <input type="button" id="play" name="play" readonly>                      
-                    </div>
-                   <!-- <img src="BotonJugar.png" a href="window.location.href = '/canciones';"
-                    <button id="mainmenu" class="rkmd-btn btn-lightBlue ripple-effect" onclick="window.location.href = '/canciones';"><img src="BotonJugar.png">Jugar</button> -->
+                        <input type="image" id="play" src="../img/BotonJugar.png" name="play" readonly>                      
+                    </form>-->
+                   <!-- <img src="BotonJugar.png" a href="window.location.href = '/canciones';"-->
+                    <button id="mainmenu" onclick="window.location.href = '/canciones';"><img src="../img/BotonJugar.png"></button> 
                 </div>
             </div>
         </div>

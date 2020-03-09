@@ -54,31 +54,30 @@ class DAOCanciones{
         MongoClient.connect(url, function(err, db){
             if(err) throw err;
             else{
-                console.log("Hola",datos);
                 var dbo = db.db(name);
-                dbo.collection("Songs").find({$and: [{'Nombre':datos[0]},{'Autor':datos[1]}]}).toArray(function(err,result){
+                dbo.collection("Songs").find({$and: [{'Nombre':datos.songname},{'Autor':datos.authorname}]}).toArray(function(err,result){
                     if (err) throw err;
                     else{
                         if(result.length > 0){
                             //Si existe esa combinacion ya existe la cancion
-                            
-                            callback(null, result[0]._id);
+                            callback(null, result[0]);
                             db.close();
                         }
                         
                         else{
                             dbo.collection("Songs").insertOne({
-                                "Nombre":  datos[0],
-                                "Autor": datos[1],
-                                "Imagen": datos[2],
-                                "Cancion": datos[3]
+                                "Nombre":  datos.songname,
+                                "Autor": datos.authorname,
+                                "Imagen": datos.image,
+                                "Cancion": datos.audio
                             }, function(err, resultado) {
                                 if(err){
                                     throw err;
                                 }else{
                                     console.log(resultado);
+                                    console.log("DEVOLVEMOS:" + resultado.ops[0]);
                                     //Tenemos que devolver SongId
-                                    callback(null, resultado.insertedId);
+                                    callback(null, resultado.ops[0]); // Devuelve la canción entera, con todos sus atributos
                                     db.close();
                                 }
                             });

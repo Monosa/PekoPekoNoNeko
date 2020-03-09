@@ -116,6 +116,18 @@ nav {
     height: 85%;
 }
 
+.mainmenu{
+    font-family: 'Short Stack', cursive;
+    border-radius: 2%;
+    background-color: #33a79e;
+    margin-top: 5%;
+    width: 20%;
+}
+
+img{
+    width: 100%;
+}
+
 .rkmd-btn {
     display: inline-block;
     position: relative;

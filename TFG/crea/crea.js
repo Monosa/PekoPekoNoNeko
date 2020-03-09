@@ -32,31 +32,31 @@ Crea.get("/", function(request, response){
 
 Crea.post("/Fase2", cpUpload,function(request, response){
   console.log("Entra");
-  let songname = request.body.namesong;
-  let authorname = request.body.nameauthor;
-  let image = request.files['imagen'][0].originalname;
-  let audio = request.files['song'][0].originalname;
-  fs.rename(request.files['imagen'][0].path, "../TFG/public/img/"+image, function (err) {
+  let datos = {
+    songname: request.body.namesong,
+    authorname: request.body.nameauthor,
+    image: request.files['imagen'][0].originalname,
+    audio: request.files['song'][0].originalname
+  }
+
+  fs.rename(request.files['imagen'][0].path, "../TFG/public/img/" + datos.image, function (err) {
     if (err) throw err;
   });
-  fs.rename(request.files['song'][0].path, "../TFG/public/media/"+audio, function (err) {
+  fs.rename(request.files['song'][0].path, "../TFG/public/media/" + datos.audio, function (err) {
     if (err) throw err;
   });
   //let user = request.body.user;
-  
-  let datos = [songname, authorname, image, audio];
-  
-  daoCanciones.insertSong(MongoClient, config.url, config.name, datos,function(error, result){
+    
+  daoCanciones.insertSong(MongoClient, config.url, config.name, datos, function(error, result){
 
       if(error){
           response.status(500);
           response.render("creaFase1", { id: null, errorMsg: `${error.message}`});
       }else{
           // Incluir campos ocultos en el html, leer esos campos desde el .js
-          response.status(200);            
-          //result deberia tener el Songid que le ha dado la bd y le damos nivel de dificultad maximo(3)
-          res = [result[0],3];
-          response.render("creaFase2", { data:res, errorMsg: null });
+          response.status(200);
+          // Le pasamos a la plantilla el objeto entero 
+          response.render("creaFase2", { song: result, errorMsg: null });
       }
   });
 });
