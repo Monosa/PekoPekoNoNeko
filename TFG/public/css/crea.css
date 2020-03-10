@@ -26,6 +26,7 @@ body {
   min-height: 62px;
   padding: 16px 0 8px;
   margin-top: 10px;
+  overflow: hidden;
 }
 .field-label {
   top: 0;
@@ -37,6 +38,8 @@ body {
   font-size: 16px;
   font-weight: 400;
   transition: font-size .15s, line-height .15s;
+  text-overflow: clip;
+  white-space: nowrap;
 }
 .field-input,
 .field-textarea {
