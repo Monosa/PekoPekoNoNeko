@@ -14,6 +14,10 @@ body {
 #mainmenu{
     margin: auto;
     display: block;
+    background-color: #f8a0a5;
+    color: white;
+    border-radius: 10px;
+    height: 50px;
 }
 /* Pen Title */
 .pen-title {
@@ -188,14 +192,17 @@ body {
 .card .panel {
     position: absolute;
     width: 100%;
-    background: #363636;
+    background: #f8a0a5;
     padding: 30px;
     box-sizing: border-box;
     color: #fff;
+    border-color: #232e34;
+    border-width: 3px;
 }
 .card .panel:last-child {
     bottom: 0;
 }
+
 .card .panel .rank {
     display: inline-block;
     font-size: 42px;
