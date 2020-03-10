@@ -145,7 +145,7 @@ function cargarJuego() {
         //y: settings.startingY,
         timing: tiempos[i].tiempo,
         size: tiempos[i].tipo,
-        vx: 5,
+        vx: 25,
         moving: true,
         clicked: false,
         tecla: tiempos[i].tecla,
@@ -186,6 +186,7 @@ function cargarJuego() {
         // if it wasMoved, then change assumption to continueAnimating
         if (wasMoved || part.moving) {
           continueAnimating = true;
+          
         }
         
         // draw this arc at its current position
@@ -196,7 +197,11 @@ function cargarJuego() {
       // if update() reported that it moved something
       // then request another animation loop
       if (continueAnimating)
+      {
         window.requestAnimationFrame(animate);
+      }
+        
+        
     }
 
     function update(part, elapsedTime) {
@@ -230,14 +235,14 @@ function cargarJuego() {
       imgcr.onload = function() {
         context.drawImage(imgcr, 0, 0, canvas.width, canvas.height);
         rCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(animate);
+        //requestAnimationFrame(animate);
       }
       imgcr.src = "../img/RojoChiquito2.png";
       
       imgca.onload = function() {
         context.drawImage(imgca, 0, 0, canvas.width, canvas.height);
         aCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(animate);
+        //requestAnimationFrame(animate);
       }
       imgca.src = "../img/AzulEscalado.png";
     }
@@ -394,6 +399,7 @@ function comprueba() {
     }
     if (actual < particles.length) {
       playing = particles[actual];
+      console.log(playing);
     } else playing = -1;
   }
 }
