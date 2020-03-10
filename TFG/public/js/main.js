@@ -212,6 +212,7 @@ function cargarJuego() {
           // report that we moved this arc
           return (true);
         }
+        else return (true);
       }
       
       return (false);
@@ -239,7 +240,6 @@ function cargarJuego() {
         requestAnimationFrame(animate);
       }
       imgca.src = "../img/AzulEscalado.png";
-    
     }
     function drawParticle(part) {
       //74 y 70 son sushis, 75 68 son dorayakis
@@ -379,6 +379,7 @@ function iniciarPuntosyRacha() {
 
 function comprobar() {
   setInterval(comprueba, 1);
+  
 }
 
 function comprueba() {

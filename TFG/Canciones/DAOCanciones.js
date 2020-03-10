@@ -103,7 +103,7 @@ class DAOCanciones{
                         
                         else{
                             dbo.collection("Secuencias").insertOne({
-                                "Songparent":  datos.songparent,
+                                "Songparent":  new MongoClient.ObjectID(datos.songparent),
                                 "Value": datos.value
                             }, function(err, resultado) {
                                 if(err){

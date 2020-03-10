@@ -1,5 +1,5 @@
 //La letra j es la tecla 106 y la k es la 107
-var tiempos = [];
+var obj = { tiempos: []};
 var multiplayer = false;
 var mss = 0;
 var keys = [];
@@ -21,7 +21,7 @@ window.onload = function () {
   }
 
   document.getElementById("descarga").onclick = function(){
-    document.getElementById("value").value = tiempos;
+    document.getElementById("value").value = JSON.stringify(obj);
     document.forms["submitCreatedLevel"].submit();
   }
 };
@@ -116,18 +116,18 @@ function mostrarInformacionTecla(evObject) {
   var tecla = evObject.keyCode;
   keys[tecla] = true;
 
-  var tiempo = {
+  var t = {
     tiempo: mss,
     tecla: [tecla, complementario(tecla)]
   }
 
   if (tecla === 68 || tecla === 70) {
-    tiempo.tipo = 300;
+    t.tipo = 300;
   }else if(tecla === 74 || tecla == 75){
-    tiempo.tipo = 600
+    t.tipo = 600
   }
 
-  tiempos.push(tiempo);
+  obj.tiempos.push(t);
 }
 
 function complementario(tecla){

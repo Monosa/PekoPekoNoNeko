@@ -89,7 +89,7 @@ Crea.post("/guardarNivel", function (request, response) {
   console.log("Entrada en la función guardarNivel");
   let datos = {
     songparent: request.body.songparent,
-    value: request.body.secValue
+    value: JSON.parse(request.body.secValue)
   }
 
   daoCanciones.insertSecuencia(MongoClient, config.url, config.name, datos, function (error, result) {
