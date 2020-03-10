@@ -1,6 +1,6 @@
 const path = require("path");
 const express = require("express");
-const MongoClient=require('mongodb');
+const MongoClient = require('mongodb');
 const DAOCanciones = require("../Canciones/DAOCanciones.js");
 const config = require("../config");
 const bodyParser = require("body-parser");
@@ -12,25 +12,41 @@ const fs = require('fs');
 var relative = "../TFG/public/uploads";
 
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, relative);
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    }
-  });
-var upload = multer({ storage: storage });
+  destination: function (req, file, cb) {
+    cb(null, relative);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+var upload = multer({
+  storage: storage
+});
 //var uploadAudio = multer({ dest: './public/media/' });
-var cpUpload = upload.fields([{ name: 'imagen', maxCount: 1 },{ name: 'song', maxCount: 1},{ name: 'namesong', maxCount: 1 }, { name: 'nameauthor', maxCount: 1 }]);
+var cpUpload = upload.fields([{
+  name: 'imagen',
+  maxCount: 1
+}, {
+  name: 'song',
+  maxCount: 1
+}, {
+  name: 'namesong',
+  maxCount: 1
+}, {
+  name: 'nameauthor',
+  maxCount: 1
+}]);
 
 Crea.use(bodyParser.json());
 
-Crea.get("/", function(request, response){
-    response.status(200);
-    response.render("creaFase1", {errorMsg: null});
+Crea.get("/", function (request, response) {
+  response.status(200);
+  response.render("creaFase1", {
+    errorMsg: null
+  });
 });
 
-Crea.post("/Fase2", cpUpload,function(request, response){
+Crea.post("/Fase2", cpUpload, function (request, response) {
   console.log("Entra");
   let datos = {
     songname: request.body.namesong,
@@ -46,21 +62,55 @@ Crea.post("/Fase2", cpUpload,function(request, response){
     if (err) throw err;
   });
   //let user = request.body.user;
-    
-  daoCanciones.insertSong(MongoClient, config.url, config.name, datos, function(error, result){
 
-      if(error){
-          response.status(500);
-          response.render("creaFase1", { id: null, errorMsg: `${error.message}`});
-      }else{
-          // Incluir campos ocultos en el html, leer esos campos desde el .js
-          response.status(200);
-          // Le pasamos a la plantilla el objeto entero 
-          response.render("creaFase2", { song: result, errorMsg: null });
-      }
+  daoCanciones.insertSong(MongoClient, config.url, config.name, datos, function (error, result) {
+
+    if (error) {
+      response.status(500);
+      response.render("creaFase1", {
+        id: null,
+        errorMsg: `${error.message}`
+      });
+    } else {
+      // Incluir campos ocultos en el html, leer esos campos desde el .js
+      response.status(200);
+      let userId = request.session.currentUserId;
+      // Le pasamos a la plantilla el objeto entero 
+      response.render("creaFase2", {
+        song: result,
+        user: userId,
+        errorMsg: null
+      });
+    }
   });
 });
 
+Crea.post("/guardarNivel", function (request, response) {
+  console.log("Entrada en la función guardarNivel");
+  let datos = {
+    songparent: request.body.songparent,
+    value: request.body.secValue
+  }
 
+  daoCanciones.insertSecuencia(MongoClient, config.url, config.name, datos, function (error, result) {
+    if (error) {
+      response.status(500);
+      response.render("creaFase1", {
+        id: null,
+        errorMsg: `${error.message}`
+      });
+    } else {
+      daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
+        if (error) {
+            response.status(500);
+            console.log(`${error.message}`);
+        } else {
+            response.status(200);
+            response.render("songSelection", { canciones: listaCanciones, errorMsg: null });
+        }
+    });
+  }
+  });
+});
 
 module.exports = Crea;

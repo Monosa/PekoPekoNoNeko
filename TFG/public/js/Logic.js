@@ -1,25 +1,28 @@
 //La letra j es la tecla 106 y la k es la 107
 var tiempos = [];
 var multiplayer = false;
+var mss = 0;
+var keys = [];
 
 
 window.onload = function () {
-  document.onkeypress = this.mostrarInformacionTecla;
-  this.iniciarCronometro();
+  document.onkeydown = this.mostrarInformacionTecla;
   drawInitialCanvas();
 
   document.getElementById("empezar").onclick = function () {
     console.log("Leída la pulsación del botón 'Empezar'");
     var x = document.getElementById("myAudio");
     x.play();
-
-    var canvas = document.getElementById("canvas");
-    var context = canvas.getContext("2d");
+    cronometrar();
   }
 
   document.getElementById("myAudio").onended = function () {
-    var x = document.getElementById("descarga");
-    x.style.display = "block";
+    document.getElementById("descarga").style.display = "block";
+  }
+
+  document.getElementById("descarga").onclick = function(){
+    document.getElementById("value").value = tiempos;
+    document.forms["submitCreatedLevel"].submit();
   }
 };
 
@@ -91,7 +94,7 @@ function drawPattern(context, canvas, bgImg) {
   context.strokeRect(30, 100, 100, 100);
   */
   var plato = new Image();
-  plato.src = '../img/plato.png';
+  plato.src = '../img/Plato.png';
   plato.onload = function () {
     context.drawImage(plato, 30, 60);
   }
@@ -109,20 +112,41 @@ function download_song() {
   console.log(tiempos);
 }
 
-function iniciarCronometro() {
-  mss = 0;
-}
-
 function mostrarInformacionTecla(evObject) {
   var tecla = evObject.keyCode;
+  keys[tecla] = true;
 
-  if (tecla === 106 || tecla === 107) {
-    tiempos.push([mss, tecla]);
+  var tiempo = {
+    tiempo: mss,
+    tecla: [tecla, complementario(tecla)]
   }
+
+  if (tecla === 68 || tecla === 70) {
+    tiempo.tipo = 300;
+  }else if(tecla === 74 || tecla == 75){
+    tiempo.tipo = 600
+  }
+
+  tiempos.push(tiempo);
+}
+
+function complementario(tecla){
+  if (tecla === 68)
+    return 75;
+  else if (tecla === 70)
+    return 74;
+  else if (tecla === 75)
+    return 68;
+  else if (tecla === 74)
+    return 70;
 }
 
 function cronometrar() {
   escribir();
   id = setInterval(escribir, 1);
   //id2 = setInterval(descartar, 30);
+}
+
+function escribir() {
+  mss++;
 }

@@ -41,7 +41,13 @@
     </div>
 
     <button id="empezar">Empezar</button>
+    <button id="descarga" onclick="download_song()" style="display: none;">Descargar</button>
     
+    <form name="submitCreatedLevel" action="/crea/guardarNivel" method="post">
+      <input type="hidden" name="songparent" value="<%= song._id %>">
+      <input type="hidden" name="secValue" id="value" value="">
+    </form>
+
   </div>
 </body>
 

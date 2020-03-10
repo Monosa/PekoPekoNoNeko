@@ -88,6 +88,41 @@ class DAOCanciones{
         });
     }
 
+    insertSecuencia(MongoClient, url, name, datos, callback){
+        MongoClient.connect(url, function(err, db){
+            if(err) throw err;
+            else{
+                var dbo = db.db(name);
+                dbo.collection("Secuencias").find({'Songparent':datos.songparent}).toArray(function(err, result){
+                    if (err) throw err;
+                    else{
+                        if(result.length > 0){
+                            callback(new Error("Esa canción ya cuenta con un secuencia"), null);
+                            db.close();
+                        }
+                        
+                        else{
+                            dbo.collection("Secuencias").insertOne({
+                                "Songparent":  datos.songparent,
+                                "Value": datos.value
+                            }, function(err, resultado) {
+                                if(err){
+                                    throw err;
+                                }else{
+                                    console.log(resultado);
+                                    console.log("DEVOLVEMOS:" + resultado.ops[0]);
+                                    //Tenemos que devolver SongId
+                                    callback(null, resultado.ops[0]); // Devuelve la canción entera, con todos sus atributos
+                                    db.close();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
+
 
 }
 
