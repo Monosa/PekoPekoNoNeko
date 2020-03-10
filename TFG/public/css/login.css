@@ -70,10 +70,12 @@ input{
 
 button{
     font-family: 'Short Stack', cursive;
-    border-radius: 2%;
-    background-color: #33a79e;
-    padding: 1%;
-    margin-top: 5%;
-    margin-left: 39%;
-    width: 20%;
+    background-color: #b881d8;
+    margin: auto;
+    margin-top: 35px;
+    display: block;
+    color: white;
+    border-radius: 10px;
+    height: 50px;
+    width: 100px;
 }

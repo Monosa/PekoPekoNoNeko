@@ -116,12 +116,14 @@ nav {
     height: 85%;
 }
 
-.mainmenu{
+#mainmenu{
     font-family: 'Short Stack', cursive;
-    border-radius: 2%;
-    background-color: #33a79e;
-    margin-top: 5%;
-    width: 20%;
+    border-radius: 10px;
+    background-color: #b881d8;
+    margin-bottom: 35px;
+    color: white;
+    width: 100px;
+    height: 50px;
 }
 
 img{
