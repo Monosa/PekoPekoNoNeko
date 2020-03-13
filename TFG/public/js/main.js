@@ -1,10 +1,9 @@
-// La letra j es la tecla 106 y la k es la 107
-// La letra f tiene el código 102 y la d el 100
-//var tiempos = [{tiempo : 239, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 2820, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 5567, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 6064, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 9634, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 10359, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 13864, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 14767, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 17053, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 19239, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 21054, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 23362, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 24258, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 26939, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 28574, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 30563, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 32058, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 35653, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 36746, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 38632, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 40080, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 43988, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 45058, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 47421, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 49391, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 51352, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 52788, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 54971, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 57787, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 58687, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 61893, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 62255, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 64470, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 66076, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 69041, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 70318, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 73411, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 75302, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 77449, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 78780, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 80498, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 82379, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 84085, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 87318, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 89890, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 90749, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 93245, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 94954, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 96649, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 98863, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 101351, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 103997, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 104101, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 106530, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 108718, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 110627, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 113313, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 114187, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 116161, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 118496, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 121506, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 122744, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 124561, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 126337, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 128504, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 131635, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 132801, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 134735, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 136487, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 138985, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 140104, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 142820, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 144874, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 146377, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 149598, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 150705, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 153589, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 154424, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 157302, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 158215, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 160542, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 162456, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 165286, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 167001, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 168013, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 171625, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 173646, tecla : 106, tecla2 : 115, tipo : 25},{tiempo : 174754, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 176048, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 179871, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 180200, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 183893, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 184200, tecla : 107, tecla2 : 100, tipo : 25},{tiempo : 187933, tecla : 107, tecla2 : 115, tipo : 50},{tiempo : 189256, tecla : 106, tecla2 : 100, tipo : 25},{tiempo : 190053, tecla : 106, tecla2 : 115, tipo : 50},{tiempo : 193169, tecla : 107, tecla2 : 115, tipo : 25},{tiempo : 194366, tecla : 106, tecla2 : 100, tipo : 50},{tiempo : 196555, tecla : 107, tecla2 : 100, tipo : 50},{tiempo : 199554, tecla : 106, tecla2 : 100, tipo : 50}];
+var songid;
+var difid;
 var tiempos;
 var particles = [];
 var puntos = 0, puntos2 = 0;
-var startTime;
+var startTime = null;
 var actual = 0;
 var playing;
 var settings;
@@ -12,6 +11,7 @@ var multiplayer = false;
 var contadorBien = 0;
 var contadorMal = 0;
 var racha = 0;
+var contadorCirculos = 0;
 var canvas;
 var keys = [];
 
@@ -27,9 +27,15 @@ window.onload = function () {
     startingX: canvas.width + 25
     //startingY: 0
   };
+  var alrededor = new this.Image();
+  alrededor.src = "../img/alrededor.png";
+  alrededor.onload = function(){
+
+  }
 
   var tiempo = document.getElementById("tiempos").innerHTML;
   tiempos = JSON.parse(tiempo);
+  
   cargarJuego();
 
 };
@@ -46,6 +52,11 @@ function drawInitialCanvas() {
   bgImg.onload = function () {
     //contextBg.drawImage(bgImg, 0, 0);
     drawPattern(contextBg, canvasBg, bgImg);
+  }
+  var alrededor = new Image();
+  alrededor.src = "../img/alrededor.png";
+  alrededor.onload = function(){
+    contextBg.drawImage(alrededor,30,60);
   }
 
   //  Sets the width and height of the canvas in which the circles are going to be drawn
@@ -93,7 +104,8 @@ function drawPattern(context, canvas, bgImg) {
     context.drawImage(plato,30,60);
   }
   var gifCanvas = document.getElementById("gifCanvas");
-  gifler('../img/gatocome2.gif').animate(gifCanvas);
+  
+  gifler('../img/Gatete.gif').animate(gifCanvas);
 }
 
 
@@ -133,12 +145,15 @@ function cargarJuego() {
         //y: settings.startingY,
         timing: tiempos[i].tiempo,
         size: tiempos[i].tipo,
-        vx: 5,
+        vx: 25,
         moving: true,
+        clicked: false,
         tecla: tiempos[i].tecla,
         tecla2: tiempos[i].tecla2,
       });
+      
     }
+    
     playing = particles[0];
     
 
@@ -147,7 +162,8 @@ function cargarJuego() {
 
     function animate(time) {
       // set startTime if it isn't already set
-      if (!startTime) {
+      
+      if (startTime === null) {
         startTime = time;
       }
       // calc elapsedTime
@@ -161,38 +177,47 @@ function cargarJuego() {
       // assume no further animating is necessary
       // The for-loop may change the assumption 
       var continueAnimating = false;
+      
       for (var i = 0; i < particles.length; i++) {
         var part = particles[i];
-
+        
         // update this circle & report if it wasMoved
         var wasMoved = update(part, elapsedTime);
         // if it wasMoved, then change assumption to continueAnimating
         if (wasMoved || part.moving) {
           continueAnimating = true;
+          
         }
+        
         // draw this arc at its current position
         drawParticle(part);
+        
       }
 
       // if update() reported that it moved something
       // then request another animation loop
       if (continueAnimating)
+      {
         window.requestAnimationFrame(animate);
+      }
+        
+        
     }
 
     function update(part, elapsedTime) {
       
       if (elapsedTime >= part.timing) {
         // is this arc still visible on the canvas
-        if (part.x > -part.size) {
+        if (part.x > -part.size/2) {
           // if yes+yes, move this arc by the specified moveX
           part.x -= part.vx;
-          if (part.x <= 0) {
+          if (part.x <= -part.size/2) {
             part.moving = false;
           }
           // report that we moved this arc
           return (true);
         }
+        else return (true);
       }
       
       return (false);
@@ -210,17 +235,16 @@ function cargarJuego() {
       imgcr.onload = function() {
         context.drawImage(imgcr, 0, 0, canvas.width, canvas.height);
         rCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(animate);
+        //requestAnimationFrame(animate);
       }
       imgcr.src = "../img/RojoChiquito2.png";
-  
+      
       imgca.onload = function() {
         context.drawImage(imgca, 0, 0, canvas.width, canvas.height);
         aCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(animate);
+        //requestAnimationFrame(animate);
       }
       imgca.src = "../img/AzulEscalado.png";
-    
     }
     function drawParticle(part) {
       //74 y 70 son sushis, 75 68 son dorayakis
@@ -259,8 +283,15 @@ function cargarJuego() {
         context2.arc(part.x, part.y, part.size, 0, Math.PI * 2);
         context2.fill();
       }
+     
     }
 
+  });
+
+  $("#myAudio").bind("ended", function(){
+      document.getElementById("usePoints").value = puntos;
+      
+      document.forms["submitScore"].submit();
   });
 
 }
@@ -268,6 +299,7 @@ function cargarJuego() {
 
 function clic (evt) { 
   //Se supone que se dibujan las cosas en pequeño si son las teclas 100 y 102 la primera tecla
+  playing.clicked=true;
   keys[evt.keyCode] = true;
   //Si se requiere pequeño
   if(playing.tecla[0] === 68 || playing.tecla[0] === 70){
@@ -312,7 +344,7 @@ function compruebaAcierto(e){
   } else {
     contadorMal++;
     contadorBien = 0;
-    racha = 1;
+    racha = 0;
     if (contadorMal >= 5)
       puntos -= 25;
   }
@@ -337,40 +369,6 @@ function rachas(puntos, contadorBien){
     return [10,puntos * 10];
   else return [1,puntos];
 }
-/*function clic(evObject) {
-  var tecla = evObject.keyCode;
-  console.log(tecla, playing.tecla[0]);
-  if (tecla === playing.tecla[0] || tecla === playing.tecla[1]) {
-    //De 135 a 165 es pleno
-    
-  }
-
-  if (multiplayer) {
-    if (tecla === playing.tecla2) {
-      //De 135 a 165 es pleno
-      if ((playing.x >= 96 && playing.x <= 139) || (playing.x >= 161 && playing.x <= 204)) {
-        contadorBien++;
-        if (contadorBien >= 10)
-          puntos += 50 * 2;
-        else puntos += 50;
-      } else if (playing.x >= 140 && playing.x <= 160) {
-        contadorBien++;
-        if (contadorBien >= 10)
-          puntos += 100 * 2.5;
-        else puntos += 100;
-
-      } else {
-        contadorMal++;
-        contadorBien = 0;
-        if (contadorMal >= 5)
-          puntos -= 25;
-      }
-
-      document.getElementById("puntos-p2").innerHTML = "Puntos jugador 2: " + puntos2;
-    }
-  }
-}*/
-
 
 function iniciarPuntosyRacha() {
   document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
@@ -385,14 +383,23 @@ function iniciarPuntosyRacha() {
 
 
 function comprobar() {
-  var id = setInterval(comprueba, 1);
+  setInterval(comprueba, 1);
+  
 }
 
 function comprueba() {
   if (playing !== -1 && playing.x <= 0) {
     actual += 1;
+    contadorCirculos += 1;
+    document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
+    if(!playing.clicked){
+      racha = 0;
+      contadorBien = 0;
+      document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
+    }
     if (actual < particles.length) {
       playing = particles[actual];
+      console.log(playing);
     } else playing = -1;
   }
 }

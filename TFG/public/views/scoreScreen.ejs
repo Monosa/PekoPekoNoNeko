@@ -1,0 +1,49 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Playing</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/scoreScreen.css">  
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <script src="../js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+  <script src="../js/ripple.js"></script>
+</head>
+
+<body>
+  <div class="card">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="panel top">
+      <div class="rank">Points</div>
+      <div class="suit"><%=data[2]%></div>
+      <div class="icon"><svg>
+        <defs>
+          <pattern id="img1" patternUnits="userSpaceOnUse" width="21" height="21">
+            <image xlink:href="../img/caragato.jpg" width="21" height="21" />
+          </pattern>
+        </defs>
+        <rect width="21" height="21" fill="url(#img1)" />
+        </svg></div>
+    </div>
+    <div class="content #{className}">
+      <div><img class="song" src="../img/<%=data[4]%>"></div>
+    </div>
+   
+    <div class="panel bottom">
+      <div class="rank">Points</div>
+      <div class="suit"><%=data[2]%></div>
+      <div class="icon"><svg>
+          <defs>
+            <pattern id="img1" patternUnits="userSpaceOnUse" width="21" height="21">
+              <image xlink:href="../img/caragato.jpg" width="21" height="21" />
+            </pattern>
+          </defs>
+          <rect width="21" height="21" fill="url(#img1)" />
+          </svg></div>
+    </div>
+  </div>   
+  <button id="mainmenu" class="rkmd-btn btn-lightBlue ripple-effect" onclick="window.location.href = '/canciones';">Ir a canciones</button> 
+</body>
+
+</html>

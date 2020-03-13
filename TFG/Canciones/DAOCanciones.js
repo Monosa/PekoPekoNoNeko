@@ -1,4 +1,4 @@
-class DAOSelectionScreen{
+class DAOCanciones{
     //constructor(pool) {
         //this.pool = pool;
     //}
@@ -37,40 +37,94 @@ class DAOSelectionScreen{
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
             var dbo = db.db(name);
-            dbo.collection("Songs").find({"Songid":parseInt(id)}).toArray(function(err, result) {
+            console.log(id);
+            dbo.collection("Songs").find({"_id":new MongoClient.ObjectId(id)}).toArray(function(err, result) {
                 if (err) throw err;
-               
-                dbo.collection("Secuencias").find({$and: [{'Songparent':result[0]['Songid']},{'Secid':parseInt(iddif)}]}).toArray(function(err,result2){
+                
+                dbo.collection("Secuencias").find({$and: [{'Songparent':result[0]['_id']},{'Secid':parseInt(iddif)}]}).toArray(function(err,result2){
                     if (err) throw err;
                     var devolver = [result[0],result2[0]];
                     callback(null, devolver);
                 });
             });
         });
-		/*this.pool.getConnection(function (err, connection) {
-            if (err)
-            callback(new Error("Error de conexión a la base de datos"), null);
-            else {
-                const sql = `SELECT son.nombre, son.autor, son.image, GROUP_CONCAT(sec.value) as tiempos
-                FROM songs son, secuencias sec
-				WHERE son.id = ? AND sec.parent = ?`;
-				const elems = [id, id];
-                connection.query(sql, elems, function (err, listado) {
-                    if (err)
-						callback(new Error("Error de acceso a la base de datos en el getListaCanciones"), null);
-                    else {
-                        console.log("Respuestas leídas correctamentes");
-						callback(null, listado[0]);
-                    }
-                })       
-            }
-        })*/
 	}
     actualizaCancion(id, callback) {} //No tengo claro por que habria que actualizar alguna cancion
-	setCancion(){}
+	insertSong(MongoClient, url, name, datos, callback){
+        MongoClient.connect(url, function(err, db){
+            if(err) throw err;
+            else{
+                var dbo = db.db(name);
+                dbo.collection("Songs").find({$and: [{'Nombre':datos.songname},{'Autor':datos.authorname}]}).toArray(function(err,result){
+                    if (err) throw err;
+                    else{
+                        if(result.length > 0){
+                            //Si existe esa combinacion ya existe la cancion
+                            callback(null, result[0]);
+                            db.close();
+                        }
+                        
+                        else{
+                            dbo.collection("Songs").insertOne({
+                                "Nombre":  datos.songname,
+                                "Autor": datos.authorname,
+                                "Imagen": datos.image,
+                                "Cancion": datos.audio
+                            }, function(err, resultado) {
+                                if(err){
+                                    throw err;
+                                }else{
+                                    console.log(resultado);
+                                    console.log("DEVOLVEMOS:" + resultado.ops[0]);
+                                    //Tenemos que devolver SongId
+                                    callback(null, resultado.ops[0]); // Devuelve la canción entera, con todos sus atributos
+                                    db.close();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    insertSecuencia(MongoClient, url, name, datos, callback){
+        MongoClient.connect(url, function(err, db){
+            if(err) throw err;
+            else{
+                var dbo = db.db(name);
+                dbo.collection("Secuencias").find({'Songparent':datos.songparent}).toArray(function(err, result){
+                    if (err) throw err;
+                    else{
+                        if(result.length > 0){
+                            callback(new Error("Esa canción ya cuenta con un secuencia"), null);
+                            db.close();
+                        }
+                        
+                        else{
+                            dbo.collection("Secuencias").insertOne({
+                                "Songparent":  new MongoClient.ObjectID(datos.songparent),
+                                "Value": datos.value
+                            }, function(err, resultado) {
+                                if(err){
+                                    throw err;
+                                }else{
+                                    console.log(resultado);
+                                    console.log("DEVOLVEMOS:" + resultado.ops[0]);
+                                    //Tenemos que devolver SongId
+                                    callback(null, resultado.ops[0]); // Devuelve la canción entera, con todos sus atributos
+                                    db.close();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
 
 
 }
 
 
-module.exports = DAOSelectionScreen;
+module.exports = DAOCanciones;

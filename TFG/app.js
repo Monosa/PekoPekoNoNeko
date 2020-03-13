@@ -4,20 +4,22 @@ const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const session = require("express-session");
 const MongoClient = require('mongodb');
-//const mysqlSession = require("express-mysql-session");
+
 const MongoStore = require('connect-mongo')(session);
 const canciones = require("./Canciones/Canciones.js");
 const app = express();
 const config = require("./config.js");
 const users = require("./users/users.js");
+const score = require("./score/score.js");
+const crea = require("./crea/crea.js");
 
-app.set("view engine", "ejs"); // Configura EJS como motor de plantillas
-app.set("views", path.join(__dirname, "public", "views")); // Definición del directorio donde se encuentran las plantillas
+app.set("view engine", "ejs");  // Configura EJS como motor de plantillas
+app.set("views", path.join(__dirname, "public", "views"));    // Definición del directorio donde se encuentran las plantillas
 
 // Ficheros estáticos
 const ficherosEstaticos = path.join(__dirname, "public");
 app.use(express.static(ficherosEstaticos));
-app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
+
 
 // Middlewares
 app.use(expressValidator());
@@ -34,16 +36,19 @@ const middlewareSession = session({
 });
 
 app.use(middlewareSession);
-
+app.use("/canciones", canciones);   //Manejadores de ruta de preguntas
 // Manejadores de ruta de usuarios
 app.use("/users", users);
+app.use("/crea", crea);
+// Manejadores de ruta de Scores
+app.use("/score", score);
 
 app.get("/", function (request, response) {
     response.status(200);
     response.sendFile(path.join(__dirname, "public", "titlescreen.html"));
 });
 
-app.get("/play", function (request, response) {
+app.get("/play", function(request, response){
     response.status(200);
     response.sendFile(path.join(__dirname, "public", "game.html"));
 })

@@ -1,6 +1,7 @@
 const express = require("express");
 //const mysql = require("mysql");
 const MongoClient=require('mongodb');
+var cookieParser = require('cookie-parser');
 const path = require("path");
 const multer = require("multer");
 const DAOCanciones = require("./DAOCanciones.js");
@@ -10,11 +11,13 @@ const bodyParser = require("body-parser");
 //var MongoClient = require('mongodb').MongoClient;
 //hola
 const Canciones = express.Router();
-
+Canciones.use(bodyParser.json()); // support json encoded bodies
+Canciones.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 //const pool = mysql.createPool(config.mysqlConfig);
 const daoCanciones = new DAOCanciones();
 
 Canciones.use(bodyParser.json());
+Canciones.use(cookieParser('secret'));
 
 Canciones.get("/", function (request, response) {
     daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
@@ -26,23 +29,22 @@ Canciones.get("/", function (request, response) {
             response.status(200);
             response.render("songSelection", { canciones: listaCanciones, errorMsg: null });
         }
-    })
+    });
 });
 
-Canciones.get("/play", function(request, response){
-    let idcancion = request.query.idcancion;
-    let iddificultad = request.query.iddificultad;
-
-    daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion,iddificultad,function(error, cancion){
+Canciones.post("/play", function(request, response){
+    let idcancion = request.body.idcancion;
+    let iddificultad = request.body.iddificultad;
+    let user = request.session.currentUserId;
+    daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion, iddificultad, function(error, cancion){
 
         if(error){
             response.status(500);
             response.render("songSelection", { canciones: null, errorMsg: `${error.message}`});
         }else{
             // Incluir campos ocultos en el html, leer esos campos desde el .js
-            response.status(200);            
-            console.log(cancion[0]['Cancion']);
-            response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0]['Cancion'], errorMsg: null });
+            response.status(200);
+            response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0]['Cancion'], songid: idcancion, difid: iddificultad, userid: user, imagen: cancion[0]['Imagen'], errorMsg: null });
         }
     });
 });

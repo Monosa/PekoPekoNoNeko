@@ -129,3 +129,10 @@ nav.navbar {
   transform: translateX(0);
 }
 
+.image-upload>input {
+    display: none;
+}
+.image-upload{
+    float:right;
+    padding-top: 17%;
+}

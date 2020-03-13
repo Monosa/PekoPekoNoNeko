@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>Peko Peko No Neko</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">    
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/songSelection.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/hamburguesa.css">   
     <link href="../css/material-components-web.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="../js/material-components-web.min.js"></script>
@@ -12,11 +14,26 @@
     <script src="../js/songSelection.js"></script>
     
 </head>
+  <!-- hamburger -->
+  <input type="checkbox" id="navi-toggle" class="checkbox" />
+  <label for="navi-toggle" class="button">
+    <span class="icon">&nbsp;</span>
+  </label>
+  <div class="background">&nbsp;</div>
 
+  <!-- nav -->
+  <nav class="nav">
+    <ul class="list">
+      <li class="item"> <a href="/users/sesion" class="link">Perfil </a> </li>
+      <li class="item"> <a href="puntuaciones" class="link"> Puntuaciones </a> </li>
+      <li class="item"> <a class="link"> Link 4 </a> </li>
+      <li class="item"> <a href="/users/logout" class="link"> Cerrar Sesión </a> </li>
+    </ul>
+</nav>
 <body>
     <div class="contenedor">
       <div class="container text-center my-3">
-        <div class="row mx-auto my-auto">
+        <div id="boxes" class="row mx-auto my-auto">
             <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
                 <div class="carousel-inner w-100" role="listbox">
                     <% if(canciones !== null) { %>
@@ -32,18 +49,18 @@
                               </div>
                               <div class="mdc-card__actions">
                                 <div class="mdc-card__action-buttons">
-                                  <form action="/canciones/play" method="get">
-                                    <input type="hidden" name="idcancion" value=<%= cancion['Songid'] %>>
+                                  <form action="/canciones/play" method="post">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['_id'] %>>
                                     <input type="hidden" name="iddificultad" value="1">
                                     <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Fácil</button>
                                   </form>
-                                  <form action="/canciones/play" method="get">
-                                    <input type="hidden" name="idcancion" value=<%= cancion['Songid'] %>>
+                                  <form action="/canciones/play" method="post">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['_id'] %>>
                                     <input type="hidden" name="iddificultad" value="2">
                                     <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Medio</button>
                                   </form>
-                                  <form action="/canciones/play" method="get">
-                                    <input type="hidden" name="idcancion" value=<%= cancion['Songid'] %>>
+                                  <form action="/canciones/play" method="post">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['_id'] %>>
                                     <input type="hidden" name="iddificultad" value="3">
                                     <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Difícil</button>
                                   </form>
@@ -65,6 +82,7 @@
                 </div>
             </div>
         </div>
+        <div id="crea"><h5>¿Quieres añadir tu propio nivel?<br></h5><button class="rkmd-btn btn-lightBlue ripple-effect" onclick="document.location.href = '/crea';">Crea tu nivel</button> </div>
     </div>
 </body>
 

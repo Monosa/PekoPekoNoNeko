@@ -1,4 +1,3 @@
-"user strict";
 
 const express = require("express");
 const path = require("path");
@@ -67,14 +66,14 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                 user.image = request.file.buffer;
             }
 
-            /*daoUsers.checkUser(MongoClient, config.url, config.name, user.nickname, function(err, usersWithNickname){
+            daoUsers.checkUser(MongoClient, config.url, config.name, user.nickname, function(err, usersWithNickname){
                 if(err){
                     response.status(500);
                     response.render("signup", { errorMsg: `${error.message}` });
                 }if(usersWithNickname.length !== 0){
                     response.status(200);
                     response.render("signup", { errorMsg: "Ese nickname ya está cogido. Por favor, elige otro." });
-                }else{*/
+                }else{
                     daoUsers.insertUser(MongoClient, config.url, config.name, user, function (error, id) {
                         if (error) {
                             response.status(500);
@@ -84,6 +83,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                             response.status(200);
                             request.session.currentUserNickname = user.nickname;
                             request.session.currentUserId = user.id;
+                            //console.log(request.session.currentUserNickname, request.session.currentUserId);
                             if(user.image !== null)
                                 request.session.currentUserImg = true;
                             else
@@ -91,8 +91,8 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                             response.redirect("/users/sesion");
                         }
                     });
-                //}
-            //});            
+                }
+            });            
         } else {
             response.status(200);
             //Se meten todos los mensajes de error en un array
@@ -103,9 +103,9 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
 });
 
 
-// Perfil de usuario
+// Perfil de usuario: la sesion es lo que está fallando
 users.get("/sesion", middlewareLogin, function(request, response){
-    daoUsers.getUser(request.session.currentUserId, function(error, user){
+    daoUsers.getUser(MongoClient, config.url, config.name, request.session.currentUserId, function(error, user){
         if(error){
             response.status(500);
         }else{
@@ -159,7 +159,7 @@ users.post("/login", function(request, response){
             user.password = request.body.password_user;
             user.image = null;
 
-            daoUsers.isUserCorrect(user.nickname, user.password, function(err, result){
+            daoUsers.isUserCorrect(MongoClient, config.url, config.name, user.nickname, user.password, function(err, result){
                 if(err){
                     response.status(500);
                     response.render("login", { errorMsg: `${error.message}` });
@@ -168,7 +168,8 @@ users.post("/login", function(request, response){
                     response.render("login", { errorMsg: "El nickname o la contraseña no son correctos. Por favor, inténtelo de nuevo." });
                 }else{
                     response.status(200);
-                    user.id = result.id;
+                    console.log(result._id)
+                    user.id = result._id;
                     user.image = result.image;
 
                     request.session.currentUserId = user.id;
