@@ -6,3 +6,6 @@ body{
     width: 68% !important;
     padding-left: 27% !important;
 }
+#container #canvas-1, #gordo {
+    position: absolute !important;
+}

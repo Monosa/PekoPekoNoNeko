@@ -27,11 +27,7 @@ window.onload = function () {
     startingX: canvas.width + 25
     //startingY: 0
   };
-  var alrededor = new this.Image();
-  alrededor.src = "../img/alrededor.png";
-  alrededor.onload = function(){
-
-  }
+  
 
   var tiempo = document.getElementById("tiempos").innerHTML;
   tiempos = JSON.parse(tiempo);
@@ -335,16 +331,21 @@ function compruebaAcierto(e){
     contadorBien++;
     res = rachas(50, contadorBien);
     racha = res[0];
+    if(racha != 0)
     puntos += res[1];
   } else if (playing.x >= 70 && playing.x <= 90) {
     contadorBien++;
     res = rachas(100, contadorBien);
     racha = res[0];
+    if(racha != 0)
+    
     puntos += res[1];
   } else {
     contadorMal++;
     contadorBien = 0;
     racha = 0;
+    if(racha != 0)
+    
     if (contadorMal >= 5)
       puntos -= 25;
   }
@@ -384,11 +385,15 @@ function iniciarPuntosyRacha() {
 
 function comprobar() {
   setInterval(comprueba, 1);
+  setInterval(animracha,1);
+}
+function animracha(racha){
   
 }
-
 function comprueba() {
   if (playing !== -1 && playing.x <= 0) {
+    
+    
     actual += 1;
     contadorCirculos += 1;
     document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
@@ -399,9 +404,12 @@ function comprueba() {
     }
     if (actual < particles.length) {
       playing = particles[actual];
-      console.log(playing);
+      
     } else playing = -1;
   }
+  if(racha > 0)
+    document.getElementById("gordo").style.display = "inline";
+    else document.getElementById("gordo").style.display = "none";
 }
 
 
