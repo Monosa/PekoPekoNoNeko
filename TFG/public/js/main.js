@@ -1,3 +1,11 @@
+
+
+/* En el modo multijugador van a cambiar las teclas, ya qu elo que proponemos con el modo multijugador es 
+   que dos jugadores utilicen el mismo teclado para jugar. Las teclas elegidas han sido asdf para el jugador 1
+   y jklñ para el jugador 2 (hay que valorar que pasa con otro tipo de teclados??) */
+
+/* ¡¡¡Es necesario debido al modo multijugador crear un conversor de datos de un jugador a multijugador!!!*/
+
 var songid;
 var difid;
 var tiempos;
@@ -29,11 +37,6 @@ window.onload = function () {
     startingX: canvas.width + 25
   };
 
-  var alrededor = new this.Image();
-  alrededor.src = "../img/alrededor.png";
-  alrededor.onload = function () {
-
-  }
 
   var tiempo = document.getElementById("tiempos").innerHTML;
   tiempos = JSON.parse(tiempo);
@@ -53,11 +56,6 @@ function drawInitialCanvas() {
   bgImg.onload = function () {
     drawPattern(contextBg, canvasBg, bgImg);
   }
-  var alrededor = new Image();
-  alrededor.src = "../img/alrededor.png";
-  alrededor.onload = function () {
-    contextBg.drawImage(alrededor, 30, 60);
-  }
 
   //  Sets the width and height of the canvas in which the circles are going to be drawn
   canvas = document.getElementById("canvas-1");
@@ -76,11 +74,6 @@ function drawInitialCanvas() {
       drawPattern(contextBg2, canvasBg2, bgImg2);
     }
 
-    var alrededor2 = new Image();
-    alrededor2.src = "../img/alrededor.png";
-    alrededor2.onload = function () {
-      contextBg2.drawImage(alrededor2, 30, 60);
-    }
 
     //  Sets the width and height of the canvas in which the circles are going to be drawn
     canvas2 = document.getElementById("canvas-2");
@@ -266,7 +259,7 @@ function cargarJuego() {
         x: settings.startingX,
         timing: tiempos[i].tiempo,
         size: tiempos[i].tipo,
-        vx: 25,
+        vx: 15,
         moving: true,
         clicked: false,
         tecla: tiempos[i].tecla,
@@ -401,7 +394,6 @@ function comprueba() {
     }
     if (actual < particles.length) {
       playing = particles[actual];
-      console.log(playing);
     } else playing = -1;
   }
 }

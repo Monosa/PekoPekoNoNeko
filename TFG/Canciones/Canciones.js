@@ -36,7 +36,8 @@ Canciones.post("/play", function(request, response){
     let idcancion = request.body.idcancion;
     let iddificultad = request.body.iddificultad;
     let user = request.session.currentUserId;
-    daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion, iddificultad, function(error, cancion){
+    let multi = request.session.multijugador;
+    daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion, iddificultad, multi, function(error, cancion){
 
         if(error){
             response.status(500);

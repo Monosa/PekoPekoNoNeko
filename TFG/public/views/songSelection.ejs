@@ -7,11 +7,13 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../css/songSelection.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/hamburguesa.css">   
     <link href="../css/material-components-web.min.css" rel="stylesheet">
+    <link href="../css/switcher.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="../js/material-components-web.min.js"></script>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="../js/songSelection.js"></script>
+    <script src="../js/switcher.js"></script>
     
 </head>
   <!-- hamburger -->
@@ -81,7 +83,13 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div><br>
+        <div class="switcher">
+          <div class="switch">
+              <input type="checkbox" id="multijugador" class="switch__input" onclick="cambiaModo()">
+              <label for="multijugador" class="switch__label">Multijugador</label>
+          </div>
+        </div><br>
         <div id="crea"><h5>¿Quieres añadir tu propio nivel?<br></h5><button class="rkmd-btn btn-lightBlue ripple-effect" onclick="document.location.href = '/crea';">Crea tu nivel</button> </div>
     </div>
 </body>
