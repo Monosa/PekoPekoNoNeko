@@ -20,6 +20,7 @@ Canciones.use(bodyParser.json());
 Canciones.use(cookieParser('secret'));
 
 Canciones.get("/", function (request, response) {
+    request.session.multijugador = false;
     daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
         //Faltan las comprobaciones
         if (error) {
@@ -45,7 +46,7 @@ Canciones.post("/play", function(request, response){
         }else{
             // Incluir campos ocultos en el html, leer esos campos desde el .js
             response.status(200);
-            response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0], difid: iddificultad, userid: user, multijugador: multi, errorMsg: null });
+            response.render("game", { tiempos: JSON.stringify(cancion[1]['Value']['tiempos']), song: cancion[0], difid: iddificultad, userid: user, multijugador: multi, errorMsg: null });
         }
     });
 });

@@ -1,5 +1,3 @@
-
-
 /* En el modo multijugador van a cambiar las teclas, ya qu elo que proponemos con el modo multijugador es 
    que dos jugadores utilicen el mismo teclado para jugar. Las teclas elegidas han sido asdf para el jugador 1
    y jklñ para el jugador 2 (hay que valorar que pasa con otro tipo de teclados??) */
@@ -16,7 +14,7 @@ var startTime = null;
 var actual = 0;
 var playing;
 var settings;
-var multiplayer = JSON.parse(sessionStorage.getItem("multijugador"));
+var multiplayer;
 var contadorBien = 0;
 var contadorMal = 0;
 var racha = 0,
@@ -29,6 +27,13 @@ window.onload = function () {
   document.onkeydown = this.clic;
   document.onkeyup = this.keysReleased;
 
+  if(JSON.parse(sessionStorage.getItem("multijugador")) === null){
+    multiplayer = false;
+  }else{
+    multiplayer = JSON.parse(sessionStorage.getItem("multijugador"));
+  }
+
+  console.log("Valor de multijugador: " + multiplayer);
   iniciarPuntosyRacha();
   drawInitialCanvas();
 
@@ -42,6 +47,8 @@ window.onload = function () {
   tiempos = JSON.parse(tiempo);
 
   cargarJuego();
+
+  sessionStorage.clear();
 };
 
 //  Places a background image in a background canvas and draws the square over it
