@@ -40,7 +40,7 @@
                 <div class="carousel-inner w-100" role="listbox">
                     <% if(canciones !== null) { %>
                         <% canciones.forEach(function(cancion, index) { %>
-                          <div id="elem<%= index%>" class="carousel-item">
+                          <div id="elem<%=index%>" class="carousel-item">
                             <div class="col-md-4">
                               <div class="card card-body">
                                 <img class="img-fluid" src="../img/<%= cancion['Imagen'] %>" width=>
@@ -86,7 +86,7 @@
         </div><br>
         <div class="switcher">
           <div class="switch">
-              <input type="checkbox" id="multijugador" class="switch__input" onclick="cambiaModo()">
+              <input id="multijugador" type="checkbox" class="switch__input" onclick="cambiaModo()">
               <label for="multijugador" class="switch__label">Multijugador</label>
           </div>
         </div><br>

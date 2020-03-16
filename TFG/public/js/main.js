@@ -16,7 +16,7 @@ var startTime = null;
 var actual = 0;
 var playing;
 var settings;
-var multiplayer = true;
+var multiplayer = JSON.parse(sessionStorage.getItem("multijugador"));
 var contadorBien = 0;
 var contadorMal = 0;
 var racha = 0,
