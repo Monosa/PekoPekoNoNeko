@@ -32,12 +32,19 @@ Canciones.get("/", function (request, response) {
         }
     });
 });
+Canciones.post("/cambiaModo", function(request, response){
+    console.log("Entrada en cambiaModo de canciones.js");
+    request.session.multijugador = request.body.multi;
+    console.log("Valor de session.multijugador: " + request.session.multijugador);
+    response.status(200);
+});
 
 Canciones.post("/play", function(request, response){
     let idcancion = request.body.idcancion;
     let iddificultad = request.body.iddificultad;
     let user = request.session.currentUserId;
-    let multi = request.session.multijugador;
+    let multi = request.session.multi;
+    console.log("Multi vale " + multi);
     daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion, iddificultad, multi, function(error, cancion){
 
         if(error){
@@ -46,16 +53,11 @@ Canciones.post("/play", function(request, response){
         }else{
             // Incluir campos ocultos en el html, leer esos campos desde el .js
             response.status(200);
-            response.render("game", { tiempos: JSON.stringify(cancion[1]['Value']['tiempos']), song: cancion[0], difid: iddificultad, userid: user, multijugador: multi, errorMsg: null });
+            response.render("game", { tiempos: JSON.stringify(cancion[1]['value']['tiempos']), song: cancion[0], difid: iddificultad, userid: user, multijugador: multi, errorMsg: null });
         }
     });
 });
 
-Canciones.post("/cambiaModo", function(request, response){
-    console.log("Entrada en cambiaModo de canciones.js");
-    request.session.multijugador = request.body.multi;
-    console.log("Valor de session.multijugador: " + request.session.multijugador);
-    response.status(200);
-});
+
 
 module.exports = Canciones;

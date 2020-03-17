@@ -11,7 +11,7 @@ function cambiaModo() {
         multi: cambio
       }),
       success: function () {
-        console.log("AJAX success");
+        console.log("Multijugador = " + cambio);
       }
     });
 

@@ -7,16 +7,16 @@
 var songid;
 var difid;
 var tiempos;
-var particles = [];
+var particles = [], particles2 = [];
 var puntos = 0,
   puntos2 = 0;
 var startTime = null;
-var actual = 0;
-var playing;
+var actual = 0, actual2 = 0;
+var playing, playing2;
 var settings;
 var multiplayer;
-var contadorBien = 0;
-var contadorMal = 0;
+var contadorBien = 0, contadorBien2 = 0;
+var contadorMal = 0, contadorMal2 = 0;
 var racha = 0,
   racha2 = 0;
 var contadorCirculos = 0;
@@ -195,25 +195,50 @@ function drawParticle(part, context, rCanvas, aCanvas) {
   context.beginPath();
   var tam = [0, 0];
   var y = 0;
-  //Si el primer elemento de tecla es 100 o 102 se dibijan las cosas en pequeño
-  if (part.tecla[0] === 68 || part.tecla[0] === 70) {
-    tam = [100, 100];
-    y = 100;
-  }
-  //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
-  else {
-    if (part.tecla[0] === 74)
-      tam = [170, 170];
-    y = 60;
-  }
-  //En este caso se dibujan sushis
-  if (part.tecla[0] === 75 || part.tecla[0] === 68) {
-    context.drawImage(rCanvas, part.x, y, tam[0], tam[1]);
+  if(!multiplayer){
+    //Si el primer elemento de tecla es 68 o 70 se dibijan las cosas en pequeño
+    if (part.tecla[0] === 68 || part.tecla[0] === 70) {
+      tam = [100, 100];
+      y = 100;
+    }
+    //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
+    else {
+      if (part.tecla[0] === 74 || part.tecla[0] === 75)
+        tam = [170, 170];
+      y = 60;
+    }
+    //En este caso se dibujan sushis
+    if (part.tecla[0] === 75 || part.tecla[0] === 68) {
+      context.drawImage(rCanvas, part.x, y, tam[0], tam[1]);
 
+    }
+    //En este caso se dibujan dorayakis
+    else if (part.tecla[0] === 70 || part.tecla[0] === 74) {
+      context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
+    }
   }
-  //En este caso se dibujan dorayakis
-  else if (part.tecla[0] === 70 || part.tecla[0] === 74) {
-    context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
+  //Caso para el multijugador
+  else{
+    //Si el primer elemento de tecla es 83 o 68 en el caso del jugador que usa las teclas de la izquierda, 
+    //o 75 o 76 en el caso del jugador de la derecha se dibujan las cosas en pequeño
+    if (part.tecla[0] === 83 || part.tecla[0] === 68 || part.tecla[0] === 75 || part.tecla[0] === 76) {
+      tam = [100, 100];
+      y = 100;
+    }
+    //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
+    else {
+      if (part.tecla[0] === 65 || part.tecla[0] === 70 || part.tecla[0] === 74 || part.tecla[0] === 192)
+        tam = [170, 170];
+      y = 60;
+    }
+    //En este caso se dibujan sushis
+    if (part.tecla[0] === 70 || part.tecla[0] === 68 || part.tecla[0] === 76 || part.tecla[0] === 192) {
+      context.drawImage(rCanvas, part.x, y, tam[0], tam[1]);
+    }
+    //En este caso se dibujan dorayakis
+    else if (part.tecla[0] === 75 || part.tecla[0] === 74 || part.tecla[0] === 65 || part.tecla[0] === 83) {
+      context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
+    }
   }
 }
 
@@ -259,6 +284,19 @@ function cargarJuego() {
 
     if (multiplayer) {
       loadDorayakis(canvas2, context2, aCtx2, rCtx2);
+      for (var i = 0; i < tiempos.length; i++) {
+        particles2.push({
+          x: settings.startingX,
+          timing: tiempos[i].tiempo,
+          size: tiempos[i].tipo,
+          vx: 15,
+          moving: true,
+          clicked: false,
+          tecla: tiempos[i].tecla2,
+          //tecla2: tiempos[i].tecla2,
+        });
+      }
+      playing2 = particles2[0];
     }
 
     for (var i = 0; i < tiempos.length; i++) {
@@ -270,12 +308,13 @@ function cargarJuego() {
         moving: true,
         clicked: false,
         tecla: tiempos[i].tecla,
-        tecla2: tiempos[i].tecla2,
+        //tecla2: tiempos[i].tecla2,
       });
 
     }
 
     playing = particles[0];
+    
 
     window.requestAnimationFrame(function (time) {
       animate(time, context, canvas, particles, rCanvas, aCanvas)
@@ -283,7 +322,7 @@ function cargarJuego() {
 
     if (multiplayer) {
       window.requestAnimationFrame(function (time) {
-        animate(time, context2, canvas2, particles, rCanvas2, aCanvas2)
+        animate(time, context2, canvas2, particles2, rCanvas2, aCanvas2)
       });
     }
   });
@@ -297,58 +336,172 @@ function cargarJuego() {
 
 
 function clic(evt) {
-  //Se supone que se dibujan las cosas en pequeño si son las teclas 100 y 102 la primera tecla
-  playing.clicked = true;
-  keys[evt.keyCode] = true;
-  //Si se requiere pequeño
-  if (playing.tecla[0] === 68 || playing.tecla[0] === 70) {
-    //Si se pulsa alguna de las teclas y es pequeño, acertamos
-    if (keys[playing.tecla[0]] || keys[playing.tecla[1]]) {
-      compruebaAcierto(evt);
-      ponAFalse(keys);
+  //Se supone que se dibujan las cosas en pequeño si son las teclas 68 y 70 la primera tecla (o sea, la de un jugador. En el caso de multijugador eso cambia).
+  if(!multiplayer){
+    playing.clicked = true;
+    keys[evt.keyCode] = true;
+    //Si se requiere pequeño
+    if (playing.tecla[0] === 68 || playing.tecla[0] === 70) {
+      //Si se pulsa alguna de las teclas (solo 68 o 70 porque ) y es pequeño, acertamos
+      if (keys[playing.tecla[0]] || keys[playing.tecla[1]]) {
+        compruebaAcierto(playing);
+        ponAFalse(keys);
+      }
+    }
+    //Si se requiere grande
+    else if (playing.tecla[0] === 74 || playing.tecla[0] === 75) {
+      //Si se pulsan las dos teclas requeridas para grande y es grande acertamos
+      if (keys[playing.tecla[0]] && keys[playing.tecla[1]]) {
+        compruebaAcierto(playing);
+        ponAFalse(keys);
+      }
     }
   }
-  //Si se requiere grande
-  else if (playing.tecla[0] === 74 || playing.tecla[0] === 75) {
-    //Si se pulsan las dos teclas requeridas para grande y es grande acertamos
-    if (keys[playing.tecla[0]] && keys[playing.tecla[1]]) {
-      compruebaAcierto(evt);
-      ponAFalse(keys);
+  else{
+    var keysPlayer1 = [];
+    var keysPlayer2 = [];
+    keys[evt.keyCode] = true;
+    //Comprobamos si ambos jugadores han hecho click:
+    if(keys[65] || keys[83] || keys[68] || keys[70]){
+      //El jugador 1 ha pulsado una tecla por lo que:
+      playing.clicked = true;
+      keysPlayer1 = cambiaTeclas(keys);
     }
+    if(keys[74] || keys[75] || keys[76] || keys[192]){
+      //El jugador 2 ha pulsado una tecla por lo que:
+      playing2.clicked = true;
+      keysPlayer2 = cambiaTeclas(keys);
+    }
+
+    //Pasamos a comprobar de manera individual cada jugador: 
+    if (playing.tecla[0] === 65 || playing.tecla[0] === 83) {
+      //Si se pulsa alguna de las teclas y es pequeño, acertamos
+      if (keysPlayer1[playing.tecla[0]] || keysPlayer1[playing.tecla[1]]) {
+        compruebaAcierto(playing, 1);
+        //ponAFalse(keys);
+      }
+    }
+    else if(playing.tecla[0] === 68 || playing.tecla[0] === 70){
+      if(keysPlayer1[playing.tecla[0]] && keysPlayer1[playing.tecla[1]]){
+        compruebaAcierto(playing, 1);
+      }
+    }
+    if (playing2.tecla[0] === 74 || playing2.tecla[0] === 75) {
+      //Si se pulsa alguna de las teclas y es pequeño, acertamos
+      if (keysPlayer2[playing2.tecla[0]] || keysPlayer2[playing2.tecla[1]]) {
+        compruebaAcierto(playing2, 2);
+        //ponAFalse(keys);
+      }
+    }
+    else if(playing2.tecla[0] === 76 || playing2.tecla[0] === 192){
+      if(keysPlayer2[playing2.tecla[0]] && keysPlayer2[playing2.tecla[1]]){
+        compruebaAcierto(playing2, 2);
+      }
+    }
+    ponAFalse(keys);
   }
 
 }
 
-/*function keysReleased(e) {
-	// mark keys that were released
-	keys[e.keyCode] = false;
-}*/
+function cambiaTeclas(keys) {
+  var keysReturn = [];
+	if(keys[65] || keys[83] || keys[68] || keys[70]){
+    //Las teclas del jugador 1 estan activas por lo que movemos esas teclas a un array propio
+    if(keys[65])
+      keysReturn[65] = true;
+    if(keys[83])
+    keysReturn[83] = true;
+    if(keys[68])
+    keysReturn[68] = true;
+    if(keys[70])
+    keysReturn[70] = true;
+    return keysReturn;
+  }
+	else{
+    if(keys[74] || keys[75] || keys[76] || keys[192]){
+      if(keys[74])
+      keysReturn[74] = true;
+      if(keys[75])
+      keysReturn[75] = true;
+      if(keys[76])
+      keysReturn[76] = true;
+      if(keys[192])
+      keysReturn[192] = true;
+      return keysReturn;
+    }
+  }
+}
 function ponAFalse(keys) {
   keys[68] = false;
   keys[70] = false;
   keys[74] = false;
   keys[75] = false;
+  keys[65] = false;
+  keys[83] = false;
+  keys[76] = false;
+  keys[192] = false;
 }
 
-function compruebaAcierto(e) {
-  if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
-    contadorBien++;
-    res = rachas(50, contadorBien);
-    racha = res[0];
-    puntos += res[1];
-  } else if (playing.x >= 70 && playing.x <= 90) {
-    contadorBien++;
-    res = rachas(100, contadorBien);
-    racha = res[0];
-    puntos += res[1];
-  } else {
-    contadorMal++;
-    contadorBien = 0;
-    racha = 0;
-    if (contadorMal >= 5)
-      puntos -= 25;
+function compruebaAcierto(playing, player) {
+  if(!multiplayer){
+    if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
+      contadorBien++;
+      res = rachas(50, contadorBien);
+      racha = res[0];
+      puntos += res[1];
+    } else if (playing.x >= 70 && playing.x <= 90) {
+      contadorBien++;
+      res = rachas(100, contadorBien);
+      racha = res[0];
+      puntos += res[1];
+    } else {
+      contadorMal++;
+      contadorBien = 0;
+      racha = 0;
+      if (contadorMal >= 5)
+        puntos -= 25;
+    }
   }
-
+  else{
+    if(player === 1){
+      if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
+        contadorBien++;
+        res = rachas(50, contadorBien);
+        racha = res[0];
+        puntos += res[1];
+      } else if (playing.x >= 70 && playing.x <= 90) {
+        contadorBien++;
+        res = rachas(100, contadorBien);
+        racha = res[0];
+        puntos += res[1];
+      } else {
+        contadorMal++;
+        contadorBien = 0;
+        racha = 0;
+        if (contadorMal >= 5)
+          puntos -= 25;
+      }
+    }
+    else if(player === 2){
+      if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
+        contadorBien2++;
+        res = rachas(50, contadorBien2);
+        racha2 = res[0];
+        puntos2 += res[1];
+      } else if (playing.x >= 70 && playing.x <= 90) {
+        contadorBien2++;
+        res = rachas(100, contadorBien2);
+        racha2 = res[0];
+        puntos2 += res[1];
+      } else {
+        contadorMal2++;
+        contadorBien2 = 0;
+        racha2 = 0;
+        if (contadorMal2 >= 5)
+          puntos2 -= 25;
+      }
+    }
+  }
   document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
   document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
 
@@ -402,5 +555,16 @@ function comprueba() {
     if (actual < particles.length) {
       playing = particles[actual];
     } else playing = -1;
+  }
+  if (playing2 !== -1 && playing2.x <= 0) {
+    actual2 += 1;
+    if (!playing2.clicked) {
+      racha2 = 0;
+      contadorBien2 = 0;
+      document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
+    }
+    if (actual2 < particles2.length) {
+      playing2 = particles2[actual2];
+    } else playing2 = -1;
   }
 }
