@@ -68,7 +68,7 @@ function drawInitialCanvas() {
   canvas = document.getElementById("canvas-1");
   canvas.width = window.innerWidth;
   canvas.height = 300;
-
+  console.log("Hola " + multiplayer);
   if (multiplayer) {
     var canvasBg2 = document.getElementById("bg_canvas_2");
     var contextBg2 = canvasBg2.getContext("2d");
