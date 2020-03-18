@@ -31,6 +31,7 @@ Canciones.get("/", function (request, response) {
 Canciones.post("/cambiaModo", function(request, response){
     console.log("Entrada en cambiaModo de canciones.js");
     request.session.multijugador = request.body.multi;
+    request.session.save();
     console.log("Valor de session.multijugador: " + request.session.multijugador);
     response.status(200);
 });

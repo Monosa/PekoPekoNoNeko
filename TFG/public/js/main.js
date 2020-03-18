@@ -72,7 +72,6 @@ function drawInitialCanvas() {
   canvas = document.getElementById("canvas-1");
   canvas.width = window.innerWidth;
   canvas.height = 300;
-  console.log("Hola " + multiplayer);
   if (multiplayer) {
     var canvasBg2 = document.getElementById("bg_canvas_2");
     var contextBg2 = canvasBg2.getContext("2d");
@@ -288,6 +287,7 @@ function cargarJuego() {
 
     if (multiplayer) {
       loadDorayakis(canvas2, context2, aCtx2, rCtx2);
+
       for (var i = 0; i < tiempos.length; i++) {
         particles2.push({
           x: settings.startingX,
@@ -297,9 +297,9 @@ function cargarJuego() {
           moving: true,
           clicked: false,
           tecla: tiempos[i].tecla2,
-          //tecla2: tiempos[i].tecla2,
         });
       }
+
       playing2 = particles2[0];
     }
 
@@ -312,13 +312,10 @@ function cargarJuego() {
         moving: true,
         clicked: false,
         tecla: tiempos[i].tecla,
-        //tecla2: tiempos[i].tecla2,
       });
-
     }
 
     playing = particles[0];
-
 
     window.requestAnimationFrame(function (time) {
       animate(time, context, canvas, particles, rCanvas, aCanvas)
@@ -335,7 +332,6 @@ function cargarJuego() {
     document.getElementById("usePoints").value = puntos;
     document.forms["submitScore"].submit();
   });
-
 }
 
 

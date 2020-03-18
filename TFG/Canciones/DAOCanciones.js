@@ -42,7 +42,7 @@ class DAOCanciones{
                 console.log("ID CANCION: " + new MongoClient.ObjectId(result[0]['_id']), " ID DIFICULTAD: " + iddif, " MULTI: "  + multi);
                 dbo.collection("Secuencias").find({$and: [{'Songparent':new MongoClient.ObjectId(result[0]['_id'])},{'Secid':parseInt(iddif)},{'Multi':multi}]}).toArray(function(err,result2){
                     if (err) throw err;
-                    console.log("RESULTADO DE FIND EN SECUENCIAS: " + result2[0]);
+                    console.log("RESULTADO DE FIND EN SECUENCIAS: " + result2[0]['Multi']);
                     var devolver = [result[0],result2[0]];
                     callback(null, devolver);
                 });
