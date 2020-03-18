@@ -142,8 +142,10 @@ function mostrarInformacionTecla(evObject) {
 
   if (tecla === 68 || tecla === 70) {
     t.tipo = 300;
+    tMulti.tipo = 300;
   }else if(tecla === 74 || tecla == 75){
     t.tipo = 600
+    tMulti.tipo = 600;
   }
 
   obj.tiempos.push(t);
