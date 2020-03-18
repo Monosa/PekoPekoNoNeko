@@ -7,16 +7,20 @@
 var songid;
 var difid;
 var tiempos;
-var particles = [], particles2 = [];
+var particles = [],
+  particles2 = [];
 var puntos = 0,
   puntos2 = 0;
 var startTime = null;
-var actual = 0, actual2 = 0;
+var actual = 0,
+  actual2 = 0;
 var playing, playing2;
 var settings;
 var multiplayer;
-var contadorBien = 0, contadorBien2 = 0;
-var contadorMal = 0, contadorMal2 = 0;
+var contadorBien = 0,
+  contadorBien2 = 0;
+var contadorMal = 0,
+  contadorMal2 = 0;
 var racha = 0,
   racha2 = 0;
 var contadorCirculos = 0;
@@ -27,9 +31,9 @@ window.onload = function () {
   document.onkeydown = this.clic;
   document.onkeyup = this.keysReleased;
 
-  if(JSON.parse(sessionStorage.getItem("multijugador")) === null){
+  if (JSON.parse(sessionStorage.getItem("multijugador")) === null) {
     multiplayer = false;
-  }else{
+  } else {
     multiplayer = JSON.parse(sessionStorage.getItem("multijugador"));
   }
 
@@ -195,7 +199,7 @@ function drawParticle(part, context, rCanvas, aCanvas) {
   context.beginPath();
   var tam = [0, 0];
   var y = 0;
-  if(!multiplayer){
+  if (!multiplayer) {
     //Si el primer elemento de tecla es 68 o 70 se dibijan las cosas en pequeño
     if (part.tecla[0] === 68 || part.tecla[0] === 70) {
       tam = [100, 100];
@@ -218,7 +222,7 @@ function drawParticle(part, context, rCanvas, aCanvas) {
     }
   }
   //Caso para el multijugador
-  else{
+  else {
     //Si el primer elemento de tecla es 83 o 68 en el caso del jugador que usa las teclas de la izquierda, 
     //o 75 o 76 en el caso del jugador de la derecha se dibujan las cosas en pequeño
     if (part.tecla[0] === 83 || part.tecla[0] === 68 || part.tecla[0] === 75 || part.tecla[0] === 76) {
@@ -314,7 +318,7 @@ function cargarJuego() {
     }
 
     playing = particles[0];
-    
+
 
     window.requestAnimationFrame(function (time) {
       animate(time, context, canvas, particles, rCanvas, aCanvas)
@@ -337,7 +341,7 @@ function cargarJuego() {
 
 function clic(evt) {
   //Se supone que se dibujan las cosas en pequeño si son las teclas 68 y 70 la primera tecla (o sea, la de un jugador. En el caso de multijugador eso cambia).
-  if(!multiplayer){
+  if (!multiplayer) {
     playing.clicked = true;
     keys[evt.keyCode] = true;
     //Si se requiere pequeño
@@ -356,18 +360,17 @@ function clic(evt) {
         ponAFalse(keys);
       }
     }
-  }
-  else{
+  } else {
     var keysPlayer1 = [];
     var keysPlayer2 = [];
     keys[evt.keyCode] = true;
     //Comprobamos si ambos jugadores han hecho click:
-    if(keys[65] || keys[83] || keys[68] || keys[70]){
+    if (keys[65] || keys[83] || keys[68] || keys[70]) {
       //El jugador 1 ha pulsado una tecla por lo que:
       playing.clicked = true;
       keysPlayer1 = cambiaTeclas(keys);
     }
-    if(keys[74] || keys[75] || keys[76] || keys[192]){
+    if (keys[74] || keys[75] || keys[76] || keys[192]) {
       //El jugador 2 ha pulsado una tecla por lo que:
       playing2.clicked = true;
       keysPlayer2 = cambiaTeclas(keys);
@@ -380,9 +383,8 @@ function clic(evt) {
         compruebaAcierto(playing, 1);
         //ponAFalse(keys);
       }
-    }
-    else if(playing.tecla[0] === 68 || playing.tecla[0] === 70){
-      if(keysPlayer1[playing.tecla[0]] && keysPlayer1[playing.tecla[1]]){
+    } else if (playing.tecla[0] === 68 || playing.tecla[0] === 70) {
+      if (keysPlayer1[playing.tecla[0]] && keysPlayer1[playing.tecla[1]]) {
         compruebaAcierto(playing, 1);
       }
     }
@@ -392,9 +394,8 @@ function clic(evt) {
         compruebaAcierto(playing2, 2);
         //ponAFalse(keys);
       }
-    }
-    else if(playing2.tecla[0] === 76 || playing2.tecla[0] === 192){
-      if(keysPlayer2[playing2.tecla[0]] && keysPlayer2[playing2.tecla[1]]){
+    } else if (playing2.tecla[0] === 76 || playing2.tecla[0] === 192) {
+      if (keysPlayer2[playing2.tecla[0]] && keysPlayer2[playing2.tecla[1]]) {
         compruebaAcierto(playing2, 2);
       }
     }
@@ -405,32 +406,32 @@ function clic(evt) {
 
 function cambiaTeclas(keys) {
   var keysReturn = [];
-	if(keys[65] || keys[83] || keys[68] || keys[70]){
+  if (keys[65] || keys[83] || keys[68] || keys[70]) {
     //Las teclas del jugador 1 estan activas por lo que movemos esas teclas a un array propio
-    if(keys[65])
+    if (keys[65])
       keysReturn[65] = true;
-    if(keys[83])
-    keysReturn[83] = true;
-    if(keys[68])
-    keysReturn[68] = true;
-    if(keys[70])
-    keysReturn[70] = true;
+    if (keys[83])
+      keysReturn[83] = true;
+    if (keys[68])
+      keysReturn[68] = true;
+    if (keys[70])
+      keysReturn[70] = true;
     return keysReturn;
-  }
-	else{
-    if(keys[74] || keys[75] || keys[76] || keys[192]){
-      if(keys[74])
-      keysReturn[74] = true;
-      if(keys[75])
-      keysReturn[75] = true;
-      if(keys[76])
-      keysReturn[76] = true;
-      if(keys[192])
-      keysReturn[192] = true;
+  } else {
+    if (keys[74] || keys[75] || keys[76] || keys[192]) {
+      if (keys[74])
+        keysReturn[74] = true;
+      if (keys[75])
+        keysReturn[75] = true;
+      if (keys[76])
+        keysReturn[76] = true;
+      if (keys[192])
+        keysReturn[192] = true;
       return keysReturn;
     }
   }
 }
+
 function ponAFalse(keys) {
   keys[68] = false;
   keys[70] = false;
@@ -443,7 +444,7 @@ function ponAFalse(keys) {
 }
 
 function compruebaAcierto(playing, player) {
-  if(!multiplayer){
+  if (!multiplayer) {
     if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
       contadorBien++;
       res = rachas(50, contadorBien);
@@ -461,9 +462,8 @@ function compruebaAcierto(playing, player) {
       if (contadorMal >= 5)
         puntos -= 25;
     }
-  }
-  else{
-    if(player === 1){
+  } else {
+    if (player === 1) {
       if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
         contadorBien++;
         res = rachas(50, contadorBien);
@@ -481,8 +481,7 @@ function compruebaAcierto(playing, player) {
         if (contadorMal >= 5)
           puntos -= 25;
       }
-    }
-    else if(player === 2){
+    } else if (player === 2) {
       if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
         contadorBien2++;
         res = rachas(50, contadorBien2);
@@ -556,15 +555,18 @@ function comprueba() {
       playing = particles[actual];
     } else playing = -1;
   }
-  if (playing2 !== -1 && playing2.x <= 0) {
-    actual2 += 1;
-    if (!playing2.clicked) {
-      racha2 = 0;
-      contadorBien2 = 0;
-      document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
+
+  if (multiplayer) {
+    if (playing2 !== -1 && playing2.x <= 0) {
+      actual2 += 1;
+      if (!playing2.clicked) {
+        racha2 = 0;
+        contadorBien2 = 0;
+        document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
+      }
+      if (actual2 < particles2.length) {
+        playing2 = particles2[actual2];
+      } else playing2 = -1;
     }
-    if (actual2 < particles2.length) {
-      playing2 = particles2[actual2];
-    } else playing2 = -1;
   }
 }

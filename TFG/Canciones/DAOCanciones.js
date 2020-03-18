@@ -39,10 +39,10 @@ class DAOCanciones{
             var dbo = db.db(name);
             dbo.collection("Songs").find({"_id":new MongoClient.ObjectId(id)}).toArray(function(err, result) {
                 if (err) throw err;
-                console.log(new MongoClient.ObjectId(result[0]['_id']), iddif, multi);
+                console.log("ID CANCION: " + new MongoClient.ObjectId(result[0]['_id']), " ID DIFICULTAD: " + iddif, " MULTI: "  + multi);
                 dbo.collection("Secuencias").find({$and: [{'Songparent':new MongoClient.ObjectId(result[0]['_id'])},{'Secid':parseInt(iddif)},{'Multi':multi}]}).toArray(function(err,result2){
                     if (err) throw err;
-                    console.log(result[0], result2[0]);
+                    console.log("RESULTADO DE FIND EN SECUENCIAS: " + result2[0]);
                     var devolver = [result[0],result2[0]];
                     callback(null, devolver);
                 });
