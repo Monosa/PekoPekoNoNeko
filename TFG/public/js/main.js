@@ -14,6 +14,7 @@ var racha = 0;
 var contadorCirculos = 0;
 var canvas;
 var keys = [];
+var contextBg;
 
 window.onload = function () {
   document.onkeydown = this.clic;
@@ -39,7 +40,7 @@ window.onload = function () {
 //  Places a background image in a background canvas and draws the square over it
 function drawInitialCanvas() {
   var canvasBg = document.getElementById("bg_canvas_1");
-  var contextBg = canvasBg.getContext("2d");
+  contextBg = canvasBg.getContext("2d");
   canvasBg.width = window.innerWidth;
   canvasBg.height = 300;
   var bgImg = new Image();
@@ -327,12 +328,18 @@ function ponAFalse(keys){
   keys[75] = false;
 }
 function compruebaAcierto(e){
+  var plato2 = new Image();
+  plato2.src = '../img/plato2.png';
   if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
     contadorBien++;
     res = rachas(50, contadorBien);
     racha = res[0];
     if(racha != 0)
     puntos += res[1];
+    
+    plato2.onload = function(){
+    contextBg.drawImage(plato2,30,60);
+  }
   } else if (playing.x >= 70 && playing.x <= 90) {
     contadorBien++;
     res = rachas(100, contadorBien);
@@ -340,7 +347,13 @@ function compruebaAcierto(e){
     if(racha != 0)
     
     puntos += res[1];
+    plato2.onload = function(){
+      contextBg.drawImage(plato2,30,60);
+    }
   } else {
+    plato3.onload = function(){
+      contextBg.drawImage(plato3,30,60);
+    }
     contadorMal++;
     contadorBien = 0;
     racha = 0;
@@ -398,6 +411,11 @@ function comprueba() {
     contadorCirculos += 1;
     document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
     if(!playing.clicked){
+      var platoNormal = new Image();
+      platoNormal.src = '../img/Plato.png';
+      platoNormal.onload = function(){
+        contextBg.drawImage(platoNormal,30,60);
+      }
       racha = 0;
       contadorBien = 0;
       document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
@@ -407,9 +425,17 @@ function comprueba() {
       
     } else playing = -1;
   }
-  if(racha > 0)
-    document.getElementById("gordo").style.display = "inline";
-    else document.getElementById("gordo").style.display = "none";
+  if(racha === 2)
+    document.getElementById("one").style.display = "inline";
+  else if(racha === 3)
+    document.getElementById("three").style.display = "inline";
+  else if(racha === 4)
+    document.getElementById("five").style.display = "inline";
+  else if(racha === 0){
+     document.getElementById("one").style.display = "none";
+     document.getElementById("three").style.display = "none";
+     document.getElementById("five").style.display = "none";
+  }
 }
 
 
