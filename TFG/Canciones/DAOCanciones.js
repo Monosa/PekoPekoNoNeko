@@ -1,7 +1,4 @@
 class DAOCanciones{
-    //constructor(pool) {
-        //this.pool = pool;
-    //}
     
     getListaCanciones(MongoClient, url, name, callback) {
         MongoClient.connect(url, function(err, db) {
@@ -14,25 +11,7 @@ class DAOCanciones{
             });
         });
     }
-    /*getListaCanciones(callback) {
-        this.pool.getConnection(function (err, connection) {
-            if (err)
-                callback(new Error("Error de conexión a la base de datos"), null);
-            else {
-                const sql = `SELECT id, nombre, autor, image
-                FROM songs`;
 
-                connection.query(sql, function (err, listado) {
-                    if (err)
-						callback(new Error("Error de acceso a la base de datos en el getListaCanciones"), null);
-                    else {
-                        console.log("Respuestas leídas correctamentes");
-						callback(null, listado);
-                    }
-                })       
-            }
-        })
-    }*/
 	getCancion(MongoClient, url, name, id,iddif, multi, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
@@ -48,8 +27,10 @@ class DAOCanciones{
                 });
             });
         });
-	}
+    }
+    
     actualizaCancion(id, callback) {} //No tengo claro por que habria que actualizar alguna cancion
+
 	insertSong(MongoClient, url, name, datos, callback){
         MongoClient.connect(url, function(err, db){
             if(err) throw err;
@@ -144,8 +125,6 @@ class DAOCanciones{
             }
         });
     }
-
-
 }
 
 

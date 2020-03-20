@@ -17,7 +17,7 @@
     <div class="ripple"></div>
     <div class="panel top">
       <div class="rank">Points</div>
-      <div class="suit"><%=data[2]%></div>
+      <div class="suit"><%=data.puntos%></div>
       <div class="icon"><svg>
         <defs>
           <pattern id="img1" patternUnits="userSpaceOnUse" width="21" height="21">
@@ -28,12 +28,12 @@
         </svg></div>
     </div>
     <div class="content #{className}">
-      <div><img class="song" src="../img/<%=data[4]%>"></div>
+      <div><img class="song" src="../img/<%=data.imagen%>"></div>
     </div>
    
     <div class="panel bottom">
       <div class="rank">Points</div>
-      <div class="suit"><%=data[2]%></div>
+      <div class="suit"><%=data.puntos%></div>
       <div class="icon"><svg>
           <defs>
             <pattern id="img1" patternUnits="userSpaceOnUse" width="21" height="21">
@@ -61,7 +61,13 @@
           <% puntuaciones.forEach(function(puntuacion, index) { %>
             <tr>
               <td class="left"><%= puntuacion['Nick'] %></td>
-              <td><%= puntuacion['IdDificultad'] %></td>
+              <% if( puntuacion['IdDificultad'] === 1){ %>
+                <td>Fácil</td>
+              <% } else if( puntuacion['IdDificultad']  === 2){ %>
+                <td>Medio</td>
+              <% } else if( puntuacion['IdDificultad'] === 2){ %>
+                <td>Difícil</td>
+              <% } %>
               <td><%= puntuacion['Puntos'] %></td>
             </tr>
           <% }); %>
