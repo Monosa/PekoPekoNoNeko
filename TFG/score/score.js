@@ -14,19 +14,26 @@ Scores.post("/", function(request, response){
     let difid = request.body.iddificultad;
     let puntos = request.body.points;
     let user = request.body.user;
+    let nick = request.body.nick;
     let imagen = request.body.imagen;
-    let datos = [songid, difid, puntos, user,imagen];
-    console.log(user);
+    let datos = [songid, difid, puntos, user,imagen, nick];
     daoScores.insertScore(MongoClient, config.url, config.name, datos,function(error, id){
 
         if(error){
             response.status(500);
-            response.render("game", { id: null, errorMsg: `${error.message}`});
+            response.render("songSelectionScreen", { id: null, errorMsg: `${error.message}`});
         }else{
-            // Incluir campos ocultos en el html, leer esos campos desde el .js
-            response.status(200);            
-            console.log(id);
-            response.render("scoreScreen", { data:datos, errorMsg: null });
+            // Incluir campos ocultos en el html, leer esos campos desde el .js 
+            daoScores.getScoresFrom(MongoClient, config.url, config.name, songid, function(error, result){
+                if(error){
+                    response.status(500);
+                    response.render("songSelectionScreen", { id: null, errorMsg: `${error.message}`});
+                }else{
+                    // Incluir campos ocultos en el html, leer esos campos desde el .js
+                    response.status(200);
+                    response.render("scoreScreen", { data:datos, puntuaciones: result, errorMsg: null });
+                }
+            });
         }
     });
 });

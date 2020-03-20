@@ -546,104 +546,39 @@ body {
     margin-top: 4%;
     animation: aparecetabla 3s forwards 5s;
 }
-h1 {
-    font-size:3em; 
-    font-weight: 300;
-    line-height:1em;
-    text-align: center;
-    color: #4DC3FA;
-  }
-  
-  h2 {
-    font-size:1em; 
-    font-weight: 300;
-    text-align: center;
-    display: block;
-    line-height:1em;
-    padding-bottom: 2em;
-    color: #FB667A;
-  }
-  
-  h2 a {
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #FB667A;
-    text-decoration: none;
-  }
-  
-  .blue { color: #185875; }
-  .yellow { color: #FFF842; }
-  
-  .tabla th h1 {
-        font-weight: bold;
-        font-size: 1em;
+.cardTable {
+    background: #fff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .12);
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+.table .row-header {
+    color: #9e9e9e;
+}
+.table tr {
+    border-bottom: 1px solid #bdbdbd;
+}
+.table tr:last-child {
+    border: 0;
+}
+.table td {
+    text-align: right;
+    padding: 1.4rem 1rem;
+}
+.table .left {
     text-align: left;
-    color: #185875;
-  }
-  
-  .tabla td {
-        font-weight: normal;
-        font-size: 1em;
-    -webkit-box-shadow: 0 2px 2px -2px #0E1119;
-         -moz-box-shadow: 0 2px 2px -2px #0E1119;
-              box-shadow: 0 2px 2px -2px #0E1119;
-  }
-  
-  .tabla {
-        text-align: left;
-        overflow: hidden;
-        width: 100%;
-        margin: 0;
-    display: table;
-  }
-  
-  .tabla td, .tabla th {
-        padding-bottom: 2%;
-        padding-top: 2%;
-    padding-left:2%;  
-  }
-  
-  /* Background-color of the odd rows */
-  .tabla tr:nth-child(odd) {
-        background-color: #323C50;
-  }
-  
-  /* Background-color of the even rows */
-  .tabla tr:nth-child(even) {
-        background-color: #2C3446;
-  }
-  
-  .tabla th {
-        background-color: #1F2739;
-  }
-  
-  .tabla td:first-child { color: #FB667A; }
-  
-  .tabla tr:hover {
-     background-color: #464A52;
-  -webkit-box-shadow: 0 6px 6px -6px #0E1119;
-         -moz-box-shadow: 0 6px 6px -6px #0E1119;
-              box-shadow: 0 6px 6px -6px #0E1119;
-  }
-  
-  .tabla td:hover {
-    background-color: #FFF842;
-    color: #403E10;
-    font-weight: bold;
-    
-    box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
-    transform: translate3d(6px, -6px, 0);
-    
-    transition-delay: 0s;
-        transition-duration: 0.4s;
-        transition-property: all;
-    transition-timing-function: line;
-  }
-  
-  @media (max-width: 800px) {
-  .tabla td:nth-child(4),
-  .tabla th:nth-child(4) { display: none; }
-  }
+}
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+    background-color: rgba(56, 142, 60, 0.125);
+}
+.table-hover > tbody > tr:hover {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .12);
+}
+
   @keyframes aparecetabla {
       to{opacity: 100%;}
   }

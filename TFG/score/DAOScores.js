@@ -8,7 +8,6 @@ class DAOScores{
                 dbo.collection("Scores").find({$and: [{'IdCancion':new MongoClient.ObjectID(datos[0])},{'IdDificultad':parseInt(datos[1])},{'UserId':oid}]}).toArray(function(err,result){
                     if (err) throw err;
                     else{
-                        console.log("La consulta devuelve ", result.length);
                         if(result.length > 0){
                             //Si los nuevos puntos son mayores que la puntuacion anterior actualizamos
                             
@@ -28,6 +27,7 @@ class DAOScores{
                         else{
                             dbo.collection("Scores").insertOne({
                                 "UserId":  oid,
+                                "Nick": datos[5],
                                 "IdCancion": new MongoClient.ObjectID(datos[0]),
                                 "IdDificultad": parseInt(datos[1]),
                                 "Puntos": parseInt(datos[2])
@@ -41,6 +41,22 @@ class DAOScores{
                                 }
                             });
                         }
+                    }
+                });
+            }
+        });
+    }
+
+    getScoresFrom(MongoClient, url, name, songid, callback){
+        MongoClient.connect(url, function(err, db){
+            if(err) throw err;
+            else{
+                var dbo = db.db(name);
+                dbo.collection("Scores").find({'IdCancion':new MongoClient.ObjectID(songid)}).toArray(function(err,result){
+                    if(err) throw err;
+                    else{
+                        callback(null, result);
+                        db.close();
                     }
                 });
             }

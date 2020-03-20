@@ -41,7 +41,7 @@ Canciones.post("/play", function(request, response){
     let iddificultad = request.body.iddificultad;
     let user = request.session.currentUserId;
     let multi = request.session.multijugador;
-    console.log("Multi vale " + multi);
+    let nickname = request.session.currentUserNickname;
     daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion, iddificultad, multi, function(error, cancion){
 
         if(error){
@@ -49,7 +49,7 @@ Canciones.post("/play", function(request, response){
             response.render("songSelection", { canciones: null, errorMsg: `${error.message}`});
         }else{
             response.status(200);
-            response.render("game", { tiempos: JSON.stringify(cancion[1]['Value']['tiempos']), song: cancion[0], difid: iddificultad, userid: user, errorMsg: null });
+            response.render("game", { tiempos: JSON.stringify(cancion[1]['Value']['tiempos']), song: cancion[0], difid: iddificultad, userid: user, nick: nickname, errorMsg: null });
         }
     });
 });
