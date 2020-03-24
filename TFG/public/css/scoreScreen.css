@@ -12,13 +12,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 #mainmenu{
-    
-    margin: auto;
-    display: block;
+    margin: 0% 10%;
+    opacity: 0%;
     background-color: #f8a0a5;
     color: white;
     border-radius: 10px;
     height: 50px;
+    animation: movebutton 3s forwards 5s;
+}
+@keyframes movebutton {
+    to{margin: 9% 20%; opacity: 100%;}
 }
 /* Pen Title */
 .pen-title {
@@ -175,6 +178,11 @@ body {
    /* color: #C3E88D;
     */
 }
+.contenedor {
+    margin-left: 2%;
+    margin-top: 2%;
+   animation: floattoleft 3s forwards 4s;
+}
 /* Card */
 .card {
     z-index: 1;
@@ -189,6 +197,8 @@ body {
     line-height: 1;
     overflow-x: hidden;
     overflow-y: hidden;
+    
+    
 }
 .card .panel {
     position: absolute;
@@ -244,6 +254,7 @@ body {
     padding: 110px 20px;
     box-sizing: border-box;
     text-align: center;
+   
 }
 .card .content div {
     display: table-cell;
@@ -312,7 +323,7 @@ body {
 .card {
     position: relative;
     margin: 0 auto 100px;
-    animation: card 1s ease;
+    animation: card 1s ease, movetoleft 0s 5s forwards;
 }
 .card .panel {
     animation: slideInTop 3s ease;
@@ -442,6 +453,12 @@ body {
         opacity: 0;
    }
 }
+@keyframes movetoleft {
+    to {margin: 0;}
+}
+@keyframes floattoleft {
+    to {float: left;}
+}
 .song{
     max-width: 80%;
 }
@@ -519,3 +536,49 @@ body {
     animation: ripple 0.6s linear;
 }
 
+/* CSS tabla puntuaciones */
+.contenedortabla {
+    opacity: 0%;
+    width: 68%;
+    float: right;
+    /* overflow: hidden; */
+    margin-right: 4%;
+    margin-top: 4%;
+    animation: aparecetabla 3s forwards 5s;
+}
+.cardTable {
+    background: #fff;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .12);
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+.table .row-header {
+    color: #9e9e9e;
+}
+.table tr {
+    border-bottom: 1px solid #bdbdbd;
+}
+.table tr:last-child {
+    border: 0;
+}
+.table td {
+    text-align: right;
+    padding: 1.4rem 1rem;
+}
+.table .left {
+    text-align: left;
+}
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+    background-color: rgba(56, 142, 60, 0.125);
+}
+.table-hover > tbody > tr:hover {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .12);
+}
+
+  @keyframes aparecetabla {
+      to{opacity: 100%;}
+  }

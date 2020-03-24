@@ -89,10 +89,34 @@ Crea.post("/guardarNivel", function (request, response) {
   console.log("Entrada en la función guardarNivel");
   let datos = {
     songparent: request.body.songparent,
+    multi: false,
     value: JSON.parse(request.body.secValue)
   }
-
+  let datosMulti = {
+    songparent: request.body.songparent,
+    multi: true,
+    value: JSON.parse(request.body.secValueMulti)
+  }
   daoCanciones.insertSecuencia(MongoClient, config.url, config.name, datos, function (error, result) {
+    if (error) {
+      response.status(500);
+      response.render("creaFase1", {
+        id: null,
+        errorMsg: `${error.message}`
+      });
+    } else {
+      daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
+        if (error) {
+            response.status(500);
+            console.log(`${error.message}`);
+        } else {
+            response.status(200);
+            response.render("songSelection", { canciones: listaCanciones, errorMsg: null });
+        }
+    });
+  }
+  });
+  daoCanciones.insertSecuencia(MongoClient, config.url, config.name, datosMulti, function (error, result) {
     if (error) {
       response.status(500);
       response.render("creaFase1", {
