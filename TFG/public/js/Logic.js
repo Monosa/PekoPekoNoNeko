@@ -1,5 +1,6 @@
 //La letra j es la tecla 106 y la k es la 107
-var obj = { tiempos: []};
+var obj = { tiempos: [] };
+var objMulti = { tiempos: [] };
 var multiplayer = false;
 var mss = 0;
 var keys = [];
@@ -21,8 +22,12 @@ window.onload = function () {
   }
 
   document.getElementById("descarga").onclick = function(){
+    
     document.getElementById("value").value = JSON.stringify(obj);
+    document.getElementById("valueMulti").value = JSON.stringify(objMulti);
+
     document.forms["submitCreatedLevel"].submit();
+
   }
 };
 
@@ -114,20 +119,37 @@ function download_song() {
 
 function mostrarInformacionTecla(evObject) {
   var tecla = evObject.keyCode;
+  var teclaMulti1, teclaMulti2;
   keys[tecla] = true;
 
   var t = {
     tiempo: mss,
     tecla: [tecla, complementario(tecla)]
   }
+  if(tecla === 68 || tecla === 75){
+    teclaMulti1 = [83,68];
+    teclaMulti2 = [75,76];
+  }
+  else if(tecla === 70 || tecla === 74){
+    teclaMulti1 = [65,70];
+    teclaMulti2 = [74,192];
+  }
+  var tMulti = {
+    tiempo: mss,
+    tecla: teclaMulti1,
+    tecla2: teclaMulti2
+  }
 
   if (tecla === 68 || tecla === 70) {
     t.tipo = 300;
+    tMulti.tipo = 300;
   }else if(tecla === 74 || tecla == 75){
     t.tipo = 600
+    tMulti.tipo = 600;
   }
 
   obj.tiempos.push(t);
+  objMulti.tiempos.push(tMulti);
 }
 
 function complementario(tecla){

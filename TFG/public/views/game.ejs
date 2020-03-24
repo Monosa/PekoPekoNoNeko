@@ -17,48 +17,48 @@
 
   <div id="tiempos" style="display: none;">
     <%=tiempos%>
-    
   </div>
-  
-  </div>  
  
 
   <div class="container">
 
     <audio id="player" src="../media/countdown.mp3" type="audio/mpeg" autoplay preload="auto"></audio>
-    <audio id="myAudio" src="../media/<%=song%>" type="audio/mpeg"></audio>
+    <audio id="myAudio" src="../media/<%=song.Cancion%>" type="audio/mpeg"></audio>
 
     
     <div id="bg-player1">
       <div id="info">
-        <div id="control"> </div>
-        <div class="cronometro">
-          <div id="hms"></div>
-        </div>
-        <div id="pin"></div>
         <div id="puntos">
           <div id = "puntos-p1"></div>
           <div id = "racha-p1"></div>
           <div id= "Contador"></div>
-          <div id="puntos-p2" style="visibility: hidden;"></div>
         </div>
-        <canvas id="gifCanvas"></canvas>
+        <canvas id="gifCanvas1"></canvas>
       </div>
       <canvas id="bg_canvas_1"></canvas>
       <canvas id="canvas-1"></canvas>
-      
     </div>
 
     <div id="bg-player2" style="visibility: hidden;">
+      <div id="info">
+        <div id="puntos2">
+          <div id = "puntos-p2"></div>
+          <div id = "racha-p2"></div>
+          <div id= "Contador"></div>
+        </div>
+        <canvas id="gifCanvas2"></canvas>
+      </div>
       <canvas id="bg_canvas_2"></canvas>
       <canvas id="canvas-2"></canvas>
     </div>
+
     <form name="submitScore" action="/score" method="post">
-      <input type="hidden" name="idcancion" value="<%= songid %>">
+      <input type="hidden" name="idcancion" value="<%= song._id %>">
       <input type="hidden" name="iddificultad" value="<%= difid %>">
       <input type="hidden" id="usePoints" name="points" value=''>
       <input type="hidden" name="user" value="<%=userid%>">
-      <input type="hidden" name="imagen" value="<%=imagen%>"">
+      <input type="hidden" name="nick" value="<%=nick%>">
+      <input type="hidden" name="imagen" value="<%=song.Imagen%>"">
       
     </form>
     

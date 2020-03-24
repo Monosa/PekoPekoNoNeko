@@ -10,23 +10,30 @@ Scores.use(bodyParser.json());
 
 
 Scores.post("/", function(request, response){
-    let songid = request.body.idcancion;
-    let difid = request.body.iddificultad;
-    let puntos = request.body.points;
-    let user = request.body.user;
-    let imagen = request.body.imagen;
-    let datos = [songid, difid, puntos, user,imagen];
-    console.log(user);
-    daoScores.insertScore(MongoClient, config.url, config.name, datos,function(error, id){
+    let datos = {
+        songid: request.body.idcancion,
+        difid: request.body.iddificultad,
+        puntos: request.body.points,
+        user: request.body.user,
+        imagen: request.body.imagen,
+        nick: request.body.nick
+    }
+
+    daoScores.insertScore(MongoClient, config.url, config.name, datos, function(error, id){
 
         if(error){
             response.status(500);
-            response.render("game", { id: null, errorMsg: `${error.message}`});
+            response.render("songSelectionScreen", { id: null, errorMsg: `${error.message}`});
         }else{
-            // Incluir campos ocultos en el html, leer esos campos desde el .js
-            response.status(200);            
-            console.log(id);
-            response.render("scoreScreen", { data:datos, errorMsg: null });
+            daoScores.getScoresFrom(MongoClient, config.url, config.name, datos.songid, function(error, result){
+                if(error){
+                    response.status(500);
+                    response.render("songSelectionScreen", { id: null, errorMsg: `${error.message}`});
+                }else{
+                    response.status(200);
+                    response.render("scoreScreen", { data: datos, puntuaciones: result, errorMsg: null });
+                }
+            });
         }
     });
 });

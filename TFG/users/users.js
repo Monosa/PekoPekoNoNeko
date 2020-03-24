@@ -60,6 +60,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
             user.password = request.body.password_user;
             user.name = request.body.name_user;
             user.nickname = request.body.nickname_user;
+            user.multi = false;
             user.image = null;
 
             if (request.file) {
@@ -83,6 +84,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                             response.status(200);
                             request.session.currentUserNickname = user.nickname;
                             request.session.currentUserId = user.id;
+                            request.session.multijugador = user.multi;
                             //console.log(request.session.currentUserNickname, request.session.currentUserId);
                             if(user.image !== null)
                                 request.session.currentUserImg = true;
