@@ -46,7 +46,7 @@ class DAOScores{
         });
     }
 
-    getScoresFrom(MongoClient, url, name, songid, callback){
+    getSongScores(MongoClient, url, name, songid, callback){
         MongoClient.connect(url, function(err, db){
             if(err) throw err;
             else{
@@ -62,5 +62,20 @@ class DAOScores{
         });
     }
     
+    getUserSongScores(MongoClient, url, name, songid, nick, callback){
+        MongoClient.connect(url, function(err, db){
+            if(err) throw err;
+            else{
+                var dbo = db.db(name);
+                dbo.collection("Scores").find({$and: [{'IdCancion': new MongoClient.ObjectID(songid)}, {'Nick': nick}]}, {$orderby: { 'Puntos': -1 }}).toArray(function(err,result){
+                    if(err) throw err;
+                    else{
+                        callback(null, result);
+                        db.close();
+                    }
+                });
+            }
+        });
+    }
 }
 module.exports = DAOScores;
