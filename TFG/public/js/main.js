@@ -115,38 +115,20 @@ function drawPattern(context, canvas, bgImg) {
   }
 }
 
-function loadDorayakis(canvas, context, aCtx, rCtx, dCtx) {
+function loadDorayakis(canvas, context) {
   // a ghost canvas that will keep our original image
   //Canvas rojo
   //img c es por chiquito r es por rojo, g es por grande, a es por azul
   var imgcr = new Image();
   var imgca = new Image();
   var imgcd = new Image();
-
-  imgcr.onload = function () {
-    context.drawImage(imgcr, 0, 0, canvas.width, canvas.height);
-    rCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-    //requestAnimationFrame(animate);
-  }
-
   imgcr.src = "../img/RojoChiquito2.png";
-
-  imgca.onload = function () {
-    context.drawImage(imgca, 0, 0, canvas.width, canvas.height);
-    aCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-    //requestAnimationFrame(animate);
-  }
   imgca.src = "../img/AzulEscalado.png";
-
-  imgcd.onload = function () {
-    context.drawImage(imgcd, 0, 0, canvas.width, canvas.height);
-    dCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-    //requestAnimationFrame(animate);
-  }
   imgcd.src = "../img/dango2.png";
+  return [imgcr, imgca, imgcd];
 }
 
-function animate(time, context, canvas, particles, rCanvas, aCanvas, dCanvas) {
+function animate(time, context, canvas, particles, imgs) {
   // set startTime if it isn't already set
   if (startTime === null) {
     startTime = time;
@@ -172,14 +154,14 @@ function animate(time, context, canvas, particles, rCanvas, aCanvas, dCanvas) {
     }
 
     // draw this arc at its current position
-    drawParticle(part, context, rCanvas, aCanvas, dCanvas);
+    drawParticle(part, context, imgs);
   }
 
   // if update() reported that it moved something
   // then request another animation loop
   if (continueAnimating) {
     window.requestAnimationFrame(function (time) {
-      animate(time, context, canvas, particles, rCanvas, aCanvas, dCanvas)
+      animate(time, context, canvas, particles, imgs)
     });
   }
 }
@@ -215,7 +197,7 @@ function update(part, elapsedTime) {
 }
 
 
-function drawParticle(part, context, rCanvas, aCanvas, dCanvas) {
+function drawParticle(part, context, imgs) {
   //74 y 70 son sushis, 75 68 son dorayakis
   context.beginPath();
   var tam = [0, 0];
@@ -236,17 +218,17 @@ function drawParticle(part, context, rCanvas, aCanvas, dCanvas) {
       }
       //En este caso se dibujan sushis
       if (part.tecla[0] === 75 || part.tecla[0] === 68) {
-        context.drawImage(rCanvas, part.x, y, tam[0], tam[1]);
+        context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
 
       }
       //En este caso se dibujan dorayakis
       else if (part.tecla[0] === 70 || part.tecla[0] === 74) {
-        context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
+        context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
       }
     }
     //Dibujamos el dango
     else{
-      context.drawImage(dCanvas, part.x, 60,728,170);
+      context.drawImage(imgs[2], part.x, 60,728,170);
     }
   }
   //Caso para el multijugador
@@ -266,15 +248,15 @@ function drawParticle(part, context, rCanvas, aCanvas, dCanvas) {
       }
       //En este caso se dibujan sushis
       if (part.tecla[0] === 70 || part.tecla[0] === 68 || part.tecla[0] === 76 || part.tecla[0] === 192) {
-        context.drawImage(rCanvas, part.x, y, tam[0], tam[1]);
+        context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
       }
       //En este caso se dibujan dorayakis
       else if (part.tecla[0] === 75 || part.tecla[0] === 74 || part.tecla[0] === 65 || part.tecla[0] === 83) {
-        context.drawImage(aCanvas, part.x, y, tam[0], tam[1]);
+        context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
       }
     }
     else{
-      context.drawImage(dCanvas, part.x, 60, 728, 170);
+      context.drawImage(imgs[2], part.x, 60, 728, 170);
     }
   }
 }
@@ -283,20 +265,7 @@ function cargarJuego() {
   var canvas2, context2;
   var canvas = document.getElementById("canvas-1");
   var context = canvas.getContext("2d");
-  var rCanvas = document.createElement('canvas');
-  var rCtx = rCanvas.getContext('2d');
-  rCanvas.width = canvas.width;
-  rCanvas.height = canvas.height;
-  //Canvas azul
-  var aCanvas = document.createElement('canvas');
-  var aCtx = aCanvas.getContext('2d');
-  aCanvas.width = canvas.width;
-  aCanvas.height = canvas.height;
-  //Canvas dango
-  var dCanvas = document.createElement('canvas');
-  var dCtx = dCanvas.getContext('2d');
-  dCanvas.width = canvas.width;
-  dCanvas.height = canvas.height;
+  
 
 
   if (multiplayer) {
@@ -305,20 +274,6 @@ function cargarJuego() {
     document.getElementById("bg-player2").style.top = "60%";
     canvas2 = document.getElementById("canvas-2");
     context2 = canvas2.getContext("2d");
-    var rCanvas2 = document.createElement('canvas');
-    var rCtx2 = rCanvas2.getContext('2d');
-    rCanvas2.width = canvas2.width;
-    rCanvas2.height = canvas2.height;
-    //Canvas azul
-    var aCanvas2 = document.createElement('canvas');
-    var aCtx2 = aCanvas2.getContext('2d');
-    aCanvas2.width = canvas.width;
-    aCanvas2.height = canvas.height;
-     //Canvas dango
-    var dCanvas2 = document.createElement('canvas');
-    var dCtx2 = dCanvas.getContext('2d');
-    dCanvas2.width = canvas.width;
-    dCanvas2.height = canvas.height;
   }
 
   $("#player").bind("ended", function () {
@@ -326,10 +281,10 @@ function cargarJuego() {
     x.play();
     comprobar();
 
-    loadDorayakis(canvas, context, aCtx, rCtx, dCtx);
+    var imgs = loadDorayakis(canvas, context);
 
     if (multiplayer) {
-      loadDorayakis(canvas2, context2, aCtx2, rCtx2, dCtx2);
+      loadDorayakis(canvas2, context2);
 
       for (var i = 0; i < tiempos.length; i++) {
         particles2.push({
@@ -361,12 +316,12 @@ function cargarJuego() {
     playing = particles[0];
 
     window.requestAnimationFrame(function (time) {
-      animate(time, context, canvas, particles, rCanvas, aCanvas, dCanvas);
+      animate(time, context, canvas, particles, imgs);
     });
 
     if (multiplayer) {
       window.requestAnimationFrame(function (time) {
-        animate(time, context2, canvas2, particles2, rCanvas2, aCanvas2, dCanvas2);
+        animate(time, context2, canvas2, particles2, imgs);
       });
     }
   });
@@ -445,6 +400,7 @@ function clic(evt) {
   }
   else{
     //Caso un jugador para dango
+    console.log("Ha entrado");
     if(!multiplayer){
       if(playing.x <= 115 && (evt.keyCode === 68 || evt.keyCode === 70 || evt.keyCode === 74 || evt.keyCode === 75)){
         pulsacionesDango1 += 1;
@@ -630,16 +586,21 @@ function comprueba() {
     }
   }
   else{
-    if(playing !== -1 && playing.x > -647){
+    if(playing !== -1 && playing.x < -500){
+      console.log("Pulsaciones = " + pulsacionesDango1);
+      puntos += pulsacionesDango1 * 100;
       actual += 1;
       contadorCirculos += 1;
+      document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
       document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
       if (actual < particles.length) {
         playing = particles[actual];
       } else playing = -1;
       if (multiplayer) {
-        if (playing2 !== -1 && playing2.x > -647) {
+        if (playing2 !== -1 && playing2.x < -500) {
+          puntos2 += pulsacionesDango2 * 100;
           actual2 += 1;
+          document.getElementById("puntos-p2").innerHTML = "Puntos: " + puntos2;
           if (actual2 < particles2.length) {
             playing2 = particles2[actual2];
           } else playing2 = -1;
