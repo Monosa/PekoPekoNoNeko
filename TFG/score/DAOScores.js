@@ -61,6 +61,22 @@ class DAOScores{
             }
         });
     }
+
+    getAllScores(MongoClient, url, name, callback){
+        MongoClient.connect(url, function(err, db){
+            if(err) throw err;
+            else{
+                var dbo = db.db(name);
+                dbo.collection("Scores").find({}).toArray(function(err, scores){
+                    if(err) throw err;
+                    else{
+                        callback(null, scores);
+                        db.close();
+                    }
+                });
+            }
+        });
+    }
     
     getUserSongScores(MongoClient, url, name, songid, nick, callback){
         MongoClient.connect(url, function(err, db){

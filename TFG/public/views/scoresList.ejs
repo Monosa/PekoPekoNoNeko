@@ -32,45 +32,36 @@
 </nav>
 <body>
     <div class="contenedor">
-      <div class="container text-center my-3">
-        <div id="boxes" class="row mx-auto my-auto">
-            <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
-                <div class="carousel-inner w-100" role="listbox">
-                    <% if(canciones !== null) { %>
-                        <% canciones.forEach(function(cancion, index) { %>
-                          <div id="elem<%=index%>" class="carousel-item">
-                            <div class="col-md-4">
-                              <div class="card card-body">
-                                <img class="img-fluid" src="../img/<%= cancion['Imagen'] %>" width=>
-                              </div>
-                              <div>
-                                <h2 class="mdc-typography mdc-typography--headline6"><%= cancion['Nombre'] %></h2>
-                                <h3 class="mdc-typography mdc-typography--subtitle2"><%= cancion['Autor'] %></h3>
-                              </div>
-                              <div class="mdc-card__actions">
-                                <div class="mdc-card__action-buttons">
-                                  <form action="/score/songscores" method="POST">
-                                    <input type="hidden" name="idcancion" value=<%= cancion['_id'] %>>
-                                    <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Puntuaciones</button>
-                                  </form>
-                                </div>
-                              </div>  
-                            </div>
-                          </div>
-                            <% }); %>
-                      <% } %>
-                    </div>
-                    <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
-        </div><br>
+      <ul class="listaCaciones">
+        <% canciones.forEach(function(cancion, index){ %>
+          <table class="song">
+            <thead>
+              <tr>
+                <td class="songName"> <%= cancion['Nombre'] %> </td>
+                <td class="songAuthor"> <%= cancion['Autor'] %></td>
+              </tr>
+            </thead>
+            <tbody>
+              <% puntuaciones.forEach(function(puntuacion, index){ %>
+                <% if(puntuacion['IdCancion'] === cancion['_id']) { %>
+                  <% console.log("Entrada en if"); %>
+                  <tr>
+                    <td class="scoreNick"> <%= puntuacion['Nick'] %></td>
+                    <% if( puntuacion['IdDificultad'] === 1){ %>
+                      <td class="scoreDif">Fácil</td>
+                    <% } else if( puntuacion['IdDificultad']  === 2){ %>
+                      <td class="scoreDif">Medio</td>
+                    <% } else if( puntuacion['IdDificultad'] === 2){ %>
+                      <td class="scoreDif">Difícil</td>
+                    <% } %>
+                    <td class="scorePoints"> <%= puntuacion['Puntos'] %></td>
+                  </tr>
+                <% } %>
+              <% }) %>
+            </tbody>
+          </table>
+        <% }); %>
+      </ul>
     </div>
 </body>
 
