@@ -1,68 +1,77 @@
 <!DOCTYPE html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Peko Peko No Neko</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">    
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/songSelection.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/hamburguesa.css">   
-    <link href="../css/material-components-web.min.css" rel="stylesheet">
-    <link href="../css/switcher.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="../js/material-components-web.min.js"></script>
-    <script src="../js/jquery-3.3.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/songSelection.js"></script>    
+  <meta charset="utf-8">
+  <title>Peko Peko No Neko</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/songSelection.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/scoresList.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/hamburguesa.css">
+  <link href="../css/material-components-web.min.css" rel="stylesheet">
+  <link href="../css/switcher.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="../js/material-components-web.min.js"></script>
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/songSelection.js"></script>
 </head>
-  <!-- hamburger -->
-  <input type="checkbox" id="navi-toggle" class="checkbox" />
-  <label for="navi-toggle" class="button">
-    <span class="icon">&nbsp;</span>
-  </label>
-  <div class="background">&nbsp;</div>
+<!-- hamburger -->
+<input type="checkbox" id="navi-toggle" class="checkbox" />
+<label for="navi-toggle" class="button">
+  <span class="icon">&nbsp;</span>
+</label>
+<div class="background">&nbsp;</div>
 
-  <!-- nav -->
-  <nav class="nav">
-    <ul class="list">
-      <li class="item"> <a href="/users/sesion" class="link">Perfil </a> </li>
-      <li class="item"> <a href="/score/scoreslist" class="link"> Puntuaciones </a> </li>
-      <li class="item"> <a class="link"> Link 4 </a> </li>
-      <li class="item"> <a href="/users/logout" class="link"> Cerrar Sesión </a> </li>
-    </ul>
+<!-- nav -->
+<nav class="nav">
+  <ul class="list">
+    <li class="item"> <a href="/users/sesion" class="link">Perfil </a> </li>
+    <li class="item"> <a href="/score/scoreslist" class="link"> Puntuaciones </a> </li>
+    <li class="item"> <a class="link"> Link 4 </a> </li>
+    <li class="item"> <a href="/users/logout" class="link"> Cerrar Sesión </a> </li>
+  </ul>
 </nav>
+
 <body>
-    <div class="contenedor">
-      <ul class="listaCaciones">
-        <% canciones.forEach(function(cancion, index){ %>
-          <table class="song">
-            <thead>
-              <tr>
-                <td class="songName"> <%= cancion['Nombre'] %> </td>
-                <td class="songAuthor"> <%= cancion['Autor'] %></td>
-              </tr>
-            </thead>
-            <tbody>
-              <% puntuaciones.forEach(function(puntuacion, index){ %>
-                <% if(puntuacion['IdCancion'] === cancion['_id']) { %>
-                  <% console.log("Entrada en if"); %>
-                  <tr>
-                    <td class="scoreNick"> <%= puntuacion['Nick'] %></td>
-                    <% if( puntuacion['IdDificultad'] === 1){ %>
-                      <td class="scoreDif">Fácil</td>
-                    <% } else if( puntuacion['IdDificultad']  === 2){ %>
-                      <td class="scoreDif">Medio</td>
-                    <% } else if( puntuacion['IdDificultad'] === 2){ %>
-                      <td class="scoreDif">Difícil</td>
-                    <% } %>
-                    <td class="scorePoints"> <%= puntuacion['Puntos'] %></td>
-                  </tr>
-                <% } %>
-              <% }) %>
-            </tbody>
-          </table>
-        <% }); %>
-      </ul>
-    </div>
+  <div class="titulo">
+    <h2> Ránking de puntuaciones </h2>
+  </div>
+  <div class="listaCanciones">
+    <ul>
+      <% canciones.forEach(function(cancion, index){ %>
+      <li class="song">
+        <a href="#"> <img src="../img/<%= cancion['Imagen'] %>" style="width: 8%; height: 8%;"> <%= cancion['Nombre'] %>
+          - <%= cancion['Autor'] %> </a>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <td class="left row-header">Jugador</td>
+              <td class="row-header">Dificultad</td>
+              <td class="row-header">Puntuación</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% puntuaciones.forEach(function(puntuacion, index){ %>
+            <% if(puntuacion['IdCancion'].equals(cancion['_id']) == true ) { %>
+            <tr>
+              <td class="left"> <%= puntuacion['Nick'] %></td>
+              <% if( puntuacion['IdDificultad'] === 1){ %>
+              <td>Fácil</td>
+              <% } else if( puntuacion['IdDificultad']  === 2){ %>
+              <td>Medio</td>
+              <% } else if( puntuacion['IdDificultad'] === 3){ %>
+              <td>Difícil</td>
+              <% } %>
+              <td> <%= puntuacion['Puntos'] %></td>
+            </tr>
+            <% }%>
+            <% }) %>
+          </tbody>
+        </table>
+      </li>
+      <% }); %>
+    </ul>
+  </div>
 </body>
 
 </html>

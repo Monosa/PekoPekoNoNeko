@@ -1,0 +1,73 @@
+.titulo{
+    display: flex;
+    justify-content: center;
+    padding: 2%;
+}
+
+.listaCanciones{
+    display: flex;
+    justify-content: center;
+}
+
+.listaCanciones ul {
+    width: 60%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.listaCanciones a {
+    display: block;
+    padding: 1%;
+    background-color: #4bb04f;
+    text-decoration: none;
+    color: #191C26;
+}
+
+.listaCanciones li {
+    padding: 1%;
+}
+
+.listaCanciones a:hover {
+    background-color: #358e39;
+    text-decoration: none;
+    color: black;
+}
+
+.listaCanciones ul li table {
+    display: none;
+}
+
+.listaCanciones ul li a:hover + table, .listaCanciones ul li table:hover {
+    display: table;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    background-color: #add493;
+}
+
+.table td {
+    text-align: right;
+    padding: 1.4rem 1rem;
+}
+
+.table .row-header {
+    color: #9e9e9e;
+}
+
+.table tr {
+    border-bottom: 1px solid #bdbdbd;
+}
+
+.table tr:last-child {
+    border: 0;
+}
+
+
+
+.table .left {
+    text-align: left;
+}

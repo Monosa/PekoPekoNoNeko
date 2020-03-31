@@ -67,7 +67,7 @@ class DAOScores{
             if(err) throw err;
             else{
                 var dbo = db.db(name);
-                dbo.collection("Scores").find({}).toArray(function(err, scores){
+                dbo.collection("Scores").find({}).sort({ 'Puntos': -1 }).toArray(function(err, scores){
                     if(err) throw err;
                     else{
                         callback(null, scores);
@@ -83,7 +83,7 @@ class DAOScores{
             if(err) throw err;
             else{
                 var dbo = db.db(name);
-                dbo.collection("Scores").find({$and: [{'IdCancion': new MongoClient.ObjectID(songid)}, {'Nick': nick}]}, {$orderby: { 'Puntos': -1 }}).toArray(function(err,result){
+                dbo.collection("Scores").find({$and: [{'IdCancion': new MongoClient.ObjectID(songid)}, {'Nick': nick}]}).sort({ 'Puntos': -1 }).toArray(function(err,result){
                     if(err) throw err;
                     else{
                         callback(null, result);
