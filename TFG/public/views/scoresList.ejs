@@ -3,17 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>Peko Peko No Neko</title>
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/songSelection.css">
   <link rel="stylesheet" type="text/css" media="screen" href="../css/scoresList.css">
   <link rel="stylesheet" type="text/css" media="screen" href="../css/hamburguesa.css">
   <link href="../css/material-components-web.min.css" rel="stylesheet">
-  <link href="../css/switcher.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="../js/material-components-web.min.js"></script>
-  <script src="../js/jquery-3.3.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/songSelection.js"></script>
 </head>
 <!-- hamburger -->
 <input type="checkbox" id="navi-toggle" class="checkbox" />
@@ -40,8 +33,9 @@
     <ul>
       <% canciones.forEach(function(cancion, index){ %>
       <li class="song">
-        <a href="#"> <img src="../img/<%= cancion['Imagen'] %>" style="width: 8%; height: 8%;"> <%= cancion['Nombre'] %>
-          - <%= cancion['Autor'] %> </a>
+        <a href="#"> <img src="../img/<%= cancion['Imagen'] %>" style="width: 8%; height: 8%;">
+          <%= cancion['Nombre'] %> - <%= cancion['Autor'] %> 
+        </a>
         <table class="table table-hover">
           <thead>
             <tr>
