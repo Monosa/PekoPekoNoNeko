@@ -1,9 +1,13 @@
 //La letra j es la tecla 106 y la k es la 107
-var obj = { tiempos: [] };
-var objMulti = { tiempos: [] };
-var multiplayer = false;
-var mss = 0;
-var keys = [];
+let obj = { tiempos: [] };
+let objMulti = { tiempos: [] };
+let objTercios = { tiempos: [] };
+let objMultiTercios = { tiempos: [] };
+let objMitad = { tiempos: [] };
+let objMultiMitad = { tiempos: [] };
+let multiplayer = false;
+let mss = 0;
+let keys = [];
 
 
 window.onload = function () {
@@ -18,6 +22,7 @@ window.onload = function () {
   }
 
   document.getElementById("myAudio").onended = function () {
+    calcula();
     document.getElementById("descarga").style.display = "block";
   }
 
@@ -25,7 +30,10 @@ window.onload = function () {
     
     document.getElementById("value").value = JSON.stringify(obj);
     document.getElementById("valueMulti").value = JSON.stringify(objMulti);
-
+    document.getElementById("valueTercios").value = JSON.stringify(objTercios);
+    document.getElementById("valueMultiTercios").value = JSON.stringify(objMultiTercios);
+    document.getElementById("valueMitad").value = JSON.stringify(objMitad);
+    document.getElementById("valueMultiMitad").value = JSON.stringify(objMultiMitad);
     document.forms["submitCreatedLevel"].submit();
 
   }
@@ -150,6 +158,25 @@ function mostrarInformacionTecla(evObject) {
 
   obj.tiempos.push(t);
   objMulti.tiempos.push(tMulti);
+  
+}
+function calcula(){
+  obj.tiempos.forEach(function(value, i){
+    if(i % 2 === 0)
+      objMitad.tiempos.push(value);
+  });
+  objMulti.tiempos.forEach(function(value, i){
+    if(i % 2 === 0)
+      objMultiMitad.tiempos.push(value);
+  });
+  obj.tiempos.forEach(function(value, i){
+    if(i % 3 !== 0)
+      objTercios.tiempos.push(value);
+  });
+  objMulti.tiempos.forEach(function(value, i){
+    if(i % 3 !== 0)
+      objMultiTercios.tiempos.push(value);
+  });
 }
 
 function complementario(tecla){

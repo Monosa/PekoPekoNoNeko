@@ -69,55 +69,33 @@ class DAOCanciones{
         });
     }
 
-    insertSecuencia(MongoClient, url, name, datos, callback){
+    insertSecuencias(MongoClient, url, name, conjuntoDatos, callback){
         MongoClient.connect(url, function(err, db){
             if(err) throw err;
             else{
                 var dbo = db.db(name);
-                dbo.collection("Secuencias").find({'Songparent':datos.songparent}).toArray(function(err, result){
+                dbo.collection("Secuencias").find({'Songparent':conjuntoDatos[0].songparent}).toArray(function(err, result){
                     if (err) throw err;
                     else{
-                        // Si hay un solo resultado implica que le falta el multi, por lo que le dejamos insertar el multi 
-                        // No es que le dejemos al usuario. Le dejamos al sistema
-                        if(result.length === 1){
-                            dbo.collection("Secuencias").insertOne({
-                                "Songparent":  new MongoClient.ObjectID(datos.songparent),
-                                "Secid": 3,
-                                "Multi": datos.multi,
-                                "value": datos.value
-                            }, function(err, resultado) {
-                                if(err){
-                                    throw err;
-                                }else{
-                                    console.log(resultado);
-                                    console.log("DEVOLVEMOS:" + resultado.ops[0]);
-                                    //Tenemos que devolver SongId
-                                    callback(null, resultado.ops[0]); // Devuelve la canción entera, con todos sus atributos
-                                    db.close();
-                                }
+                        // Implica que no hay aun registro para esa cancion, por lo que insertamos todas sus secuencias                       
+                        if (result.length === 0){
+                            conjuntoDatos.forEach(function(value, i){
+                                console.log(i);
+                                dbo.collection("Secuencias").insertOne({
+                                    "Songparent":  new MongoClient.ObjectID(value.songparent),
+                                    "Secid": value.secid,
+                                    "Multi": value.multi,
+                                    "Value": value.value
+                                }, function(err) {
+                                    if(err)
+                                        throw err;
+                                });
                             });
-                        }
-                        // Implica que no hay aun registro para esa cancion, por lo que la insertamos                        
-                        else if (result.length === 0){
-                            dbo.collection("Secuencias").insertOne({
-                                "Songparent":  new MongoClient.ObjectID(datos.songparent),
-                                "Secid": 3,
-                                "Multi": datos.multi,
-                                "Value": datos.value
-                            }, function(err, resultado) {
-                                if(err){
-                                    throw err;
-                                }else{
-                                    console.log(resultado);
-                                    console.log("DEVOLVEMOS:" + resultado.ops[0]);
-                                    //Tenemos que devolver SongId
-                                    callback(null, resultado.ops[0]); // Devuelve la canción entera, con todos sus atributos
-                                    db.close();
-                                }
-                            });
+                            callback(null); // Devuelve la canción entera, con todos sus atributos
+                            db.close();                            
                         }
                         else {                            
-                            callback(new Error("Esa canción ya cuenta con un secuencia en modo individual y en modo multijugador"), null);
+                            callback(new Error("Esa canción ya cuenta con secuencias"), null);
                             db.close();
                         }
                     }
