@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playing</title>
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">  
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/create.css">  
   <link rel="stylesheet" type="text/css" media="screen" href="../css/game.css">
   <script src="../js/jquery-3.3.1.min.js"></script>
   <script src="../js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
@@ -39,9 +39,12 @@
       <canvas id="canvas-1"></canvas>
       
     </div>
-
-    <button id="empezar">Empezar</button>
-    <button id="descarga" onclick="download_song()" style="display: none;">Descargar</button>
+    <div class="Instrucciones"><img class="inst" src="../img/Instrucciones.png"></div>
+    <div class="Botones">
+      <button id="empezar" class="rkmd-btn btn-lightBlue ripple-effect">Empezar</button>
+      <button id="descarga" class="rkmd-btn btn-lightBlue ripple-effect" onclick="download_song()" style="display: none;">Descargar</button>
+    </div>
+    
     
     <form name="submitCreatedLevel" action="/crea/guardarNivel" method="post">
       <input type="hidden" name="songparent" value="<%= song._id %>">

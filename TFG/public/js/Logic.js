@@ -6,7 +6,9 @@ let objMultiTercios = { tiempos: [] };
 let objMitad = { tiempos: [] };
 let objMultiMitad = { tiempos: [] };
 let multiplayer = false;
-let mss = 0;
+let mss;
+let cuentaAtras = false;
+let timeLeft;
 let keys = [];
 
 
@@ -17,8 +19,8 @@ window.onload = function () {
   document.getElementById("empezar").onclick = function () {
     console.log("Leída la pulsación del botón 'Empezar'");
     var x = document.getElementById("myAudio");
+    mss = new Date().getTime();
     x.play();
-    cronometrar();
   }
 
   document.getElementById("myAudio").onended = function () {
@@ -126,12 +128,12 @@ function download_song() {
 }
 
 function mostrarInformacionTecla(evObject) {
+  if(!cuentaAtras){
   var tecla = evObject.keyCode;
   var teclaMulti1, teclaMulti2;
   keys[tecla] = true;
-
   var t = {
-    tiempo: mss,
+    tiempo: new Date().getTime() - mss,
     tecla: [tecla, complementario(tecla)]
   }
   if(tecla === 68 || tecla === 75){
@@ -142,8 +144,9 @@ function mostrarInformacionTecla(evObject) {
     teclaMulti1 = [65,70];
     teclaMulti2 = [74,192];
   }
+  
   var tMulti = {
-    tiempo: mss,
+    tiempo: new Date().getTime() - mss + 2000,
     tecla: teclaMulti1,
     tecla2: teclaMulti2
   }
@@ -155,10 +158,23 @@ function mostrarInformacionTecla(evObject) {
     t.tipo = 600
     tMulti.tipo = 600;
   }
+  else if(tecla === 71 || tecla === 72){
+    //Esto implica que quiere dibujar un dango
+    //Al dibujar un dango tenemos que dejar un espacio suficiente para que no se añadan mas
+    //sushis o dorayakis o dangos mientras este se fuera a mostrar
+    cuentaAtras = true;
+    timeLeft = new Date().getTime() + 4000;
+    t.tipo = 1000;
+    tMulti.tipo = 1000;
+  }
 
   obj.tiempos.push(t);
   objMulti.tiempos.push(tMulti);
-  
+  }
+  else {
+    if(timeLeft < new Date().getTime())
+      cuentaAtras = false;
+  }
 }
 function calcula(){
   obj.tiempos.forEach(function(value, i){
@@ -188,14 +204,4 @@ function complementario(tecla){
     return 68;
   else if (tecla === 74)
     return 70;
-}
-
-function cronometrar() {
-  escribir();
-  id = setInterval(escribir, 1);
-  //id2 = setInterval(descartar, 30);
-}
-
-function escribir() {
-  mss++;
 }
