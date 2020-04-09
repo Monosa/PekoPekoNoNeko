@@ -74,3 +74,23 @@ button{
 .mensaje_error{
     margin-top: 7%;
 }
+
+#tablaDeGatos {
+    border: 1px black;
+    overflow: hidden;
+    width: 800px;
+    padding: 10px;
+  }
+#tablaDeGatos li{
+    display: flex;
+    flex-direction: column-reverse;
+    
+}
+
+  .element {
+    list-style: none;
+    width: 105px;
+    height: 150px;
+    float: left;
+    margin: 5px;
+}
