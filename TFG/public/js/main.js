@@ -440,7 +440,9 @@ function ponAFalse(keys) {
 
 function compruebaAcierto(playing, player) {
   var plato2 = new Image();
-  plato2.src = '../img/plato2.png';
+  plato2.src = '../img/Plato2.png';
+  var plato3 = new Image();
+  plato3.src = '../img/Plato3.png';
 
   if (!multiplayer) {
     if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {

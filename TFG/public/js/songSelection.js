@@ -24,4 +24,3 @@ function init(){
       });
 }
 window.onload = init;
-document.getElementById("elem0").className = "carousel-item";
