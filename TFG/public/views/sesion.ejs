@@ -4,7 +4,7 @@
 <head lang="es-ES">
     <meta charset="utf-8" />
     <title>
-        <%= user.name %> - PekoPekoNoNeko</title>
+        <%= user.Name %> - PekoPekoNoNeko</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/login.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../css/sesion.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../css/hamburguesa.css" />
@@ -18,71 +18,59 @@
             <div class="titulo">
                 <h1>PekoPekoNoNeko</h1>
             </div>
-            <!--<div class="nav">
-                <div class="enlaces"> 
-                    <div class="enlace perfil"> <a href="/users/sesion"> Perfil </a> </div>
-                    <div class="enlace desconectar"> <a href="/users/logout"> Desconectar </a> </div>
-                </div>
-                <div class="user_icon">
-                     <% if(user.image){ %>
-                    <img class="icon" src="/users/image/<%= user.id %>">
-                    <% } else { %>
-                    <img class="icon" src="../profile-images/no_pic.png">
-                     <% } %>
-                 </div>
-            </div>-->
         </div>
         <!-- hamburger -->
-  <input type="checkbox" id="navi-toggle" class="checkbox" />
-  <label for="navi-toggle" class="button">
-    <span class="icon">&nbsp;</span>
-  </label>
-  <div class="background">&nbsp;</div>
+        <input type="checkbox" id="navi-toggle" class="checkbox" />
+        <label for="navi-toggle" class="button">
+            <span class="icon">&nbsp;</span>
+        </label>
+        <div class="background">&nbsp;</div>
 
-  <!-- nav -->
-  <nav class="nav">
-    <ul class="list">
-      <li class="item"> <a href="/users/sesion" class="link"> Perfil </a> </li>
-      <li class="item"> <a href="puntuaciones" class="link"> Puntuaciones </a> </li>
-      <li class="item"> <a class="link"> Link 4 </a> </li>
-      <li class="item"> <a href="/users/logout" class="link"> Cerrar Sesión </a> </li>
-    </ul>
-</nav>
+        <!-- nav -->
+        <nav class="nav">
+            <ul class="list">
+                <li class="item"> <a href="/users/sesion" class="link"> Perfil </a> </li>
+                <li class="item"> <a href="/score/scoreslist" class="link"> Puntuaciones </a> </li>
+                <li class="item"> <a class="link"> Link 4 </a> </li>
+                <li class="item"> <a href="/users/logout" class="link"> Cerrar Sesión </a> </li>
+            </ul>
+        </nav>
 </body>
-        <div class="body">
+<div class="body">
 
-            <div class="contenedor_ventana">
+    <div class="contenedor_ventana">
 
-                <div class="titulo_ventana">
-                    <h2>Tu perfil</h2>
-                </div>
+        <div class="titulo_ventana">
+            <h2>Tu perfil</h2>
+        </div>
 
-                <div class="contenedor_datos">
-                    <div class="imagen_usuario">
-                        <% if(user.image){ %>
-                        <img src="/users/imagen/<%= user.id_user %>">
-                        <% } else { %>
-                        <img src="../profile-images/no_pic.png">
-                        <% } %>
+        <div class="contenedor_datos">
+            <div class="imagen_usuario">
+                <% if(user.image){ %>
+                <img src="/users/imagen/<%= user.id_user %>">
+                <% } else { %>
+                <img src="../profile-images/no_pic.png">
+                <% } %>
+            </div>
+            <div class="datos">
+                <div class="datos">
+                    <div class="elem nombre_usuario">
+                        <h3>
+                            <%= user.Name %>
+                        </h3>
                     </div>
-                    <div class="datos">
-                        <div class="datos">
-                            <div class="elem nombre_usuario">
-                                <h3>
-                                    <%= user.Name %>
-                                </h3>
-                            </div>
-                            <div class="elem nickname_usuario">
-                                <h4>
-                                    @<%= user.Nickname %> </h4>
-                            </div>
-                        </div>
+                    <div class="elem nickname_usuario">
+                        <h4>
+                            @<%= user.Nickname %> </h4>
                     </div>
-                    
-                    <button id="mainmenu" class="rkmd-btn btn-lightBlue ripple-effect" onclick="window.location.href = '/canciones';">Jugar</button>  
                 </div>
             </div>
+
+            <button id="mainmenu" class="rkmd-btn btn-lightBlue ripple-effect"
+                onclick="window.location.href = '/canciones';">Jugar</button>
         </div>
+    </div>
+</div>
 </body>
 
 </html>
