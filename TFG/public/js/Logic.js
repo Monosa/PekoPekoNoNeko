@@ -113,6 +113,7 @@ function drawPattern(context, canvas, bgImg) {
   plato.onload = function () {
     context.drawImage(plato, 30, 60);
   }
+ 
   var gifCanvas = document.getElementById("gifCanvas");
 
   gifler('../img/Gatete.gif').animate(gifCanvas);
@@ -130,6 +131,7 @@ function download_song() {
 function mostrarInformacionTecla(evObject) {
   if(!cuentaAtras){
   var tecla = evObject.keyCode;
+  muestraPulsado(tecla);
   var teclaMulti1, teclaMulti2;
   keys[tecla] = true;
   var t = {
@@ -204,4 +206,51 @@ function complementario(tecla){
     return 68;
   else if (tecla === 74)
     return 70;
+}
+function muestraPulsado(tecla){
+  switch (tecla){
+    case 68:
+      document.getElementById("sushgrand").style.display = "block";
+      document.getElementById("sushchiq").style.display = "none";
+      document.getElementById("dang").style.display = "none";
+      document.getElementById("dorchiq").style.display = "none";
+      document.getElementById("dorgrand").style.display = "none";
+      break;
+    case 75:
+      document.getElementById("sushgrand").style.display = "none";
+      document.getElementById("sushchiq").style.display = "none";
+      document.getElementById("dang").style.display = "none";
+      document.getElementById("dorchiq").style.display = "block";
+      document.getElementById("dorgrand").style.display = "none";
+      break;
+    case 74:
+      document.getElementById("sushgrand").style.display = "none";
+      document.getElementById("sushchiq").style.display = "block";
+      document.getElementById("dang").style.display = "none";
+      document.getElementById("dorchiq").style.display = "none";
+      document.getElementById("dorgrand").style.display = "none";
+      break;
+    case 70:
+      document.getElementById("sushgrand").style.display = "none";
+      document.getElementById("sushchiq").style.display = "none";
+      document.getElementById("dang").style.display = "none";
+      document.getElementById("dorchiq").style.display = "none";
+      document.getElementById("dorgrand").style.display = "block";
+      break;
+    case 71:
+      document.getElementById("sushgrand").style.display = "none";
+      document.getElementById("sushchiq").style.display = "none";
+      document.getElementById("dang").style.display = "block";
+      document.getElementById("dorchiq").style.display = "none";
+      document.getElementById("dorgrand").style.display = "none";
+      break;
+    case 72:
+      document.getElementById("sushgrand").style.display = "none";
+      document.getElementById("sushchiq").style.display = "none";
+      document.getElementById("dang").style.display = "block";
+      document.getElementById("dorchiq").style.display = "none";
+      document.getElementById("dorgrand").style.display = "none";
+      break;
+  }
+  
 }

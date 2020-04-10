@@ -129,7 +129,29 @@ nav.navbar {
     color: white;
     height: 50px;
 }
-
+.imagenpeq{
+    top: 30%;
+    left: 21.6%;
+    position: absolute;
+    width: 5.3%;
+    display: none;
+}
+.crea{
+    width:100%;
+}
+.dang{
+    top: 29%;
+    position: absolute;
+    left: 21%;
+    display: none;
+}
+.imagengrande{
+    top: 26.5%;
+    left: 19.7%;
+    position: absolute;
+    width: 9%;
+    display: none;
+}
 
 .rkmd-btn {
     display: inline-block;
