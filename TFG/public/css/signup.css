@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Short+Stack&display=swap');
 
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
-.header{
+.header {
     padding: 1%;
     display: flex;
     justify-content: space-between;
     background-color: #33a79e;
 }
 
-.titulo{
+.titulo {
     color: #d5d8e9;
 }
 
@@ -21,14 +21,14 @@ body {
     background-image: url("../img/titlescreencats.jpg");
 }
 
-.container{
+.container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 10%;
 }
 
-.title{
+.title {
     display: flex;
     justify-content: center;
     color: #d5d8e9;
@@ -36,33 +36,33 @@ body {
     font-weight: bold;
 }
 
-.data-container{
+.data-container {
     display: flex;
     justify-content: center;
 }
 
-.signup_user{
+.signup_user {
     background-color: #d5d8e9;
     border-radius: 3%;
     padding: 3%;
     width: 35%;
 }
 
-.data{
+.data {
     padding-top: 2%;
     padding-bottom: 2%;
 }
 
-.texto{
+.texto {
     display: flex;
     justify-content: space-between;
 }
 
-input{
+input {
     width: 50%;
 }
 
-button{
+button {
     font-family: 'Short Stack', cursive;
     justify-self: center;
     border-radius: 2%;
@@ -71,7 +71,7 @@ button{
     margin-left: 38%;
 }
 
-.mensaje_error{
+.mensaje_error {
     margin-top: 7%;
 }
 
@@ -93,4 +93,14 @@ button{
     height: 150px;
     float: left;
     margin: 5px;
-}
+  }
+
+  .seleccionable:hover {
+    background-color: #cc99ff;
+    border-radius: 5px;
+  }
+
+  .seleccionado{
+    background-color: #b366ff;
+    border-radius: 5px;
+  }

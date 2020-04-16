@@ -39,7 +39,7 @@ users.get("/signup", middlewareLogged, function(request, response){
     response.render("signup", {errorMsg: null});
 });
 
-users.post("/signup", multerFactory.single("user_img"), function (request, response) {
+users.post("/signup", function (request, response) {
     //  Comprobar que los campos obligatorios no estén vacíos
     request.checkBody("email_user", "El email del usuario está vacío").notEmpty();
     request.checkBody("password_user", "La contraseña está vacía").notEmpty();
@@ -61,12 +61,8 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
             user.name = request.body.name_user;
             user.nickname = request.body.nickname_user;
             user.multi = false;
-            user.image = null;
-
-            if (request.file) {
-                user.image = request.file.buffer;
-            }
-
+            user.image = request.body.userAvatar+".png";
+            
             daoUsers.checkUser(MongoClient, config.url, config.name, user.nickname, function(err, usersWithNickname){
                 if(err){
                     response.status(500);
@@ -86,10 +82,7 @@ users.post("/signup", multerFactory.single("user_img"), function (request, respo
                             request.session.currentUserId = user.id;
                             request.session.multijugador = user.multi;
                             //console.log(request.session.currentUserNickname, request.session.currentUserId);
-                            if(user.image !== null)
-                                request.session.currentUserImg = true;
-                            else
-                                request.session.currentUserImg = false;
+                            request.session.currentUserImg = user.image;
                             response.redirect("/users/sesion");
                         }
                     });

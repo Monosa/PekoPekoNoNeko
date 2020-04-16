@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Registro - Peko Peko No Neko</title>
     <link rel="stylesheet" type="text/css" media="screen" href="../css/signup.css" />
+    <script src="../js/avatarSelection.js"></script>
 </head>
 
 <div class="header">
@@ -58,31 +59,32 @@
                 <div class="data imagen_perfil">
                     <div class="texto">
                         <h2> Imagen de perfil: </h2>
+                        <input type="hidden" name="userAvatar" value="">
                         <ul id="tablaDeGatos">
-                            <li class="element"><img src="/img/Blue.png" width="121px" height="128px"></li>
-                            <li class="element"><img src="/img/Chesire.png" width="109px" height="122px"></li>
-                            <li class="element"><img src="/img/Logan.png" width="100px" height="145px"></li>
-                            <li class="element"><img src="/img/Mery.png" width="108px" height="122px"></li>
-                            <li class="element"><img src="/img/Pelusa.png" width="107px" height="144px"></li>
-                            <li class="element"><img src="/img/Perla.png" width="107px" height="105px"></li>
-                            </ul>
+                            <li class="element seleccionable" id="Blue" onclick="cambiarClases(id)"><img src="/img/Blue.png" width="121px" height="128px"></li>
+                            <li class="element seleccionable" id="Chesire" onclick="cambiarClases(id)"><img src="/img/Chesire.png" width="109px" height="122px"></li>
+                            <li class="element seleccionable" id="Logan" onclick="cambiarClases(id)"><img src="/img/Logan.png" width="100px" height="145px"></li>
+                            <li class="element seleccionable" id="Mery" onclick="cambiarClases(id)"><img src="/img/Mery.png" width="108px" height="122px"></li>
+                            <li class="element seleccionable" id="Pelusa" onclick="cambiarClases(id)"><img src="/img/Pelusa.png" width="107px" height="144px"></li>
+                            <li class="element seleccionable" id="Perla" onclick="cambiarClases(id)"><img src="/img/Perla.png" width="107px" height="105px"></li>
+                        </ul>
+                    </input>
                     </div>
                 </div>
 
                 <button class="boton_aceptar" type="submit"> Registrarse </button>
 
-                <% if (errorMsg !== null ) { %> 
-                    <div class="mensaje_error">
-                        <h4>
-                         <%= errorMsg %>
-                        </h4>
-                    </div>
-                 <% } %>
+                <% if (errorMsg !== null ) { %>
+                <div class="mensaje_error">
+                    <h4>
+                        <%= errorMsg %>
+                    </h4>
+                </div>
+                <% } %>
 
             </form>
         </div>
-    </div
-    >
+    </div>
 </body>
 
 </html>
