@@ -43,21 +43,9 @@
         <div class="titulo_ventana">
             <h2>Tu perfil</h2>
         </div>
-
-        <div class="contenedor_datos">
-            <div class="imagen_usuario">
-                <% if(user.image){ %>
-                <img src="/users/imagen/<%= user.id_user %>">
-                <% } else { %>
-                <img src="../profile-images/no_pic.png">
-                <% } %>
-            </div>
-            <div class="datos">
-                <div class="datos">
-                    <div class="elem nombre_usuario">
-                        <h3>
-                            <%= user.Name %>
-                        </h3>
+                <div class="contenedor_datos">
+                    <div class="imagen_usuario">
+                        <img src="../img/<%= user.Image %>">
                     </div>
                     <div class="elem nickname_usuario">
                         <h4>

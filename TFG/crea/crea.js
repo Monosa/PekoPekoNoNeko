@@ -87,36 +87,9 @@ Crea.post("/Fase2", cpUpload, function (request, response) {
 
 Crea.post("/guardarNivel", function (request, response) {
   console.log("Entrada en la función guardarNivel");
-  let datos = {
-    songparent: request.body.songparent,
-    multi: false,
-    value: JSON.parse(request.body.secValue)
-  }
-  let datosMulti = {
-    songparent: request.body.songparent,
-    multi: true,
-    value: JSON.parse(request.body.secValueMulti)
-  }
-  daoCanciones.insertSecuencia(MongoClient, config.url, config.name, datos, function (error, result) {
-    if (error) {
-      response.status(500);
-      response.render("creaFase1", {
-        id: null,
-        errorMsg: `${error.message}`
-      });
-    } else {
-      daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
-        if (error) {
-            response.status(500);
-            console.log(`${error.message}`);
-        } else {
-            response.status(200);
-            response.render("songSelection", { canciones: listaCanciones, errorMsg: null });
-        }
-    });
-  }
-  });
-  daoCanciones.insertSecuencia(MongoClient, config.url, config.name, datosMulti, function (error, result) {
+  //ConjuntoDatos tiene los 6 objetos de datos para los 6 tipos de secuencias por cancion que vamos a ofrecer  
+  let conjuntoDatos = creaDatos(request);
+  daoCanciones.insertSecuencias(MongoClient, config.url, config.name, conjuntoDatos, function (error, result) {
     if (error) {
       response.status(500);
       response.render("creaFase1", {
@@ -136,5 +109,43 @@ Crea.post("/guardarNivel", function (request, response) {
   }
   });
 });
-
+function creaDatos(request){
+  //Devuelve un array con todos los datos en este orden: datos, datosMulti, datosTercios, datosMultiTercios, datosMitad, datosMultiMitad
+  return [{
+    songparent: request.body.songparent,
+    secid: 3,
+    multi: false,
+    value: JSON.parse(request.body.secValue)
+  },
+  {
+    songparent: request.body.songparent,
+    secid: 3,
+    multi: true,
+    value: JSON.parse(request.body.secValueMulti)
+  },
+  {
+    songparent: request.body.songparent,
+    secid: 2,
+    multi: false,
+    value: JSON.parse(request.body.secValueTercios)
+  },
+  {
+    songparent: request.body.songparent,
+    secid: 2,
+    multi: true,
+    value: JSON.parse(request.body.secValueMultiTercios)
+  },
+  {
+    songparent: request.body.songparent,
+    secid: 1,
+    multi: false,
+    value: JSON.parse(request.body.secValueMitad)
+  },
+  {
+    songparent: request.body.songparent,
+    secid: 1,
+    multi: true,
+    value: JSON.parse(request.body.secValueMultiMitad)
+  }];
+}
 module.exports = Crea;

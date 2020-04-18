@@ -18,7 +18,8 @@ class DAOUsers{
                     "Name": user.name,
                     "Nickname": user.nickname,
                     "Email": user.email,
-                    "Password": user.password
+                    "Password": user.password,
+                    "Image": user.image
                 }, function(err, resultado) {
                /* const sql = `INSERT INTO user (id, name, nickname, email, password, image)`
                  + `VALUES (?,?,?,?,?,?)`;
