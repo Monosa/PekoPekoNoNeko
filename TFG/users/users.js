@@ -81,7 +81,6 @@ users.post("/signup", function (request, response) {
                             request.session.currentUserNickname = user.nickname;
                             request.session.currentUserId = user.id;
                             request.session.multijugador = user.multi;
-                            //console.log(request.session.currentUserNickname, request.session.currentUserId);
                             request.session.currentUserImg = user.image;
                             response.redirect("/users/sesion");
                         }

@@ -17,6 +17,7 @@ Scores.post("/", function (request, response) {
         difid: request.body.iddificultad,
         puntos: request.body.points,
         user: request.body.user,
+        userImg: request.body.img,
         imagen: request.body.imagen,
         nick: request.body.nick
     }

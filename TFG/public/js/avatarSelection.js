@@ -5,6 +5,6 @@ function cambiarClases(id) {
        elems[0].classList.remove("seleccionado");
    }
    document.getElementById(id).classList.add("seleccionado");
-   document.getElementsByName("userAvatar").value=id;
+   document.getElementById("avatar").value=id;
 }
 
