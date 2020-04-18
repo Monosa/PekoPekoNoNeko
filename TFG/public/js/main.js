@@ -25,6 +25,7 @@ var racha = 0,
   racha2 = 0;
 var contadorCirculos = 0;
 var canvas;
+var contextBg;
 var keys = [];
 var pulsacionesDango1 = 0, pulsacionesDango2 = 0;
 
@@ -58,7 +59,7 @@ window.onload = function () {
 //  Places a background image in a background canvas and draws the square over it
 function drawInitialCanvas() {
   var canvasBg = document.getElementById("bg_canvas_1");
-  var contextBg = canvasBg.getContext("2d");
+  contextBg = canvasBg.getContext("2d");
   canvasBg.width = window.innerWidth;
   canvasBg.height = 300;
   var bgImg = new Image();
