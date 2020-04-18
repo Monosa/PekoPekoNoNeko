@@ -12,7 +12,7 @@ class DAOCanciones{
         });
     }
 
-	getCancion(MongoClient, url, name, id,iddif, multi, callback){
+	getCancion(MongoClient, url, name, id, iddif, multi, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
             var dbo = db.db(name);

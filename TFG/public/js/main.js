@@ -47,7 +47,6 @@ window.onload = function () {
     startingX: canvas.width + 25
   };
 
-
   var tiempo = document.getElementById("tiempos").innerHTML;
   tiempos = JSON.parse(tiempo);
 
@@ -73,6 +72,7 @@ function drawInitialCanvas() {
   canvas = document.getElementById("canvas-1");
   canvas.width = window.innerWidth;
   canvas.height = 300;
+
   if (multiplayer) {
     var canvasBg2 = document.getElementById("bg_canvas_2");
     var contextBg2 = canvasBg2.getContext("2d");
@@ -85,13 +85,11 @@ function drawInitialCanvas() {
       drawPattern(contextBg2, canvasBg2, bgImg2);
     }
 
-
     //  Sets the width and height of the canvas in which the circles are going to be drawn
     canvas2 = document.getElementById("canvas-2");
     canvas2.width = window.innerWidth;
     canvas2.height = 300;
   }
-
 }
 
 
@@ -458,23 +456,42 @@ function ponAFalse(keys) {
 }
 
 function compruebaAcierto(playing, player) {
+  var plato2 = new Image();
+  plato2.src = '../img/Plato2.png';
+  var plato3 = new Image();
+  plato3.src = '../img/Plato3.png';
+
   if (!multiplayer) {
     if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
       contadorBien++;
       res = rachas(50, contadorBien);
       racha = res[0];
-      puntos += res[1];
+      if(racha != 0)
+        puntos += res[1];
+      
+      plato2.onload = function(){
+        contextBg.drawImage(plato2,30,60);
+      }
     } else if (playing.x >= 70 && playing.x <= 90) {
       contadorBien++;
       res = rachas(100, contadorBien);
       racha = res[0];
-      puntos += res[1];
+      if(racha != 0)
+        puntos += res[1];
+
+      plato2.onload = function(){
+        contextBg.drawImage(plato2,30,60);
+      }
     } else {
+      plato3.onload = function(){
+      contextBg.drawImage(plato3,30,60);
+    }
       contadorMal++;
       contadorBien = 0;
       racha = 0;
-      if (contadorMal >= 5)
-        puntos -= 25;
+      if(racha != 0)
+        if (contadorMal >= 5)
+          puntos -= 25;
     }
   } else {
     if (player === 1) {
@@ -523,6 +540,7 @@ function compruebaAcierto(playing, player) {
     document.getElementById("racha-p2").innerHTML = "Racha: " + racha2;
   }
 }
+
 //Devuelve el computo de puntos y la racha
 function rachas(puntos, contadorBien) {
   if (contadorBien >= 2 && contadorBien < 6)
@@ -552,7 +570,10 @@ function iniciarPuntosyRacha() {
 
 function comprobar() {
   setInterval(comprueba, 1);
+  setInterval(animracha,1);
+}
 
+function animracha(racha){
 }
 
 function comprueba() {
@@ -562,6 +583,11 @@ function comprueba() {
       contadorCirculos += 1;
       document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
       if (!playing.clicked) {
+        var platoNormal = new Image();
+        platoNormal.src = '../img/Plato.png';
+        platoNormal.onload = function(){
+          contextBg.drawImage(platoNormal,30,60);
+        }
         racha = 0;
         contadorBien = 0;
         document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
@@ -570,6 +596,18 @@ function comprueba() {
         playing = particles[actual];
       } else playing = -1;
     }
+    
+    if(racha === 2)
+    document.getElementById("one").style.display = "inline";
+  else if(racha === 3)
+    document.getElementById("three").style.display = "inline";
+  else if(racha === 4)
+    document.getElementById("five").style.display = "inline";
+  else if(racha === 0){
+     document.getElementById("one").style.display = "none";
+     document.getElementById("three").style.display = "none";
+     document.getElementById("five").style.display = "none";
+  }
 
     if (multiplayer) {
       if (playing2 !== -1 && playing2.x <= 0) {

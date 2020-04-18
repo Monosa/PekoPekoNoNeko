@@ -7,6 +7,7 @@
   <title>Playing</title>
   <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">  
   <link rel="stylesheet" type="text/css" media="screen" href="../css/game.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/animacion-plato.css">
   <script src="../js/jquery-3.3.1.min.js"></script>
   <script src="../js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
   <script src="../js/main.js"></script>
@@ -27,7 +28,13 @@
 
     
     <div id="bg-player1">
+       
       <div id="info">
+        <div id="control"> </div>
+        <div class="cronometro">
+          <div id="hms"></div>
+        </div>
+        <div id="pin"></div>
         <div id="puntos">
           <div id = "puntos-p1"></div>
           <div id = "racha-p1"></div>
@@ -36,7 +43,29 @@
         <canvas id="gifCanvas1"></canvas>
       </div>
       <canvas id="bg_canvas_1"></canvas>
+       
       <canvas id="canvas-1"></canvas>
+      <!--  Aqui vamos a poner los divs de las animaciones-->
+      <!--<div id="gordo">
+        <div id="outer-circle">
+          <div id="inner-circle">
+            <div id="center-circle">
+              <div id="content"></div>
+            </div>
+          </div>
+        </div>
+  
+      </div>-->
+      <div class="animation">
+      <div class="format-animation" id="six">6</div>
+      <div class="format-animation" id="five" style="display: none">5</div>
+      <div class="format-animation" id="four">4</div>
+      <div class="format-animation" id="three" style="display: none">3</div>
+      <div class="format-animation" id="two">2</div>
+      <div class="format-animation" id="one" style="display: none">1</div>
+    </div>
+      <!--  Aqui terminan los divs-->
+
     </div>
 
     <div id="bg-player2" style="visibility: hidden;">
