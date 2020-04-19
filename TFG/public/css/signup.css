@@ -81,7 +81,7 @@ button {
     width: 800px;
     padding: 10px;
   }
-#tablaDeGatos li{
+  #tablaDeGatos li{
     display: flex;
     flex-direction: column-reverse;
     
@@ -104,3 +104,16 @@ button {
     background-color: #b366ff;
     border-radius: 5px;
   }
+  #tablaDeGatos2 {
+    
+    margin: auto;
+    border: 1px black;
+    overflow: hidden;
+    width: 345px;
+    padding: 10px;
+  }
+#tablaDeGatos2 li{
+    display: flex;
+    flex-direction: column-reverse;
+    
+}

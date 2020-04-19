@@ -25,6 +25,7 @@ class DAOScores{
                         }
                         else{
                             dbo.collection("Scores").insertOne({
+                                
                                 "UserId":  oid,
                                 "Nick": datos.nick,
                                 "IdCancion": new MongoClient.ObjectID(datos.songid),

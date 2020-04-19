@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="es-ES">
+    <meta charset="utf-8" />
+    <title>Cambia Buff Jugador 2 - PekoPekoNoNeko</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/signup.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/sesion.css" />
+    <script src="../js/avatarSelection.js"></script>
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="body">
+            <div class="titulo_ventana">
+                <h2>Cambia Buff Jugador 2</h2>
+            </div>
+            <div class="contenedor_ventana">
+                <div class="data-container">
+                    <form class="signup_user" method="post" action="/users/cambiaMulti">
+                        <div class="data imagen_perfil">
+                            <div class="texto">
+                                <input type="hidden" name="userAvatar" id="avatar" value="Blue">
+                                    <ul id="tablaDeGatos2">
+                                        <li class="element seleccionable seleccionado" id="Blue" onclick="cambiarClases(id)"><img src="/img/Blue.png" width="121px" height="128px"></li>
+                                        <li class="element seleccionable" id="Chesire" onclick="cambiarClases(id)"><img src="/img/Chesire.png" width="109px" height="122px"></li>
+                                        <li class="element seleccionable" id="Logan" onclick="cambiarClases(id)"><img src="/img/Logan.png" width="100px" height="145px"></li>
+                                        <li class="element seleccionable" id="Mery" onclick="cambiarClases(id)"><img src="/img/Mery.png" width="108px" height="122px"></li>
+                                        <li class="element seleccionable" id="Pelusa" onclick="cambiarClases(id)"><img src="/img/Pelusa.png" width="107px" height="144px"></li>
+                                        <li class="element seleccionable" id="Perla" onclick="cambiarClases(id)"><img src="/img/Perla.png" width="107px" height="105px"></li>
+                                    </ul>
+                                </input>
+                            </div>
+                        </div>
+                        <button id="buffMulti" class="rkmd-btn btn-lightBlue ripple-effect mar35" type="submit"> Confirmar </button>
+                    </form>
+                    
+                    <% if (errorMsg !== null ) { %>
+                    <div class="mensaje_error">
+                        <h4>
+                            <%= errorMsg %>
+                        </h4>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

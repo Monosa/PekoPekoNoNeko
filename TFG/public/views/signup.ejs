@@ -27,7 +27,7 @@
 
         <div class="data-container">
 
-            <form class="signup_user" method="post" action="/users/signup" enctype="multipart/form-data">
+            <form class="signup_user" method="post" action="/users/signup">
                 <div class="data email_signup">
                     <div class="texto">
                         <h2> Email: </h2>
@@ -59,9 +59,9 @@
                 <div class="data imagen_perfil">
                     <div class="texto">
                         <h2> Imagen de perfil: </h2>
-                        <input type="hidden" name="userAvatar" value="">
+                        <input type="hidden" name="userAvatar" id="avatar" value="Blue">
                         <ul id="tablaDeGatos">
-                            <li class="element seleccionable" id="Blue" onclick="cambiarClases(id)"><img src="/img/Blue.png" width="121px" height="128px"></li>
+                            <li class="element seleccionable seleccionado" id="Blue" onclick="cambiarClases(id)"><img src="/img/Blue.png" width="121px" height="128px"></li>
                             <li class="element seleccionable" id="Chesire" onclick="cambiarClases(id)"><img src="/img/Chesire.png" width="109px" height="122px"></li>
                             <li class="element seleccionable" id="Logan" onclick="cambiarClases(id)"><img src="/img/Logan.png" width="100px" height="145px"></li>
                             <li class="element seleccionable" id="Mery" onclick="cambiarClases(id)"><img src="/img/Mery.png" width="108px" height="122px"></li>
