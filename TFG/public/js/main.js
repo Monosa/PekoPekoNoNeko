@@ -4,29 +4,41 @@
 
 /* ¡¡¡Es necesario debido al modo multijugador crear un conversor de datos de un jugador a multijugador!!!*/
 
-var songid;
-var difid;
-var tiempos;
-var particles = [],
+let songid;
+let difid;
+let tiempos;
+let particles = [],
   particles2 = [];
-var puntos = 0,
+let puntos = 0,
   puntos2 = 0;
-var startTime = null;
-var actual = 0,
+let startTime = null;
+let actual = 0,
   actual2 = 0;
-var playing, playing2;
-var settings;
-var multiplayer;
-var contadorBien = 0,
+let playing, playing2;
+let settings;
+let multiplayer;
+let contadorBien = 0,
   contadorBien2 = 0;
-var contadorMal = 0,
+let contadorMal = 0,
   contadorMal2 = 0;
-var racha = 0,
+let racha = 0,
   racha2 = 0;
-var contadorCirculos = 0;
-var canvas;
-var keys = [];
-var pulsacionesDango1 = 0, pulsacionesDango2 = 0;
+let contadorCirculos = 0;
+let canvas;
+let keys = [];
+let pulsacionesDango1 = 0, pulsacionesDango2 = 0;
+let buffUsado = false, buffUsado2 = false;
+
+//La siguiente variable es el buff que tiene elegido el usuario
+/*
+Chesire es sumador
+Blue es Multiplicador
+Pelusa es Salva racha
+Logan es Rango acierto mas grande
+Perla es sin penalizacion por fallo
+Mery es multiplicador dango X3
+*/
+let buff, buffMulti;
 
 window.onload = function () {
   document.onkeydown = this.clic;
@@ -37,6 +49,8 @@ window.onload = function () {
   } else {
     multiplayer = JSON.parse(sessionStorage.getItem("multijugador"));
   }
+  buffMulti = JSON.parse(sessionStorage.getItem("currentUserImg2"));
+  buff = JSON.parse(sessionStorage.getItem("imagenJugador"));
 
   //console.log("Valor de multijugador: " + multiplayer);
   iniciarPuntosyRacha();
@@ -47,7 +61,7 @@ window.onload = function () {
     startingX: canvas.width + 25
   };
 
-  var tiempo = document.getElementById("tiempos").innerHTML;
+  let tiempo = document.getElementById("tiempos").innerHTML;
   tiempos = JSON.parse(tiempo);
 
   cargarJuego();
@@ -57,11 +71,11 @@ window.onload = function () {
 
 //  Places a background image in a background canvas and draws the square over it
 function drawInitialCanvas() {
-  var canvasBg = document.getElementById("bg_canvas_1");
-  var contextBg = canvasBg.getContext("2d");
+  let canvasBg = document.getElementById("bg_canvas_1");
+  let contextBg = canvasBg.getContext("2d");
   canvasBg.width = window.innerWidth;
   canvasBg.height = 300;
-  var bgImg = new Image();
+  let bgImg = new Image();
 
   bgImg.src = "../img/image.png";
   bgImg.onload = function () {
@@ -74,11 +88,11 @@ function drawInitialCanvas() {
   canvas.height = 300;
 
   if (multiplayer) {
-    var canvasBg2 = document.getElementById("bg_canvas_2");
-    var contextBg2 = canvasBg2.getContext("2d");
+    let canvasBg2 = document.getElementById("bg_canvas_2");
+    let contextBg2 = canvasBg2.getContext("2d");
     canvasBg2.width = window.innerWidth;
     canvasBg2.height = 300;
-    var bgImg2 = new Image();
+    let bgImg2 = new Image();
 
     bgImg2.src = "../img/image.png";
     bgImg2.onload = function () {
@@ -98,28 +112,29 @@ function drawPattern(context, canvas, bgImg) {
   context.fillStyle = context.createPattern(bgImg, "repeat-x");
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  var plato = new Image();
+  let plato = new Image();
   plato.src = '../img/Plato.png';
   plato.onload = function () {
     context.drawImage(plato, 30, 60);
   }
 
-  var gifCanvas1 = document.getElementById("gifCanvas1");
-  gifler('../img/Gatete.gif').animate(gifCanvas1);
+  let gifCanvas1 = document.getElementById("gifCanvas1");
+  let gifCanvas2 = document.getElementById("gifCanvas2");
+  
 
-  if (multiplayer) {
-    var gifCanvas2 = document.getElementById("gifCanvas2");
+  if (multiplayer) {    
     gifler('../img/Gatete.gif').animate(gifCanvas2);
   }
+  else gifler('../img/Gatete.gif').animate(gifCanvas1);
 }
 
 function loadDorayakis(canvas, context) {
   // a ghost canvas that will keep our original image
   //Canvas rojo
   //img c es por chiquito r es por rojo, g es por grande, a es por azul
-  var imgcr = new Image();
-  var imgca = new Image();
-  var imgcd = new Image();
+  let imgcr = new Image();
+  let imgca = new Image();
+  let imgcd = new Image();
   imgcr.src = "../img/RojoChiquito2.png";
   imgca.src = "../img/AzulEscalado.png";
   imgcd.src = "../img/dango2.png";
@@ -132,19 +147,19 @@ function animate(time, context, canvas, particles, imgs) {
     startTime = time;
   }
   // calc elapsedTime
-  var elapsedTime = time - startTime;
+  let elapsedTime = time - startTime;
 
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // assume no further animating is necessary
   // The for-loop may change the assumption 
-  var continueAnimating = false;
+  let continueAnimating = false;
 
-  for (var i = 0; i < particles.length; i++) {
-    var part = particles[i];
+  for (let i = 0; i < particles.length; i++) {
+    let part = particles[i];
 
     // update this circle & report if it wasMoved
-    var wasMoved = update(part, elapsedTime);
+    let wasMoved = update(part, elapsedTime);
     // if it wasMoved, then change assumption to continueAnimating
     if (wasMoved || part.moving) {
       continueAnimating = true;
@@ -198,8 +213,8 @@ function update(part, elapsedTime) {
 function drawParticle(part, context, imgs) {
   //74 y 70 son sushis, 75 68 son dorayakis
   context.beginPath();
-  var tam = [0, 0];
-  var y = 0;
+  let tam = [0, 0];
+  let y = 0;
   if (!multiplayer) {
     //Si el tipo es 1000 es el indicador de que dibujamos el dango
     if(part.size !== 1000){
@@ -260,9 +275,9 @@ function drawParticle(part, context, imgs) {
 }
 
 function cargarJuego() {
-  var canvas2, context2;
-  var canvas = document.getElementById("canvas-1");
-  var context = canvas.getContext("2d");
+  let canvas2, context2;
+  let canvas = document.getElementById("canvas-1");
+  let context = canvas.getContext("2d");
   
 
 
@@ -275,16 +290,16 @@ function cargarJuego() {
   }
 
   $("#player").bind("ended", function () {
-    var x = document.getElementById("myAudio");
+    let x = document.getElementById("myAudio");
     x.play();
     comprobar();
 
-    var imgs = loadDorayakis(canvas, context);
+    let imgs = loadDorayakis(canvas, context);
 
     if (multiplayer) {
       loadDorayakis(canvas2, context2);
 
-      for (var i = 0; i < tiempos.length; i++) {
+      for (let i = 0; i < tiempos.length; i++) {
         particles2.push({
           x: settings.startingX,
           timing: tiempos[i].tiempo,
@@ -299,7 +314,7 @@ function cargarJuego() {
       playing2 = particles2[0];
     }
 
-    for (var i = 0; i < tiempos.length; i++) {
+    for (let i = 0; i < tiempos.length; i++) {
       particles.push({
         x: settings.startingX,
         timing: tiempos[i].tiempo,
@@ -325,7 +340,16 @@ function cargarJuego() {
   });
 
   $("#myAudio").bind("ended", function () {
-    document.getElementById("usePoints").value = puntos;
+    //Si eligió el buff sumador le sumamos 500 puntos al resultado final
+    if(buff === "Chesire.png")
+    document.getElementById("usePoints").value = puntos + 500;
+    else document.getElementById("usePoints").value = puntos;
+    if(multiplayer){
+      //Si eligió el buff sumador le sumamos 500 puntos al resultado final
+      if(buffMulti === "Chesire.png")
+        document.getElementById("usePoints2").value = puntos2 + 500;
+      else document.getElementById("usePoints2").value = puntos2;
+    }
     document.forms["submitScore"].submit();
   });
 }
@@ -354,9 +378,8 @@ function clic(evt) {
         }
       }
     } else {
-      console.log("X:" + playing.x);
-      var keysPlayer1 = [];
-      var keysPlayer2 = [];
+      let keysPlayer1 = [];
+      let keysPlayer2 = [];
       keys[evt.keyCode] = true;
       //Comprobamos si ambos jugadores han hecho click:
       if (keys[65] || keys[83] || keys[68] || keys[70]) {
@@ -398,7 +421,6 @@ function clic(evt) {
   }
   else{
     //Caso un jugador para dango
-    console.log("Ha entrado");
     if(!multiplayer){
       if(playing.x <= 115 && (evt.keyCode === 68 || evt.keyCode === 70 || evt.keyCode === 74 || evt.keyCode === 75)){
         pulsacionesDango1 += 1;
@@ -417,7 +439,7 @@ function clic(evt) {
 }
 
 function cambiaTeclas(keys) {
-  var keysReturn = [];
+  let keysReturn = [];
   if (keys[65] || keys[83] || keys[68] || keys[70]) {
     //Las teclas del jugador 1 estan activas por lo que movemos esas teclas a un array propio
     if (keys[65])
@@ -456,9 +478,9 @@ function ponAFalse(keys) {
 }
 
 function compruebaAcierto(playing, player) {
-  var plato2 = new Image();
+  let plato2 = new Image();
   plato2.src = '../img/Plato2.png';
-  var plato3 = new Image();
+  let plato3 = new Image();
   plato3.src = '../img/Plato3.png';
 
   if (!multiplayer) {
@@ -466,9 +488,12 @@ function compruebaAcierto(playing, player) {
       contadorBien++;
       res = rachas(50, contadorBien);
       racha = res[0];
-      if(racha != 0)
-        puntos += res[1];
-      
+      if(racha != 0){
+        //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
+        if(buff === "Blue.png")
+        puntos += res[1] * 1.5;
+      else puntos += res[1];
+      }
       plato2.onload = function(){
         contextBg.drawImage(plato2,30,60);
       }
@@ -476,22 +501,49 @@ function compruebaAcierto(playing, player) {
       contadorBien++;
       res = rachas(100, contadorBien);
       racha = res[0];
-      if(racha != 0)
-        puntos += res[1];
+      if(racha != 0){
+        //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
+        if(buff === "Blue.png")
+          puntos += res[1] * 1.5;
+        else puntos += res[1];
+      }
 
       plato2.onload = function(){
         contextBg.drawImage(plato2,30,60);
       }
-    } else {
-      plato3.onload = function(){
-      contextBg.drawImage(plato3,30,60);
+    } 
+    //Si elige el buff de logan el rango de acierto se amplia
+    else if (buff === "Logan.png" && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
+      contadorBien++;
+      res = rachas(50, contadorBien);
+      racha = res[0];
+      if(racha != 0){
+        puntos += res[1];
+      }
+      plato2.onload = function(){
+        contextBg.drawImage(plato2,30,60);
+      }
     }
-      contadorMal++;
-      contadorBien = 0;
-      racha = 0;
-      if(racha != 0)
-        if (contadorMal >= 5)
-          puntos -= 25;
+    else {
+      //Si eligió el buff mantener racha
+      if(buff === "Pelusa.png" && racha >= 4 && !buffUsado){
+        res = rachas(100, contadorBien);
+        racha = res[0];
+        buffUsado = true;
+      }
+      else{
+        contadorMal++;
+        contadorBien = 0;
+        racha = 0;
+        //Si eligió a pelusa como buff no se le resta por fallar repetidas veces
+        if(buff !== "Perla.png"){
+          if (contadorMal >= 2)
+            puntos -= 25;
+        }
+      }
+      plato3.onload = function(){
+        contextBg.drawImage(plato3,30,60);
+      }
     }
   } else {
     if (player === 1) {
@@ -499,36 +551,120 @@ function compruebaAcierto(playing, player) {
         contadorBien++;
         res = rachas(50, contadorBien);
         racha = res[0];
-        puntos += res[1];
+        if(racha != 0){
+          //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
+          if(buff === "Blue.png")
+            puntos += res[1] * 1.5;
+          else puntos += res[1];
+        }
+        plato2.onload = function(){
+          contextBg.drawImage(plato2,30,60);
+        }
       } else if (playing.x >= 70 && playing.x <= 90) {
         contadorBien++;
         res = rachas(100, contadorBien);
         racha = res[0];
-        puntos += res[1];
-      } else {
-        contadorMal++;
-        contadorBien = 0;
-        racha = 0;
-        if (contadorMal >= 5)
-          puntos -= 25;
+        if(racha != 0){
+          //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
+          if(buff === "Blue.png")
+            puntos += res[1] * 1.5;
+          else puntos += res[1];
+        }
+        plato2.onload = function(){
+          contextBg.drawImage(plato2,30,60);
+        }
+      }
+      //Si elige el buff de logan el rango de acierto se amplia
+      else if (buff === "Logan.png" && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
+        contadorBien++;
+        res = rachas(50, contadorBien);
+        racha = res[0];
+        if(racha != 0){
+          puntos += res[1];
+        }
+        plato2.onload = function(){
+          contextBg.drawImage(plato2,30,60);
+        }
+      } 
+      else {
+        //Si eligió el buff mantener racha
+        if(buff === "Pelusa.png" && racha >= 4 && !buffUsado){
+          res = rachas(100, contadorBien);
+          racha = res[0];
+          buffUsado = true;
+        }
+        else{
+          contadorMal++;
+          contadorBien = 0;
+          racha = 0;
+          if(buff !== "Perla.png"){
+            if (contadorMal >= 2)
+              puntos -= 25;
+          }
+        }
+        plato3.onload = function(){
+          contextBg.drawImage(plato3,30,60);
+        }
       }
     } else if (player === 2) {
       if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
         contadorBien2++;
         res = rachas(50, contadorBien2);
         racha2 = res[0];
-        puntos2 += res[1];
+        if(racha != 0){
+          //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
+          if(buffMulti === "Blue.png")
+            puntos2 += res[1] * 1.5;
+          else puntos2 += res[1];
+        }
+        plato2.onload = function(){
+          contextBg.drawImage(plato2,30,60);
+        }
       } else if (playing.x >= 70 && playing.x <= 90) {
         contadorBien2++;
         res = rachas(100, contadorBien2);
         racha2 = res[0];
-        puntos2 += res[1];
-      } else {
-        contadorMal2++;
-        contadorBien2 = 0;
-        racha2 = 0;
-        if (contadorMal2 >= 5)
-          puntos2 -= 25;
+        if(racha2 != 0){
+          //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
+          if(buffMulti === "Blue.png")
+            puntos2 += res[1] * 1.5;
+          else puntos2 += res[1];
+        }
+        plato2.onload = function(){
+          contextBg.drawImage(plato2,30,60);
+        }
+      } 
+      //Si elige el buff de logan el rango de acierto se amplia
+      else if (buffMulti === "Logan.png" && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
+        contadorBien2++;
+        res = rachas(50, contadorBien2);
+        racha2 = res[0];
+        if(racha2 != 0){
+          puntos2 += res[1];
+        }
+        plato2.onload = function(){
+          contextBg.drawImage(plato2,30,60);
+        }
+      }
+      else {
+        //Si eligió el buff mantener racha
+        if(buffMulti === 3 && racha2 >= 4 && !buffUsado2){
+          res = rachas(100, contadorBien);
+          racha2 = res[0];
+          buffUsado2 = true;
+        }
+        else{
+          contadorMal2++;
+          contadorBien2 = 0;
+          racha2 = 0;
+          if(buffMulti !== "Perla.png"){
+            if (contadorMal2 >= 2)
+              puntos2 -= 25;
+          }
+        }
+        plato3.onload = function(){
+          contextBg.drawImage(plato3,30,60);
+        }
       }
     }
   }
@@ -583,7 +719,7 @@ function comprueba() {
       contadorCirculos += 1;
       document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
       if (!playing.clicked) {
-        var platoNormal = new Image();
+        let platoNormal = new Image();
         platoNormal.src = '../img/Plato.png';
         platoNormal.onload = function(){
           contextBg.drawImage(platoNormal,30,60);
@@ -598,12 +734,12 @@ function comprueba() {
     }
     
     if(racha === 2)
-    document.getElementById("one").style.display = "inline";
-  else if(racha === 3)
-    document.getElementById("three").style.display = "inline";
-  else if(racha === 4)
-    document.getElementById("five").style.display = "inline";
-  else if(racha === 0){
+      document.getElementById("one").style.display = "inline";
+    else if(racha === 3)
+      document.getElementById("three").style.display = "inline";
+    else if(racha === 4)
+      document.getElementById("five").style.display = "inline";
+    else if(racha === 0){
      document.getElementById("one").style.display = "none";
      document.getElementById("three").style.display = "none";
      document.getElementById("five").style.display = "none";
@@ -625,8 +761,11 @@ function comprueba() {
   }
   else{
     if(playing !== -1 && playing.x < -500){
-      console.log("Pulsaciones = " + pulsacionesDango1);
-      puntos += pulsacionesDango1 * 100;
+      if(buff === "Blue.png")
+        puntos += pulsacionesDango1 * 100 * 1.5;
+      else if(buff === "Mery.png")
+        puntos += pulsacionesDango1 * 300;
+      else puntos += pulsacionesDango1 * 100;
       actual += 1;
       contadorCirculos += 1;
       document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
@@ -636,7 +775,11 @@ function comprueba() {
       } else playing = -1;
       if (multiplayer) {
         if (playing2 !== -1 && playing2.x < -500) {
-          puntos2 += pulsacionesDango2 * 100;
+          if(buffMulti === "Blue.png")
+            puntos += pulsacionesDango1 * 100 * 1.5;
+          else if(buff === "Mery.png")
+            puntos += pulsacionesDango1 * 300;
+          else puntos += pulsacionesDango1 * 100;
           actual2 += 1;
           document.getElementById("puntos-p2").innerHTML = "Puntos: " + puntos2;
           if (actual2 < particles2.length) {

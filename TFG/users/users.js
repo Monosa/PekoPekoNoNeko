@@ -81,7 +81,9 @@ users.post("/signup", function (request, response) {
                             request.session.currentUserNickname = user.nickname;
                             request.session.currentUserId = user.id;
                             request.session.multijugador = user.multi;
-                            request.session.currentUserImg = user.image;
+                            request.session.currentUserImg = true;
+                            request.session.imagenJugador = user.image;
+                            request.session.currentUserImg2 = user.image;
                             response.redirect("/users/sesion");
                         }
                     });
@@ -137,6 +139,35 @@ users.get("/no_profile_pic", function (request, response) {
 users.get("/login", middlewareLogged, function(request, response){
     response.status(200);
     response.render("login", {errorMsg: null});
+});
+
+users.get("/cambiaMulti", function(request, response){
+    response.status(200);
+    response.render("cambiaMulti", {errorMsg: null});
+});
+users.post("/cambiaMulti", function(request, response){
+    let image = request.body.userAvatar+".png";
+    let user = request.session;
+    daoUsers.updateMulti(MongoClient, config.url, config.name, image, user.currentUserNickname, function (error, id) {
+        if (error) {
+            response.status(500);
+            response.render("cambiaMulti", { errorMsg: `${error.message}` });
+        } else {
+            
+            response.status(200);
+            request.session.currentUserImg2 = image;
+            
+            daoUsers.getUser(MongoClient, config.url, config.name, request.session.currentUserId, function(error, user){
+                if(error){
+                    response.status(500);
+                }else{
+                    response.status(200);
+                    request.session.imagenJugador = user.Image;
+                    response.render("sesion", {user: user});
+                }
+            });
+        }
+    });
 });
 
 users.post("/login", function(request, response){

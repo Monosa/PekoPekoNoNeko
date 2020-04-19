@@ -126,6 +126,20 @@ nav {
     height: 50px;
 }
 
+#buffMulti{
+    font-family: 'Short Stack', cursive;
+    border-radius: 10px;
+    background-color: #b881d8;
+    margin-bottom: 35px;
+    color: white;
+    width: 280px;
+    height: 50px;
+}
+.mar35 {
+    margin-left: 35%;
+    width: auto!important;
+}
+
 img{
     width: 100%;
 }

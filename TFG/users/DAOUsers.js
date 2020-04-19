@@ -19,7 +19,8 @@ class DAOUsers{
                     "Nickname": user.nickname,
                     "Email": user.email,
                     "Password": user.password,
-                    "Image": user.image
+                    "Image": user.image,
+                    "ImageMulti": user.image
                 }, function(err, resultado) {
                /* const sql = `INSERT INTO user (id, name, nickname, email, password, image)`
                  + `VALUES (?,?,?,?,?,?)`;
@@ -124,23 +125,18 @@ class DAOUsers{
                 db.close();
             });
         });
-        /*this.pool.getConnection(function (err, connection) {
-            if (err) {
-                callback(new Error("Error de conexión a la base de datos"), null);
-            } else {
-                let sql = `SELECT * FROM user WHERE nickname = ? AND password = ?`;
-
-                connection.query(sql, [nickname, password], function (err, result) {
-                    connection.release();
-                    if (err) {
-                        callback(new Error("Error de acceso a la base de datos"), null);
-                    } else {
-                        callback(null, result[0]);
-                    }
-                });
-            }
-        });*/
     }
+    updateMulti(MongoClient, url, name, image, nickname, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db(name);
+            dbo.collection("Users").updateOne({"Nickname":nickname},{$set:{'ImageMulti':image}}, function(err, result){
+                callback(null, result);
+                db.close();
+            });
+        });
+    }
+    
 }
 
 module.exports = DAOUsers;
