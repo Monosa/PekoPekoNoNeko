@@ -50,7 +50,7 @@ Canciones.post("/play", function(request, response){
             response.render("songSelection", { canciones: null, errorMsg: `${error.message}`});
         }else{
             response.status(200);
-            response.render("game", { tiempos: JSON.stringify(cancion[1]['Value']['tiempos']), song: cancion[0], difid: iddificultad, userid: user, nick: nickname, userImg: usrImg, usrMulti : usrMulti, errorMsg: null });
+            response.render("game", { tiempos: JSON.stringify(cancion[1]['Value']['tiempos']), song: cancion[0], multi: multi, difid: iddificultad, userid: user, nick: nickname, usrImg: request.session.imagenJugador, usrMulti : usrMulti, errorMsg: null });
         }
     });
 });

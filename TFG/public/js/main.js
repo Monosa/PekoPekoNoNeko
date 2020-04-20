@@ -28,6 +28,7 @@ let canvas;
 let keys = [];
 let pulsacionesDango1 = 0, pulsacionesDango2 = 0;
 let buffUsado = false, buffUsado2 = false;
+let contextBg, contextBg2;
 
 //La siguiente variable es el buff que tiene elegido el usuario
 /*
@@ -49,10 +50,10 @@ window.onload = function () {
   } else {
     multiplayer = JSON.parse(sessionStorage.getItem("multijugador"));
   }
-  buffMulti = JSON.parse(sessionStorage.getItem("currentUserImg2"));
-  buff = JSON.parse(sessionStorage.getItem("imagenJugador"));
 
-  //console.log("Valor de multijugador: " + multiplayer);
+  buffMulti = document.getElementById("imgMulti").value;
+  buff = document.getElementById("img").value;
+
   iniciarPuntosyRacha();
   drawInitialCanvas();
 
@@ -72,7 +73,7 @@ window.onload = function () {
 //  Places a background image in a background canvas and draws the square over it
 function drawInitialCanvas() {
   let canvasBg = document.getElementById("bg_canvas_1");
-  let contextBg = canvasBg.getContext("2d");
+  contextBg = canvasBg.getContext("2d");
   canvasBg.width = window.innerWidth;
   canvasBg.height = 300;
   let bgImg = new Image();
@@ -89,7 +90,7 @@ function drawInitialCanvas() {
 
   if (multiplayer) {
     let canvasBg2 = document.getElementById("bg_canvas_2");
-    let contextBg2 = canvasBg2.getContext("2d");
+    contextBg2 = canvasBg2.getContext("2d");
     canvasBg2.width = window.innerWidth;
     canvasBg2.height = 300;
     let bgImg2 = new Image();
@@ -121,11 +122,10 @@ function drawPattern(context, canvas, bgImg) {
   let gifCanvas1 = document.getElementById("gifCanvas1");
   let gifCanvas2 = document.getElementById("gifCanvas2");
   
-
-  if (multiplayer) {    
-    gifler('../img/Gatete.gif').animate(gifCanvas2);
-  }
-  else gifler('../img/Gatete.gif').animate(gifCanvas1);
+  if (multiplayer)
+    seleccionaGif(buffMulti, gifCanvas2);
+  seleccionaGif(buff, gifCanvas1);
+  
 }
 
 function loadDorayakis(canvas, context) {
@@ -341,15 +341,16 @@ function cargarJuego() {
 
   $("#myAudio").bind("ended", function () {
     //Si eligió el buff sumador le sumamos 500 puntos al resultado final
-    if(buff === "Chesire.png")
-    document.getElementById("usePoints").value = puntos + 500;
+    if(buff.localeCompare("Chesire.png") === 0)
+      document.getElementById("usePoints").value = puntos + 500;
     else document.getElementById("usePoints").value = puntos;
     if(multiplayer){
       //Si eligió el buff sumador le sumamos 500 puntos al resultado final
-      if(buffMulti === "Chesire.png")
+      if(buffMulti.localeCompare("Chesire.png") === 0)
         document.getElementById("usePoints2").value = puntos2 + 500;
       else document.getElementById("usePoints2").value = puntos2;
     }
+    document.getElementById("multi").value = multiplayer;
     document.forms["submitScore"].submit();
   });
 }
@@ -490,7 +491,7 @@ function compruebaAcierto(playing, player) {
       racha = res[0];
       if(racha != 0){
         //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-        if(buff === "Blue.png")
+        if(buff.localeCompare("Blue.png") === 0)
         puntos += res[1] * 1.5;
       else puntos += res[1];
       }
@@ -503,7 +504,7 @@ function compruebaAcierto(playing, player) {
       racha = res[0];
       if(racha != 0){
         //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-        if(buff === "Blue.png")
+        if(buff.localeCompare("Blue.png") === 0)
           puntos += res[1] * 1.5;
         else puntos += res[1];
       }
@@ -513,7 +514,7 @@ function compruebaAcierto(playing, player) {
       }
     } 
     //Si elige el buff de logan el rango de acierto se amplia
-    else if (buff === "Logan.png" && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
+    else if ((buff.localeCompare("Logan.png") === 0) && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
       contadorBien++;
       res = rachas(50, contadorBien);
       racha = res[0];
@@ -526,7 +527,7 @@ function compruebaAcierto(playing, player) {
     }
     else {
       //Si eligió el buff mantener racha
-      if(buff === "Pelusa.png" && racha >= 4 && !buffUsado){
+      if((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado){
         res = rachas(100, contadorBien);
         racha = res[0];
         buffUsado = true;
@@ -535,8 +536,8 @@ function compruebaAcierto(playing, player) {
         contadorMal++;
         contadorBien = 0;
         racha = 0;
-        //Si eligió a pelusa como buff no se le resta por fallar repetidas veces
-        if(buff !== "Perla.png"){
+        //Si eligió a perla como buff no se le resta por fallar repetidas veces
+        if(buff.localeCompare("Perla.png") !== 0){
           if (contadorMal >= 2)
             puntos -= 25;
         }
@@ -553,7 +554,7 @@ function compruebaAcierto(playing, player) {
         racha = res[0];
         if(racha != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if(buff === "Blue.png")
+          if(buff.localeCompare("Blue.png") === 0)
             puntos += res[1] * 1.5;
           else puntos += res[1];
         }
@@ -566,7 +567,7 @@ function compruebaAcierto(playing, player) {
         racha = res[0];
         if(racha != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if(buff === "Blue.png")
+          if(buff.localeCompare("Blue.png") === 0)
             puntos += res[1] * 1.5;
           else puntos += res[1];
         }
@@ -575,7 +576,7 @@ function compruebaAcierto(playing, player) {
         }
       }
       //Si elige el buff de logan el rango de acierto se amplia
-      else if (buff === "Logan.png" && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
+      else if ((buff.localeCompare("Logan.png") === 0) && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
         contadorBien++;
         res = rachas(50, contadorBien);
         racha = res[0];
@@ -588,7 +589,7 @@ function compruebaAcierto(playing, player) {
       } 
       else {
         //Si eligió el buff mantener racha
-        if(buff === "Pelusa.png" && racha >= 4 && !buffUsado){
+        if((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado){
           res = rachas(100, contadorBien);
           racha = res[0];
           buffUsado = true;
@@ -597,7 +598,7 @@ function compruebaAcierto(playing, player) {
           contadorMal++;
           contadorBien = 0;
           racha = 0;
-          if(buff !== "Perla.png"){
+          if(buff.localeCompare("Perla.png") !== 0){
             if (contadorMal >= 2)
               puntos -= 25;
           }
@@ -613,7 +614,7 @@ function compruebaAcierto(playing, player) {
         racha2 = res[0];
         if(racha != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if(buffMulti === "Blue.png")
+          if(buffMulti.localeCompare("Blue.png") === 0)
             puntos2 += res[1] * 1.5;
           else puntos2 += res[1];
         }
@@ -626,7 +627,7 @@ function compruebaAcierto(playing, player) {
         racha2 = res[0];
         if(racha2 != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if(buffMulti === "Blue.png")
+          if(buffMulti.localeCompare("Blue.png") === 0)
             puntos2 += res[1] * 1.5;
           else puntos2 += res[1];
         }
@@ -635,7 +636,7 @@ function compruebaAcierto(playing, player) {
         }
       } 
       //Si elige el buff de logan el rango de acierto se amplia
-      else if (buffMulti === "Logan.png" && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
+      else if ((buffMulti.localeCompare("Logan.png") === 0) && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
         contadorBien2++;
         res = rachas(50, contadorBien2);
         racha2 = res[0];
@@ -648,7 +649,7 @@ function compruebaAcierto(playing, player) {
       }
       else {
         //Si eligió el buff mantener racha
-        if(buffMulti === 3 && racha2 >= 4 && !buffUsado2){
+        if((buffMulti.localeCompare("Pelusa.png") === 0) && racha2 >= 4 && !buffUsado2){
           res = rachas(100, contadorBien);
           racha2 = res[0];
           buffUsado2 = true;
@@ -657,7 +658,7 @@ function compruebaAcierto(playing, player) {
           contadorMal2++;
           contadorBien2 = 0;
           racha2 = 0;
-          if(buffMulti !== "Perla.png"){
+          if(buffMulti.localeCompare("Perla.png") !== 0){
             if (contadorMal2 >= 2)
               puntos2 -= 25;
           }
@@ -683,12 +684,8 @@ function rachas(puntos, contadorBien) {
     return [2, puntos * 2];
   else if (contadorBien >= 6 && contadorBien < 10)
     return [3, puntos * 3];
-  else if (contadorBien >= 10 && contadorBien < 15)
+  else if (contadorBien >= 10)
     return [4, puntos * 4];
-  else if (contadorBien >= 15 && contadorBien < 20)
-    return [5, puntos * 5];
-  else if (contadorBien >= 20)
-    return [10, puntos * 10];
   else return [1, puntos];
 }
 
@@ -733,17 +730,28 @@ function comprueba() {
       } else playing = -1;
     }
     
-    if(racha === 2)
+    if(racha === 2){
       document.getElementById("one").style.display = "inline";
-    else if(racha === 3)
+      document.getElementById("number2").style.display = "inline";
+    }
+    else if(racha === 3){
       document.getElementById("three").style.display = "inline";
-    else if(racha === 4)
+      document.getElementById("number3").style.display ="inline";
+      document.getElementById("number2").style.display = "none";
+    }
+    else if(racha === 4){
       document.getElementById("five").style.display = "inline";
+      document.getElementById("number4").style.display ="inline";
+      document.getElementById("number3").style.display = "none";
+    }
     else if(racha === 0){
-     document.getElementById("one").style.display = "none";
-     document.getElementById("three").style.display = "none";
-     document.getElementById("five").style.display = "none";
-  }
+      document.getElementById("one").style.display = "none";
+      document.getElementById("three").style.display = "none";
+      document.getElementById("five").style.display = "none";
+      document.getElementById("number2").style.display = "none";
+      document.getElementById("number3").style.display = "none";
+      document.getElementById("number4").style.display = "none";
+    }
 
     if (multiplayer) {
       if (playing2 !== -1 && playing2.x <= 0) {
@@ -761,9 +769,9 @@ function comprueba() {
   }
   else{
     if(playing !== -1 && playing.x < -500){
-      if(buff === "Blue.png")
+      if(buff.localeCompare("Blue.png") === 0)
         puntos += pulsacionesDango1 * 100 * 1.5;
-      else if(buff === "Mery.png")
+      else if(buff.localeCompare("Mery.png") === 0)
         puntos += pulsacionesDango1 * 300;
       else puntos += pulsacionesDango1 * 100;
       actual += 1;
@@ -775,9 +783,9 @@ function comprueba() {
       } else playing = -1;
       if (multiplayer) {
         if (playing2 !== -1 && playing2.x < -500) {
-          if(buffMulti === "Blue.png")
+          if(buffMulti.localeCompare("Blue.png") === 0)
             puntos += pulsacionesDango1 * 100 * 1.5;
-          else if(buff === "Mery.png")
+          else if(buffMulti.localeCompare("Mery.png") === 0)
             puntos += pulsacionesDango1 * 300;
           else puntos += pulsacionesDango1 * 100;
           actual2 += 1;
@@ -789,4 +797,21 @@ function comprueba() {
       }
     }
   }
+}
+
+function seleccionaGif(buffParam, canvasParam){
+  let ruta = "";
+  if(buffParam.localeCompare("Pelusa.png") === 0)  
+      ruta = '../img/Pelusa.gif';
+  else if(buffParam.localeCompare("Logan.png") === 0)
+    ruta = '../img/Logan.gif';
+  else if(buffParam.localeCompare("Mery.png") === 0)
+    ruta = '../img/Mery.gif';
+  else if(buffParam.localeCompare("Chesire.png") === 0)
+    ruta = '../img/Chesire.gif';
+  else if(buffParam.localeCompare("Blue.png") === 0)
+    ruta = '../img/Blue.gif';
+  else if(buffParam.localeCompare("Perla.png") === 0)
+    ruta = '../img/Perla.gif';
+  gifler(ruta).animate(canvasParam);
 }

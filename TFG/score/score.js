@@ -16,12 +16,15 @@ Scores.post("/", function (request, response) {
         songid: request.body.idcancion,
         difid: request.body.iddificultad,
         puntos: request.body.points,
+        puntos2: request.body.points2,
         user: request.body.user,
         userImg: request.body.img,
+        userMulti: request.body.imgMulti,
         imagen: request.body.imagen,
-        nick: request.body.nick
+        nick: request.body.nick,
+        multi: request.body.multi
     }
-
+    console.log(datos.multi);
     daoScores.insertScore(MongoClient, config.url, config.name, datos, function (error, id) {
         if (error) {
             response.status(500);

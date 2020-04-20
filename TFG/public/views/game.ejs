@@ -25,6 +25,7 @@
 
     <audio id="player" src="../media/countdown.mp3" type="audio/mpeg" autoplay preload="auto"></audio>
     <audio id="myAudio" src="../media/<%=song.Cancion%>" type="audio/mpeg"></audio>
+    <div id="showrachas"><img id="number2" src="../img/2.gif" style="display: none"><img id="number3" src="../img/3.gif" style="display: none"><img id="number4" src="../img/4.gif" style="display: none"></div> 
 
     
     <div id="bg-player1">
@@ -88,8 +89,10 @@
       <input type="hidden" id="usePoints2" name="points2" value=''>
       <input type="hidden" name="user" value="<%=userid%>">
       <input type="hidden" name="nick" value="<%=nick%>">
-      <input type="hidden" name="img" value="<%=userImg%>">
+      <input type="hidden" id="img" name="img" value="<%=usrImg%>">
+      <input type="hidden" id="imgMulti" name="imgMulti" value="<%=usrMulti%>">
       <input type="hidden" name="imagen" value="<%=song.Imagen%>"">
+      <input type="hidden" id="multi" name="multi" value=''>
     </form>
     
   </div>
