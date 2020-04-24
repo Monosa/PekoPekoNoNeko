@@ -1,0 +1,184 @@
+@import "https://fonts.googleapis.com/css?family=Roboto";
+
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto;
+  font-size: 16px;
+  color: #212121;
+  background-image: url("../img/FondoCrea.png");
+  background-size: 100%;
+}
+
+.centred-form {
+  width: 250px;
+  margin: 0 auto;
+}
+
+.field {
+  position: relative;
+  min-height: 62px;
+  padding: 16px 0 8px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+.field-label {
+  top: 0;
+  margin: -45px 0;
+  display: block;
+  color: #AAA;
+  line-height: 62px;
+  height: 24px;
+  font-size: 16px;
+  font-weight: 400;
+  transition: font-size .15s, line-height .15s;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+.field-input,
+.field-textarea {
+  position: relative;
+  display: block;
+  width: 90%;
+  padding: 8px 0;
+  line-height: 16px;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+.field-input {
+    height: 32px;
+  }
+.field-input2 {
+  height: 32px;
+  width: calc(100% - 32px);
+  float:left;
+}
+.field-label::after,
+.field::before {
+  content: '';
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  background-color: #DDD;
+}
+.field-label::after {
+  bottom: 6px;
+  background-color: #2191ea;
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+
+
+.field-input:invalid:focus ~ .field-label,
+.field-input2:invalid:focus ~ .field-label,
+.field-textarea:invalid:focus ~ .field-label,
+.field-input:valid ~ .field-label,
+.field-input2:valid ~ .field-label,
+.field-textarea:valid ~ .field-label {
+  font-size: 12px;
+  line-height: 14px;
+}
+.field-input:focus ~ .field-label,
+.field-input2:focus ~ .field-label,
+.field-textarea:focus ~ .field-label {
+  color: #2191ea;
+}
+.field-input:focus ~ .field-label::after,
+.field-input2:focus ~ .field-label::after,
+.field-textarea:focus ~ .field-label::after {
+  transform: scaleX(1);
+}
+.card {
+  width: 20%;
+  display: block;
+  margin: auto;
+  margin-top:7%;
+  height:385px!important;
+	background-color: #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+	-webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+	color: rgba(0,0,0,.87);
+	
+	min-width: 290px;
+	overflow: hidden;
+	position: relative;
+}
+.card::after {
+	clear: both;
+}
+.card::after, .card::before {
+	content: "";
+	display: block;
+}
+.card__dark .action-icons {
+	color: rgba(255,255,255,1);
+}
+.card__dark .border-top, .border-top {
+	border-top: 1px solid rgba(0,0,0,0.12);
+}
+.card__dark .secondary-text, .card__dark .subhead, .media .optional-header .subhead {
+	color: rgba(255,255,255,.7);
+}
+.card__dark, .media .primary-text, .media .secondary-text {
+	color: #fff;
+}
+.card__dark--anthracite {
+	background-color: rgba(41,49,51,1);
+}
+.card__dark--magenta {
+	background-color: rgba(73, 64, 101,1);
+}
+.card__small {
+	height: 146px;
+}
+.card__small .media {
+	float: left;
+	height: 100%;
+	overflow: hidden;
+	width: 88px;
+}
+.card__small .media img {
+	height: 100%;
+	left: 50%;
+	position: absolute;
+	-moz-transform: translate(-50%, 0);
+	-ms-transform: translate(-50%, 0);
+	-o-transform: translate(-50%, 0);
+	-webkit-transform: translate(-50%, 0);
+	transform: translate(-50%, 0);
+	width: auto;
+}
+.card__small .media__right {
+	float: right;
+	height: 100%;
+	overflow: hidden;
+	width: 88px;
+}
+.card__small .media__right ~ .optional-header, .card__small .media__right ~ .primary-title, .card__small .media__right ~ .supporting-text, .card__small .media__right ~ .actions {
+	margin-left: 0;
+	margin-right: 88px;
+}
+.card__small .optional-header, .card__small .primary-title, .card__small .supporting-text, .card__small .actions {
+	margin-left: 88px;
+}
+.card__small .primary-text, .card__small .secondary-text {
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

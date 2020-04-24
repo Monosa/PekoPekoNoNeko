@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Peko Peko No Neko</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">    
+    <link href="../css/material-components-web.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="../js/material-components-web.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/songSelection.js"></script>
+    
+</head>
+
+<body>
+    <div class="contenedor">
+      <div class="container text-center my-3">
+        <div class="row mx-auto my-auto">
+            <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                <div class="carousel-inner w-100" role="listbox">
+                    <% if(canciones !== null) { %>
+                        <% canciones.forEach(function(cancion, index) { %>
+                          <div id="elem<%= index%>" class="carousel-item">
+                            <div class="col-md-4">
+                              <div class="card card-body">
+                                <img class="img-fluid" src="../img/<%= cancion['Imagen'] %>" width=>
+                              </div>
+                              <div>
+                                <h2 class="mdc-typography mdc-typography--headline6"><%= cancion['Nombre'] %></h2>
+                                <h3 class="mdc-typography mdc-typography--subtitle2"><%= cancion['Autor'] %></h3>
+                              </div>
+                              <div class="mdc-card__actions">
+                                <div class="mdc-card__action-buttons">
+                                  <form action="/canciones/play" method="get">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['Songid'] %>>
+                                    <input type="hidden" name="iddificultad" value="1">
+                                    <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Fácil</button>
+                                  </form>
+                                  <form action="/canciones/play" method="get">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['Songid'] %>>
+                                    <input type="hidden" name="iddificultad" value="2">
+                                    <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Medio</button>
+                                  </form>
+                                  <form action="/canciones/play" method="get">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['Songid'] %>>
+                                    <input type="hidden" name="iddificultad" value="3">
+                                    <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Difícil</button>
+                                  </form>
+                                </div>
+                              </div>  
+                            </div>
+                          </div>
+                            <% }); %>
+                      <% } %>
+                    </div>
+                    <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

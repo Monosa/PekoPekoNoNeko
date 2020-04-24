@@ -1,0 +1,64 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playing</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/create.css">  
+  <link rel="stylesheet" type="text/css" media="screen" href="../css/game.css">
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <script src="../js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+  <!--<script src="../js/main.js"></script>-->
+  <script src="../js/Logic.js"></script>
+  <script src="../js/gifler.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <!--<audio id="player" src="../media/countdown.mp3" type="audio/mpeg" autoplay preload="auto"></audio>-->
+    <audio id="myAudio" src="../media/<%=song.Cancion%>" type="audio/mpeg"></audio>
+
+    
+    <div id="bg-player1">
+      <div id="info">
+        <div id="control"> </div>
+        <div class="cronometro">
+          <div id="hms"></div>
+        </div>
+        <div id="pin"></div>
+        <div id="puntos">
+          <div id = "puntos-p1"></div>
+          <div id = "racha-p1"></div>
+          <div id= "Contador"></div>
+        </div>
+        
+        <canvas id="gifCanvas"></canvas>
+      </div>
+      <canvas id="bg_canvas_1"></canvas>
+      <canvas id="canvas-1"></canvas>
+      
+    </div>
+    <div class="crea"><img id="dorchiq" src = "../img/RojoChiquito2.png" class="imagenpeq"><img id="sushchiq" src = "../img/AzulEscalado.png" class="imagenpeq"><img id="dang" src = "../img/dango2.png" class="dang"><img id="dorgrand" src = "../img/RojoChiquito2.png" class="imagengrande"><img id="sushgrand" src = "../img/AzulEscalado.png" class="imagengrande"></div>
+    <div class="Instrucciones"><img class="inst" src="../img/Instrucciones.png"></div>
+    <div class="Botones">
+      <button id="empezar" class="rkmd-btn btn-lightBlue ripple-effect">Empezar</button>
+      <button id="descarga" class="rkmd-btn btn-lightBlue ripple-effect" onclick="download_song()" style="display: none;">Descargar</button>
+    </div>
+    
+    
+    <form name="submitCreatedLevel" action="/crea/guardarNivel" method="post">
+      <input type="hidden" name="songparent" value="<%= song._id %>">
+      <input type="hidden" name="secValue" id="value" value="">
+      <input type="hidden" name="secValueMulti" id="valueMulti" value="">
+      <input type="hidden" name="secValueTercios" id="valueTercios" value="">
+      <input type="hidden" name="secValueMultiTercios" id="valueMultiTercios" value="">
+      <input type="hidden" name="secValueMitad" id="valueMitad" value="">
+      <input type="hidden" name="secValueMultiMitad" id="valueMultiMitad" value="">
+    </form>
+
+  </div>
+</body>
+
+</html>

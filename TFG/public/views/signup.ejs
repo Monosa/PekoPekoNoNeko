@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Registro - Peko Peko No Neko</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/signup.css" />
+    <script src="../js/avatarSelection.js"></script>
+</head>
+
+<div class="header">
+    <div class="titulo">
+        <h1>PekoPekoNoNeko</h1>
+    </div>
+
+    <div class="nav">
+        <div class="enlace entrar"> <a href="/users/login">Entrar</a> </div>
+        <div class="enlace nuevo_usuario"> <a href="/users/signup">Nuevo usuario</a> </div>
+    </div>
+</div>
+
+<body>
+    <div class="container">
+
+        <div class="title">
+            <h2>Registro</h2>
+        </div>
+
+        <div class="data-container">
+
+            <form class="signup_user" method="post" action="/users/signup">
+                <div class="data email_signup">
+                    <div class="texto">
+                        <h2> Email: </h2>
+                        <input type="text" name="email_user">
+                    </div>
+                </div>
+
+                <div class="data contraseña_signup">
+                    <div class="texto">
+                        <h2> Contraseña: </h2>
+                        <input type="password" name="password_user">
+                    </div>
+                </div>
+
+                <div class="data nombre_completo">
+                    <div class="texto">
+                        <h2> Nombre completo: </h2>
+                        <input type="text" name="name_user">
+                    </div>
+                </div>
+
+                <div class="data nickname">
+                    <div class="texto">
+                        <h2> Nickname: </h2>
+                        <input type="text" name="nickname_user">
+                    </div>
+                </div>
+
+                <div class="data imagen_perfil">
+                    <div class="texto">
+                        <h2> Imagen de perfil: </h2>
+                        <input type="hidden" name="userAvatar" id="avatar" value="Blue">
+                        <ul id="tablaDeGatos">
+                            <li class="element seleccionable seleccionado" id="Blue" onclick="cambiarClases(id)"><img src="/img/Blue.png" width="121px" height="128px"></li>
+                            <li class="element seleccionable" id="Chesire" onclick="cambiarClases(id)"><img src="/img/Chesire.png" width="109px" height="122px"></li>
+                            <li class="element seleccionable" id="Logan" onclick="cambiarClases(id)"><img src="/img/Logan.png" width="100px" height="145px"></li>
+                            <li class="element seleccionable" id="Mery" onclick="cambiarClases(id)"><img src="/img/Mery.png" width="108px" height="122px"></li>
+                            <li class="element seleccionable" id="Pelusa" onclick="cambiarClases(id)"><img src="/img/Pelusa.png" width="107px" height="144px"></li>
+                            <li class="element seleccionable" id="Perla" onclick="cambiarClases(id)"><img src="/img/Perla.png" width="107px" height="105px"></li>
+                        </ul>
+                    </input>
+                    </div>
+                </div>
+
+                <button class="boton_aceptar" type="submit"> Registrarse </button>
+
+                <% if (errorMsg !== null ) { %>
+                <div class="mensaje_error">
+                    <h4>
+                        <%= errorMsg %>
+                    </h4>
+                </div>
+                <% } %>
+
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,12 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title></title>
-  <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">
-  <script src="../js/vendor/jquery-1.11.2.js"></script>
-  <script src="../js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Peko Peko No Neko</a>
+        <a class="navbar-brand" href="#">Project name</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <form class="navbar-form navbar-right" role="form">
@@ -38,36 +38,19 @@
 
   <div class="container">
 
-    <audio id="player" src="../media/countdown.mp3" type="audio/mpeg" autoplay preload="auto"></audio>
-    <audio id="myAudio" src="../media/aaa.mp3" type="audio/mpeg"></audio>
-
-    <div id="bg-player1">
-      <canvas id="bg_canvas_1"></canvas>
-      <canvas id="canvas-1"></canvas>
+    <audio id="myAudio" src="../media/Fareoh - Under Water [NCS Release].mp3" type="audio/mpeg"></audio>
+    <div id="bg">
+      <canvas id="bg_canvas"></canvas>
+      <canvas id="canvas"></canvas>
     </div>
-
-    <div id="bg-player2">
-      <canvas id="bg_canvas_2"></canvas>
-      <canvas id="canvas-2"></canvas>
-    </div>
-
+	<button id="empezar">Empezar</button>
+	<button id="descarga" onclick="download1()" style="display: none;">Descargar</button>
     <hr>
-    <div id="control"> </div>
-    <div class="cronometro">
-      <div id="hms"></div>
-    </div>
-    <div id="pin"></div>
-    <div id="puntos">
-      <div id = "puntos-p1"></div>
-      <div id="puntos-p2" style="visibility: hidden;"></div>
-    </div>
-    
-
-    <hr>
-
 
   </div> <!-- /container -->
-  <script src="../js/main.js"></script>
 </body>
-
+<script>
+  window.jQuery || document.write('<script src="../js/vendor/jquery-1.11.2.js"><\/script>')
+</script>
+<script src="../js/crea.js"></script>
 </html>

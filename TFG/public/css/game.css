@@ -1,0 +1,30 @@
+body{
+    background-image: url('../img/FondoSong.png');
+    background-size: 100%;
+}
+
+#gifCanvas1, #gifCanvas2{
+    width: 68% !important;
+    padding-left: 27% !important;
+}
+#container #canvas-1, #gordo {
+    position: absolute !important;
+}
+
+#showrachas {
+    display: block;
+    margin-top: 4%;
+    margin-left: 40%;
+}
+#number2 {
+    margin-top: 4%;
+    width: 17%;
+}
+#number3 {
+    margin-top: 4%;
+    width: 10%;
+}
+#number4 {
+    margin-top: 4%;
+    width: 12%;
+}

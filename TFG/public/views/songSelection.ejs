@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Peko Peko No Neko</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css">    
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/songSelection.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/hamburguesa.css">   
+    <link href="../css/material-components-web.min.css" rel="stylesheet">
+    <link href="../css/switcher.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="../js/material-components-web.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/songSelection.js"></script>
+    <script src="../js/switcher.js"></script>
+    
+</head>
+  <!-- hamburger -->
+  <input type="checkbox" id="navi-toggle" class="checkbox" />
+  <label for="navi-toggle" class="button">
+    <span class="icon">&nbsp;</span>
+  </label>
+  <div class="background">&nbsp;</div>
+
+  <!-- nav -->
+  <nav class="nav">
+    <ul class="list">
+      <li class="item"> <a href="/users/sesion" class="link">Perfil </a> </li>
+      <li class="item"> <a href="/score/scoreslist" class="link"> Puntuaciones </a> </li>
+      <li class="item"> <a href="/users/logout" class="link"> Cerrar Sesión </a> </li>
+    </ul>
+</nav>
+<body>
+    <div class="contenedor">
+      <div class="container text-center my-3">
+        <div id="boxes" class="row mx-auto my-auto">
+            <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                <div class="carousel-inner w-100" role="listbox">
+                    <% if(canciones !== null) { %>
+                        <% canciones.forEach(function(cancion, index) { %>
+                          <div id="elem<%=index%>" class="carousel-item">
+                            <div class="col-md-4">
+                              <div class="card card-body">
+                                <img class="img-fluid" src="../img/<%= cancion['Imagen'] %>" width=>
+                              </div>
+                              <div>
+                                <h2 class="mdc-typography mdc-typography--headline6"><%= cancion['Nombre'] %></h2>
+                                <h3 class="mdc-typography mdc-typography--subtitle2"><%= cancion['Autor'] %></h3>
+                                <% if(cancion['PRO']){%><img class="star" src="../img/Sin título-1.png"><%}%>
+                              </div>
+                              <div class="mdc-card__actions">
+                                <div class="mdc-card__action-buttons">
+                                  <form action="/canciones/play" method="post">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['_id'] %>>
+                                    <input type="hidden" name="iddificultad" value="1">
+                                    <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Fácil</button>
+                                  </form>
+                                  <form action="/canciones/play" method="post">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['_id'] %>>
+                                    <input type="hidden" name="iddificultad" value="2">
+                                    <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Medio</button>
+                                  </form>
+                                  <form action="/canciones/play" method="post">
+                                    <input type="hidden" name="idcancion" value=<%= cancion['_id'] %>>
+                                    <input type="hidden" name="iddificultad" value="3">
+                                    <button class="mdc-button mdc-card__action mdc-card__action--button" type="submit">  <span class="mdc-button__ripple"></span>Difícil</button>
+                                  </form>
+                                </div>
+                              </div>  
+                            </div>
+                          </div>
+                            <% }); %>
+                      <% } %>
+                    </div>
+                    <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div><br>
+        <div class="switcher">
+          <div class="switch">
+              <input id="multijugador" type="checkbox" class="switch__input" onclick="cambiaModo()">
+              <label for="multijugador" class="switch__label">Multijugador</label>
+          </div>
+        </div><br>
+        <div id="crea"><h5>¿Quieres añadir tu propio nivel?<br></h5><button class="rkmd-btn btn-lightBlue ripple-effect" onclick="document.location.href = '/crea';">Crea tu nivel</button> </div>
+    </div>
+</body>
+
+</html>

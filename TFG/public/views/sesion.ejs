@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="es-ES">
+    <meta charset="utf-8" />
+    <title>
+        <%= user.Name %> - PekoPekoNoNeko</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/login.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/sesion.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/hamburguesa.css" />
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/ripple.js"></script>
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="header">
+            <div class="titulo">
+                <h1>PekoPekoNoNeko</h1>
+            </div>
+        </div>
+        <!-- hamburger -->
+        <input type="checkbox" id="navi-toggle" class="checkbox" />
+        <label for="navi-toggle" class="button">
+            <span class="icon">&nbsp;</span>
+        </label>
+        <div class="background">&nbsp;</div>
+
+        <!-- nav -->
+        <nav class="nav">
+            <ul class="list">
+                <li class="item"> <a href="/users/sesion" class="link"> Perfil </a> </li>
+                <li class="item"> <a href="/score/scoreslist" class="link"> Puntuaciones </a> </li>
+                <li class="item"> <a class="link"> Link 4 </a> </li>
+                <li class="item"> <a href="/users/logout" class="link"> Cerrar Sesión </a> </li>
+            </ul>
+        </nav>
+</body>
+<div class="body">
+
+    <div class="contenedor_ventana">
+
+        <div class="titulo_ventana">
+            <h2>Tu perfil</h2>
+        </div>
+        <div class="contenedor_datos">
+            <div class="imagen_usuario">
+                <img src="../img/<%= user.Image %>">
+            </div>
+            <div class="datos">
+                <div class="datos">
+                    <div class="elem nombre_usuario">
+                        <h3>
+                            <%= user.Name %>
+                        </h3>
+                    </div>
+                    <div class="datos">
+                        <div class="datos">
+                            <div class="elem nombre_usuario">
+                                <h3>
+                                    <%= user.Name %>
+                                </h3>
+                            </div>
+                            <div class="elem nickname_usuario">
+                                <h4>
+                                    @<%= user.Nickname %> </h4>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="buttonContainer">
+                <button id="mainmenu" class="rkmd-btn btn-lightBlue ripple-effect"
+                    onclick="window.location.href = '/canciones';">Jugar</button>
+                <button id="buffMulti" class="rkmd-btn btn-lightBlue ripple-effect"
+                onclick="window.location.href = '/users/cambiaMulti';">Cambiar Buff Jugador 2</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+
+</html>

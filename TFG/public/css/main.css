@@ -1,13 +1,11 @@
+
 * {
     padding: 0;
     margin: 0;
 }
 canvas{
-    padding-left: 15,5%;
-    position: relative;
     display: flex;
-    align-items: center;
-    max-width: 100%;
+    max-width: 82%;
 }
 
 nav.navbar {
@@ -20,16 +18,17 @@ nav.navbar {
 }
 
 .project-name {
+
     color: whitesmoke;
     text-decoration: none;
 }
 
-.cronometro {
-    font-size: x-large;
-    margin-left: 60px;
+#info{
+    width: 18%;
+    height: 242px;
 }
 
-#puntos {
+#puntos, #puntos2 {
     font-size: x-large;
     margin-left: 60px;
     margin-top: 3%;
@@ -37,32 +36,78 @@ nav.navbar {
     justify-content: space-between;
 }
 
-#puntos2{
-    font-size: x-large;
-    margin-left: 60px;
-    margin-top: 3%;
-}
-
 #bg-player1 {
-    position: relative;
-    top: 190px;
-    left: -196px;
+    position: absolute;
+    top: 35%;
+    width: 100%;
 }
 
 #bg-player1>canvas {
     position: absolute;
-    left: 0;
+    left: 18%;
     top: 0;
 }
 
 #bg-player2 {
-    position: relative;
-    top: 515px;
-    left: -196px;
+    position: absolute;
+    width: 100%;
 }
 
 #bg-player2>canvas {
     position: absolute;
-    left: 0;
+    left: 18%;
     top: 0;
+}
+
+.img-fluid {
+    max-height: 100%;
+    height: 250px !important;
+}
+.mdc-card__actions{
+    justify-content: center !important;
+} 
+.card{
+    height: 297.9px !important;
+}
+
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item > div {
+        display: none;
+    }
+    .carousel-inner .carousel-item > div:first-child {
+        display: block;
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* display 3 */
+@media (min-width: 768px) {
+    
+    .carousel-inner .carousel-item-right.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(33.333%);
+    }
+    
+    .carousel-inner .carousel-item-left.active, 
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-33.333%);
+    }
+}
+
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left{ 
+  transform: translateX(0);
+}
+
+.image-upload>input {
+    display: none;
+}
+.image-upload{
+    float:right;
+    padding-top: 17%;
 }

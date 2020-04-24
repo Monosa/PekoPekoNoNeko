@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Short+Stack&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.header{
+    padding: 1%;
+    display: flex;
+    justify-content: space-between;
+    background-color:rgba(0, 0, 0, 0.0);;
+}
+a{
+    color: #d5d8e9 !important;
+}
+
+.titulo{
+    color: #d5d8e9;
+}
+
+body {
+    font-family: 'Short Stack', cursive;
+    background-image: url("../img/titlescreencats.jpg");
+    background-size: 100%;
+}
+
+.contenedor_ventana{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.titulo_ventana{
+    display: flex;
+    justify-content: center;
+    color: #d5d8e9;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.contenedor_datos{
+    display: flex;
+    justify-content: center;
+}
+
+.login_user{
+    background-color: #d5d8e9;
+    border-radius: 3%;
+    padding: 3%;
+    width: 35%;
+}
+
+.elem{
+    padding-top: 2%;
+    padding-bottom: 2%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.texto{
+    display: flex;
+    justify-content: space-between;
+}
+
+input{
+    width: 50%;
+}
+
+button{
+    font-family: 'Short Stack', cursive;
+    background-color: #b881d8;
+    margin: auto;
+    margin-top: 35px;
+    display: block;
+    color: white;
+    border-radius: 10px;
+    height: 50px;
+    width: 100px;
+}
