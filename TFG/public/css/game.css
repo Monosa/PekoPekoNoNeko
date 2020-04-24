@@ -10,3 +10,21 @@ body{
 #container #canvas-1, #gordo {
     position: absolute !important;
 }
+
+#showrachas {
+    display: block;
+    margin-top: 4%;
+    margin-left: 40%;
+}
+#number2 {
+    margin-top: 4%;
+    width: 17%;
+}
+#number3 {
+    margin-top: 4%;
+    width: 10%;
+}
+#number4 {
+    margin-top: 4%;
+    width: 12%;
+}

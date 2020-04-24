@@ -16,12 +16,15 @@ Scores.post("/", function (request, response) {
         songid: request.body.idcancion,
         difid: request.body.iddificultad,
         puntos: request.body.points,
+        puntos2: request.body.points2,
         user: request.body.user,
         userImg: request.body.img,
+        userMulti: request.body.imgMulti,
         imagen: request.body.imagen,
-        nick: request.body.nick
+        nick: request.body.nick,
+        multi: request.body.multi
     }
-
+    console.log(datos.multi);
     daoScores.insertScore(MongoClient, config.url, config.name, datos, function (error, id) {
         if (error) {
             response.status(500);
@@ -58,37 +61,6 @@ Scores.get("/scoreslist", function (request, response) {
         }
     });
 });
-
-Scores.post("/songscores", function (request, response) {
-    let idCancion = request.body.idcancion;
-
-    daoCanciones.getCancion(MongoClient, config.url, config.name, idCancion, 1, false, function (error, cancion) {
-        if (error) {
-            response.status(500);
-            response.render("songSelection", {
-                canciones: null,
-                errorMsg: `${error.message}`
-            });
-        } else {
-            response.status(200);
-            daoScores.getSongScores(MongoClient, config.url, config.name, idCancion, function (error, result) {
-                if (error) {
-                    response.status(500);
-                    response.redirect("songs/");
-                } else {
-                    response.status(200);
-                    response.render("songScores", {
-                        song: cancion[0],
-                        puntuaciones: result,
-                        errorMsg: null
-                    });
-                }
-            });
-        }
-    });
-
-});
-
 
 
 module.exports = Scores;

@@ -20,8 +20,20 @@ body {
     height: 50px;
     animation: movebutton 3s forwards 5s;
 }
+#mainmenu2{
+    margin: 0% 10%;
+    opacity: 0%;
+    background-color: #f8a0a5;
+    color: white;
+    border-radius: 10px;
+    height: 50px;
+    animation: movebutton2 3s forwards 5s;
+}
 @keyframes movebutton {
-    to{margin: 9% 20%; opacity: 100%;}
+    to{margin: 9% 27%; opacity: 100%;}
+}
+@keyframes movebutton2 {
+    to{margin: 2% 42%;opacity: 100%;}
 }
 /* Pen Title */
 .pen-title {
@@ -181,7 +193,12 @@ body {
 .contenedor {
     margin-left: 2%;
     margin-top: 2%;
-   animation: floattoleft 3s forwards 4s;
+    animation: floattoleft 3s forwards 4s;
+}
+.contenedor2 {
+    margin-left: 16%;
+    margin-top: 2%;
+    animation: floattoleft 3s forwards 4s;
 }
 /* Card */
 .card {

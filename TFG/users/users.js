@@ -81,8 +81,7 @@ users.post("/signup", function (request, response) {
                             request.session.currentUserNickname = user.nickname;
                             request.session.currentUserId = user.id;
                             request.session.multijugador = user.multi;
-                            request.session.currentUserImg = true;
-                            request.session.imagenJugador = user.image;
+                            request.session.currentUserImg = user.image;
                             request.session.currentUserImg2 = user.image;
                             response.redirect("/users/sesion");
                         }
@@ -162,7 +161,7 @@ users.post("/cambiaMulti", function(request, response){
                     response.status(500);
                 }else{
                     response.status(200);
-                    request.session.imagenJugador = user.Image;
+                    request.session.currentUserImg = user.Image;
                     response.render("sesion", {user: user});
                 }
             });
@@ -189,21 +188,17 @@ users.post("/login", function(request, response){
                     response.status(500);
                     response.render("login", { errorMsg: `${error.message}` });
                 }if(result === undefined){
-                    response.status(200);
+                    response.status(200);score
                     response.render("login", { errorMsg: "El nickname o la contraseña no son correctos. Por favor, inténtelo de nuevo." });
                 }else{
                     response.status(200);
                     console.log(result._id)
                     user.id = result._id;
-                    user.image = result.image;
+                    user.image = result.Image;
 
                     request.session.currentUserId = user.id;
                     request.session.currentUserNickname = user.nickname;
-
-                    if(user.image !== null)
-                        request.session.currentUserImg = true;
-                    else
-                        request.session.currentUserImg = false;
+                    request.session.currentUserImg = user.image;
                     
                     response.redirect("/users/sesion");
                 }
