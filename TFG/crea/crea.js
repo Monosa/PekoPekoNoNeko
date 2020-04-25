@@ -74,7 +74,7 @@ Crea.post("/Fase2", cpUpload, function (request, response) {
     } else {
       // Incluir campos ocultos en el html, leer esos campos desde el .js
       response.status(200);
-      let userId = request.session.user.id;
+      let userId = request.session.currentUserId;
       // Le pasamos a la plantilla el objeto entero 
       response.render("creaFase2", {
         song: result,
