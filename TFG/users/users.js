@@ -10,7 +10,7 @@ const daoUsers = new DAOUsers();
 
 // Middleware que limita el acceso a la sesión sin estar loggeado
 function middlewareLogin(request, response, next) {
-    if (request.session.user !== undefined) {
+    if (request.session.currentUserNickname !== undefined) {
         next();
     } else {
         response.redirect("/users/login");
@@ -18,7 +18,7 @@ function middlewareLogin(request, response, next) {
 }
 
 function middlewareLogged(request, response, next) {
-    if (request.session.user !== undefined) {
+    if (request.session.currentUserNickname !== undefined) {
         response.redirect("/users/sesion");
     } else {
         next();
@@ -81,9 +81,11 @@ users.post("/signup", function (request, response) {
                         } else {
                             user.id = id;
                             response.status(200);
-                            request.session.user = user;
+                            request.session.currentUserId = user.id;
+                            request.session.currentUserNickname = user.nickname;
+                            request.session.currentUserImg = user.image;
+                            request.session.currentUserImgMulti = user.image;
                             request.session.multijugador = false;
-                            request.session.currentUserImg2 = user.image;
                             response.redirect("/users/sesion");
                         }
                     });
@@ -103,7 +105,7 @@ users.post("/signup", function (request, response) {
 
 // Perfil de usuario
 users.get("/sesion", middlewareLogin, function (request, response) {
-    daoUsers.getUser(MongoClient, config.url, config.name, request.session.user.id, function (error, user) {
+    daoUsers.getUser(MongoClient, config.url, config.name, request.session.currentUserId, function (error, user) {
         if (error) {
             response.status(500);
         } else {
@@ -152,13 +154,12 @@ users.post("/login", function (request, response) {
                 } else {
                     response.status(200);
                     console.log(result)
-                    user = result;
-                    user.id = result._id;
-                    user.image = result.Image;
 
-                    request.session.user = user;
+                    request.session.currentUserId = result._id;
+                    request.session.currentUserNickname = result.Nickname;
+                    request.session.currentUserImg = result.Image;
+                    request.session.currentUserImgMulti = result.ImageMulti;
                     request.session.multijugador = false;
-                    request.session.currentUserImg2 = user.ImageMulti;
 
                     response.redirect("/users/sesion");
                 }
@@ -184,7 +185,7 @@ users.get("/cambiaMulti", function (request, response) {
 
 users.post("/cambiaMulti", function (request, response) {
     let image = request.body.userAvatar + ".png";
-    daoUsers.updateMulti(MongoClient, config.url, config.name, image, request.session.user.nickname, function (error, id) {
+    daoUsers.updateMulti(MongoClient, config.url, config.name, image, request.session.currentUserNickname, function (error, id) {
         if (error) {
             response.status(500);
             response.render("cambiaMulti", {
@@ -192,14 +193,14 @@ users.post("/cambiaMulti", function (request, response) {
             });
         } else {
             response.status(200);
-            request.session.currentUserImg2 = image;
+            request.session.currentUserImgMulti = image;
 
-            daoUsers.getUser(MongoClient, config.url, config.name, request.session.user.id, function (error, user) {
+            daoUsers.getUser(MongoClient, config.url, config.name, request.session.currentUserId, function (error, user) {
                 if (error) {
                     response.status(500);
                 } else {
                     response.status(200);
-                    request.session.user.image = user.Image;
+                    request.session.currentUserImg = user.Image;
                     response.render("sesion", {
                         user: user
                     });
@@ -211,16 +212,14 @@ users.post("/cambiaMulti", function (request, response) {
 
 // Editar perfil de usuario
 users.get("/editarPerfil", function (request, response) {
-    daoUsers.getUser(MongoClient, config.url, config.name, request.session.user.id, function (error, user) {
+    daoUsers.getUser(MongoClient, config.url, config.name, request.session.currentUserId, function (error, user) {
         if (error) {
             response.status(500);
         } else {
             response.status(200);
-            request.session.user.name = user.Name;
-            request.session.user.email = user.Email;
-            request.session.user.password = user.Password;
+            response.locals.user = user;
             response.render("editarPerfil", {
-                user: request.session.user,
+                user: user,
                 errorMsg: null
             });
         }
@@ -249,20 +248,28 @@ users.post("/editarPerfil", function (request, response) {
             user.email = request.body.email_user;
             user.password = request.body.password_user;
             user.name = request.body.name_user;
-            user.nickname = request.session.user.nickname;
+            user.nickname = request.session.currentUserNickname;
             user.image = request.body.userAvatar + ".png";
 
             daoUsers.updateUser(MongoClient, config.url, config.name, user, function (error, res) {
                 if (res.result.ok !== 1) {
                     response.status(500);
-                    response.render("editarPerfil", {
-                        user: request.session.user,
-                        errorMsg: `${error.message}`
+                    daoUsers.getUser(MongoClient, config.url, config.name, request.session.currentUserId, function (error, user) {
+                        if (error) {
+                            response.status(500);
+                        } else {
+                            response.status(200);
+                            response.locals.user = user;
+                            response.render("editarPerfil", {
+                                user: user,
+                                errorMsg: null
+                            });
+                        }
                     });
                 } else {
                     response.status(200);
-                    request.session.user.image = user.image;
-                    request.session.currentUserImg2 = user.image;
+                    request.session.currentUserImg = user.image;
+                    request.session.currentUserImgMulti = user.image;
                     response.redirect("/users/sesion");
                 }
             });
@@ -270,9 +277,17 @@ users.post("/editarPerfil", function (request, response) {
             response.status(200);
             //Se meten todos los mensajes de error en un array
             let mensaje = result.array().map(n => " " + n.msg);
-            response.render("editarPerfil", {
-                user: request.session.user,
-                errorMsg: mensaje
+            daoUsers.getUser(MongoClient, config.url, config.name, request.session.currentUserId, function (error, user) {
+                if (error) {
+                    response.status(500);
+                } else {
+                    response.status(200);
+                    response.locals.user = user;
+                    response.render("editarPerfil", {
+                        user: user,
+                        errorMsg: mensaje
+                    });
+                }
             });
         }
     });
