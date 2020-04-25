@@ -23,6 +23,8 @@ class DAOScores{
                             db.close();
                         }
                     });
+                }else{
+                    callback(null, null);
                 }
             }
         });

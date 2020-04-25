@@ -11,12 +11,6 @@ body {
     background-size: 100%;
 }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    background-color: #33a79e;
-}
-
 /* Dropdown Button */
 .dropbtn {
     font-family: 'Short Stack', cursive;
@@ -68,10 +62,11 @@ nav {
     display: block;
 }
 
-.nav {
+nav {
     display: flex;
     width: 15%;
     justify-content: space-between;
+    background-color: #33a79e;
 }
 
 .user_icon>img {

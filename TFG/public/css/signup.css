@@ -9,7 +9,6 @@
     padding: 1%;
     display: flex;
     justify-content: space-between;
-    background-color: #33a79e;
 }
 
 .titulo {
@@ -19,13 +18,14 @@
 body {
     font-family: 'Short Stack', cursive;
     background-image: url("../img/titlescreencats.jpg");
+    background-size: 100%;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 3%;
 }
 
 .title {
@@ -41,7 +41,7 @@ body {
     justify-content: center;
 }
 
-.signup_user {
+.signup_user, .edit_profile {
     background-color: #d5d8e9;
     border-radius: 3%;
     padding: 3%;
@@ -64,11 +64,22 @@ input {
 
 button {
     font-family: 'Short Stack', cursive;
-    justify-self: center;
-    border-radius: 2%;
-    background-color: #33a79e;
-    padding: 1%;
-    margin-left: 38%;
+    border-radius: 10px;
+    background-color: #b881d8;
+    color: white;
+    width: 30%;
+    height: 8%;   
+}
+
+.boton_aceptar{
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    user-select: none;
+    border: none;
+    transition: all 0.3s ease-out;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.225);
 }
 
 .mensaje_error {

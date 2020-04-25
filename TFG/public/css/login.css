@@ -70,12 +70,25 @@ input{
 
 button{
     font-family: 'Short Stack', cursive;
-    background-color: #b881d8;
-    margin: auto;
-    margin-top: 35px;
-    display: block;
-    color: white;
     border-radius: 10px;
-    height: 50px;
-    width: 100px;
+    background-color: #b881d8;
+    color: white;
+    width: 18%;
+    height: 25%;
+}
+
+#login_button{
+    margin-left: 41%;
+    margin-top: 3%;
+}
+
+.boton_aceptar{
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    user-select: none;
+    border: none;
+    transition: all 0.3s ease-out;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.225);
 }
