@@ -900,15 +900,15 @@ function go(points, sum, multi){
   let stri = "", ta = "";
   if(multi){ stri = "#puntos-p2"; ta = "#tag2";}
   else {stri = "#puntos-p1"; ta = "#tag1";}
-  $({puntos: 0}).animate({puntos: points},{
+  $({puntos: points - sum}).animate({puntos: points},{
     duration: 1000,
     easing:"linear",
     step: function(now, fx){
-      $(stri).html(points);
+      $(stri).html(Math.floor(now));
     },
     queue:false
   });
-  $("#tag").fadeIn({
+  $(ta).fadeIn({
     duration:700,
     easing:"linear",
     step:function(now, fx){

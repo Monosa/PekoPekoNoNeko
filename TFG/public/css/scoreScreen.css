@@ -159,7 +159,7 @@ body {
     text-align: left;
 }
 #tip code h1 {
-    dsplay: block;
+    display: block;
     background: #263238;
     margin: -10px -20px 20px;
     padding: 10px 20px;
