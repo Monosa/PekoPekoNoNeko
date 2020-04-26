@@ -1,12 +1,14 @@
 const express = require("express");
 const MongoClient = require('mongodb');
 const config = require("../config.js");
+const bcrypt = require("bcrypt");
 const DAOUsers = require("./DAOUsers.js");
 
 const users = express.Router(); // Crea la aplicación 'users' con sus propias rutas (empezando por /users)
 
 //const pool = mysql.createPool(config.mysqlConfig);
 const daoUsers = new DAOUsers();
+var sal = 12;   // Valor necesario para el cifrado de las contraseñas
 
 // Middleware que limita el acceso a la sesión sin estar loggeado
 function middlewareLogin(request, response, next) {
@@ -72,22 +74,34 @@ users.post("/signup", function (request, response) {
                         errorMsg: "Ese nickname ya está cogido. Por favor, elige otro."
                     });
                 } else {
-                    daoUsers.insertUser(MongoClient, config.url, config.name, user, function (error, id) {
-                        if (error) {
+                    bcrypt.hash(request.body.password_user, sal, function (err, cifrada) {
+                        if (err) {
                             response.status(500);
                             response.render("signup", {
-                                errorMsg: `${error.message}`
+                                errorMsg: "Error en el cifrado de la contraseña. Por favor, inténtalo de nuevo."
                             });
-                        } else {
-                            user.id = id;
-                            response.status(200);
-                            request.session.currentUserId = user.id;
-                            request.session.currentUserNickname = user.nickname;
-                            request.session.currentUserImg = user.image;
-                            request.session.currentUserImgMulti = user.image;
-                            request.session.multijugador = false;
-                            response.redirect("/users/sesion");
                         }
+                        user.password = cifrada;
+                        console.log("Password despues de cifrar: " + user.password);
+
+                        console.log("Password antes de insertar: " + user.password);
+                        daoUsers.insertUser(MongoClient, config.url, config.name, user, function (error, id) {
+                            if (error) {
+                                response.status(500);
+                                response.render("signup", {
+                                    errorMsg: `${error.message}`
+                                });
+                            } else {
+                                user.id = id;
+                                response.status(200);
+                                request.session.currentUserId = user.id;
+                                request.session.currentUserNickname = user.nickname;
+                                request.session.currentUserImg = user.image;
+                                request.session.currentUserImgMulti = user.image;
+                                request.session.multijugador = false;
+                                response.redirect("/users/sesion");
+                            }
+                        });
                     });
                 }
             });
@@ -133,37 +147,42 @@ users.post("/login", function (request, response) {
         // El método isEmpty() devuelve true si las comprobaciones
         // no han detectado ningún error
         if (result.isEmpty()) {
-            let user = {};
+            let nickname = request.body.nickname_user;
 
-            user.nickname = request.body.nickname_user;
-            user.password = request.body.password_user;
-            user.image = null;
-
-            daoUsers.isUserCorrect(MongoClient, config.url, config.name, user.nickname, user.password, function (err, result) {
+            daoUsers.getUserByNickname(MongoClient, config.url, config.name, nickname, function (err, user) {
                 if (err) {
                     response.status(500);
                     response.render("login", {
                         errorMsg: `${error.message}`
                     });
                 }
-                if (result === undefined) {
+
+                if (user === undefined) {
                     response.status(200);
                     response.render("login", {
-                        errorMsg: "El nickname o la contraseña no son correctos. Por favor, inténtelo de nuevo."
+                        errorMsg: "El nickname o la contraseña no son correctos. Por favor, inténtalo de nuevo."
                     });
                 } else {
                     response.status(200);
-                    console.log(result)
+                    bcrypt.compare(request.body.password_user, user.Password, function (err, result) {
+                        if (result == true) {
+                            request.session.currentUserId = user._id;
+                            request.session.currentUserNickname = user.Nickname;
+                            request.session.currentUserImg = user.Image;
+                            request.session.currentUserImgMulti = user.ImageMulti;
+                            request.session.multijugador = false;
 
-                    request.session.currentUserId = result._id;
-                    request.session.currentUserNickname = result.Nickname;
-                    request.session.currentUserImg = result.Image;
-                    request.session.currentUserImgMulti = result.ImageMulti;
-                    request.session.multijugador = false;
-
-                    response.redirect("/users/sesion");
+                            response.redirect("/users/sesion");
+                        } else {
+                            response.status(200);
+                            response.render("login", {
+                                errorMsg: "El nickname o la contraseña no son correctos. Por favor, inténtalo de nuevo."
+                            });
+                        }
+                    });
                 }
             });
+
         } else {
             response.status(200);
             //Se meten todos los mensajes de error en un array

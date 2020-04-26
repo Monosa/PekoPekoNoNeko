@@ -49,6 +49,21 @@ class DAOUsers{
         });
     }
 
+    // Lee un usuario de la base de datos a partir de su nickname
+    getUserByNickname(MongoClient, url, name, nickname, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            
+            var dbo = db.db(name);
+            dbo.collection("Users").find({"Nickname": nickname}).toArray(function(err, result) {
+                if(err) throw err;
+                console.log(result[0]);
+                callback(null, result[0]);
+                db.close();
+            });
+        });
+    }
+
     //  Comprueba que no existe un usuario en la base de datos con el nickname "nickname"
     checkUser(MongoClient, url, name, nickname, callback){
         MongoClient.connect(url, function(err, db) {
@@ -75,6 +90,7 @@ class DAOUsers{
         });
     }
 
+    // Actualiza el avatar del jugador invitado
     updateMulti(MongoClient, url, name, image, nickname, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
@@ -86,6 +102,7 @@ class DAOUsers{
         });
     }
 
+    // Actualiza los datos de un usuario
     updateUser(MongoClient, url, name, user, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
