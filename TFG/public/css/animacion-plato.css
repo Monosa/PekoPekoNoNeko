@@ -180,7 +180,7 @@
 }
 */.animation {
     margin-left: -53%;
-    margin-top: -7.7%;
+    margin-top: -7.9%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -228,26 +228,29 @@
     animation: ripple1 3s infinite ease-in-out;
     animation-delay: 850ms;
 }
-#one {
+#one, #one2 {
+    left: 47%;
     background-color: rgba(0, 0, 0, 0);
     border: 20px solid #FF393A;
     border-radius: 50%;
 }
-#two {
+#two, #two2 {
     background-color: rgba(0, 0, 0, 0);
 }
-#three {
+#three, #three2 {
+    left: 45%;
     background-color: rgba(0, 0, 0, 0);
     border: 30px solid #DA0000;
 }
-#four {
+#four, #four2 {
     background-color: rgba(0, 0, 0, 0);
 }
-#five {
+#five, #five2 {
+    left: 43%;
     background-color: rgba(0, 0, 0, 0);
     border: 40px solid #6c0100;
 }
-#six {
+#six, #six2 {
     background-color: rgba(0, 0, 0, 0);
 }
 @keyframes ripple6 {

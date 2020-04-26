@@ -25,61 +25,72 @@
 
     <audio id="player" src="../media/countdown.mp3" type="audio/mpeg" autoplay preload="auto"></audio>
     <audio id="myAudio" src="../media/<%=song.Cancion%>" type="audio/mpeg"></audio>
-    <div id="showrachas"><img id="number2" src="../img/2.gif" style="display: none"><img id="number3" src="../img/3.gif" style="display: none"><img id="number4" src="../img/4.gif" style="display: none"></div> 
+    <div class="showrachas">
+      <div class="centerPoints">
+        <div class="titlePoints">
+          Puntos:
+        </div>
+        <div id="tag1">
+          
+        </div>
+        <div id="puntos-p1">0</div>
+      </div>
+      <span class="nameRacha">Racha:</span>
+      <img id="number2" src="../img/2.gif" style="display: none">
+      <img id="number3" src="../img/3.gif" style="display: none">
+      <img id="number4" src="../img/4.gif" style="display: none">
+      <img id="max" src="../img/max.gif" style="display: none">
+    </div>
 
     
     <div id="bg-player1">
-       
       <div id="info">
-        <div id="control"> </div>
-        <div class="cronometro">
-          <div id="hms"></div>
-        </div>
-        <div id="pin"></div>
-        <div id="puntos">
-          <div id = "puntos-p1"></div>
-          <div id = "racha-p1"></div>
-          <div id= "Contador"></div>
-        </div>
         <canvas id="gifCanvas1"></canvas>
       </div>
       <canvas id="bg_canvas_1"></canvas>
-       
       <canvas id="canvas-1"></canvas>
-      <!--  Aqui vamos a poner los divs de las animaciones-->
-      <!--<div id="gordo">
-        <div id="outer-circle">
-          <div id="inner-circle">
-            <div id="center-circle">
-              <div id="content"></div>
-            </div>
-          </div>
-        </div>
-  
-      </div>-->
       <div class="animation">
-      <div class="format-animation" id="six">6</div>
-      <div class="format-animation" id="five" style="display: none">5</div>
-      <div class="format-animation" id="four">4</div>
-      <div class="format-animation" id="three" style="display: none">3</div>
-      <div class="format-animation" id="two">2</div>
-      <div class="format-animation" id="one" style="display: none">1</div>
-    </div>
+        <div class="format-animation" id="six">6</div>
+        <div class="format-animation" id="five" style="display: none">5</div>
+        <div class="format-animation" id="four">4</div>
+        <div class="format-animation" id="three" style="display: none">3</div>
+        <div class="format-animation" id="two">2</div>
+        <div class="format-animation" id="one" style="display: none">1</div>
+      </div>
       <!--  Aqui terminan los divs-->
 
     </div>
-
+    <div class="showrachas" id="rachasMulti" style="visibility: hidden;">
+      <div class="centerPoints2">
+        <div class="titlePoints">
+          Puntos:
+        </div>
+        <div id="tag2">
+          
+        </div>
+        <div id="puntos-p2">0</div>
+      </div>
+      <span class="nameRacha2">Racha:</span>
+      <img id="number22" src="../img/2.gif" style="display: none">
+      <img id="number32" src="../img/3.gif" style="display: none">
+      <img id="number42" src="../img/4.gif" style="display: none">
+      <img id="max2" src="../img/max.gif" style="display: none">
+    </div>
     <div id="bg-player2" style="visibility: hidden;">
       <div id="info">
-        <div id="puntos2">
-          <div id = "puntos-p2"></div>
-          <div id = "racha-p2"></div>
-          <div id= "Contador"></div>
-        </div>
         <canvas id="gifCanvas2"></canvas>
       </div>
       <canvas id="bg_canvas_2"></canvas>
       <canvas id="canvas-2"></canvas>
+      <div class="animation">
+        <div class="format-animation" id="six2">6</div>
+        <div class="format-animation" id="five2" style="display: none">5</div>
+        <div class="format-animation" id="four2">4</div>
+        <div class="format-animation" id="three2" style="display: none">3</div>
+        <div class="format-animation" id="two2">2</div>
+        <div class="format-animation" id="one2" style="display: none">1</div>
+      </div>
+      <!--  Aqui terminan los divs-->
     </div>
 
     <form name="submitScore" action="/score" method="post">

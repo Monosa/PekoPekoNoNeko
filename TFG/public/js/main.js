@@ -29,7 +29,7 @@ let keys = [];
 let pulsacionesDango1 = 0, pulsacionesDango2 = 0;
 let buffUsado = false, buffUsado2 = false;
 let contextBg, contextBg2;
-
+let suma, suma2;
 //La siguiente variable es el buff que tiene elegido el usuario
 /*
 Chesire es sumador
@@ -285,6 +285,7 @@ function cargarJuego() {
     document.getElementById("bg-player1").style.top = "10%";
     document.getElementById("bg-player2").style.visibility = "visible";
     document.getElementById("bg-player2").style.top = "60%";
+    document.getElementById("rachasMulti").style.visibility = "visible";
     canvas2 = document.getElementById("canvas-2");
     context2 = canvas2.getContext("2d");
   }
@@ -491,9 +492,14 @@ function compruebaAcierto(playing, player) {
       racha = res[0];
       if(racha != 0){
         //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-        if(buff.localeCompare("Blue.png") === 0)
-        puntos += res[1] * 1.5;
-      else puntos += res[1];
+        if(buff.localeCompare("Blue.png") === 0){
+          suma = res[1] * 1.5;
+          puntos += suma;
+        }
+        else {
+          suma = res[1];
+          puntos += suma;
+        } 
       }
       plato2.onload = function(){
         contextBg.drawImage(plato2,30,60);
@@ -504,9 +510,14 @@ function compruebaAcierto(playing, player) {
       racha = res[0];
       if(racha != 0){
         //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-        if(buff.localeCompare("Blue.png") === 0)
-          puntos += res[1] * 1.5;
-        else puntos += res[1];
+        if(buff.localeCompare("Blue.png") === 0){
+          suma = res[1] * 1.5;
+          puntos += suma;
+        }
+        else{
+          suma = res[1];
+          puntos += suma;
+        }
       }
 
       plato2.onload = function(){
@@ -519,7 +530,8 @@ function compruebaAcierto(playing, player) {
       res = rachas(50, contadorBien);
       racha = res[0];
       if(racha != 0){
-        puntos += res[1];
+        suma = res[1];
+        puntos += suma;
       }
       plato2.onload = function(){
         contextBg.drawImage(plato2,30,60);
@@ -554,9 +566,14 @@ function compruebaAcierto(playing, player) {
         racha = res[0];
         if(racha != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if(buff.localeCompare("Blue.png") === 0)
-            puntos += res[1] * 1.5;
-          else puntos += res[1];
+          if(buff.localeCompare("Blue.png") === 0){
+            suma = res[1] * 1.5;
+            puntos += suma;
+          }
+          else {
+            suma = res[1];
+            puntos += suma;
+          }
         }
         plato2.onload = function(){
           contextBg.drawImage(plato2,30,60);
@@ -567,9 +584,14 @@ function compruebaAcierto(playing, player) {
         racha = res[0];
         if(racha != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if(buff.localeCompare("Blue.png") === 0)
-            puntos += res[1] * 1.5;
-          else puntos += res[1];
+          if(buff.localeCompare("Blue.png") === 0){
+            suma = res[1] * 1.5;
+            puntos += suma;
+          }
+          else {
+            suma = res[1];
+            puntos += suma;
+          }
         }
         plato2.onload = function(){
           contextBg.drawImage(plato2,30,60);
@@ -581,7 +603,8 @@ function compruebaAcierto(playing, player) {
         res = rachas(50, contadorBien);
         racha = res[0];
         if(racha != 0){
-          puntos += res[1];
+          suma = res[1];
+          puntos += suma;
         }
         plato2.onload = function(){
           contextBg.drawImage(plato2,30,60);
@@ -614,9 +637,14 @@ function compruebaAcierto(playing, player) {
         racha2 = res[0];
         if(racha != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if(buffMulti.localeCompare("Blue.png") === 0)
-            puntos2 += res[1] * 1.5;
-          else puntos2 += res[1];
+          if(buffMulti.localeCompare("Blue.png") === 0){
+            suma2 = res[1] * 1.5;
+            puntos2 += suma2;
+          }
+          else {
+            suma2 = res[1];
+            puntos2 += suma2;
+          }
         }
         plato2.onload = function(){
           contextBg.drawImage(plato2,30,60);
@@ -627,9 +655,14 @@ function compruebaAcierto(playing, player) {
         racha2 = res[0];
         if(racha2 != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if(buffMulti.localeCompare("Blue.png") === 0)
-            puntos2 += res[1] * 1.5;
-          else puntos2 += res[1];
+          if(buffMulti.localeCompare("Blue.png") === 0){
+            suma2 = res[1] * 1.5;
+            puntos2 += suma2;
+          }
+          else {
+            suma2 = res[1];
+            puntos2 += suma2;
+          }
         }
         plato2.onload = function(){
           contextBg.drawImage(plato2,30,60);
@@ -641,7 +674,8 @@ function compruebaAcierto(playing, player) {
         res = rachas(50, contadorBien2);
         racha2 = res[0];
         if(racha2 != 0){
-          puntos2 += res[1];
+          suma2 = res[1];
+          puntos2 += suma2;
         }
         plato2.onload = function(){
           contextBg.drawImage(plato2,30,60);
@@ -669,12 +703,14 @@ function compruebaAcierto(playing, player) {
       }
     }
   }
-  document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
-  document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
+  //document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
+  go(puntos, suma, false);
+  //document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
 
   if (multiplayer) {
-    document.getElementById("puntos-p2").innerHTML = "Puntos: " + puntos2;
-    document.getElementById("racha-p2").innerHTML = "Racha: " + racha2;
+    //document.getElementById("puntos-p2").innerHTML = "Puntos: " + puntos2;
+    //document.getElementById("racha-p2").innerHTML = "Racha: " + racha2;
+    go(puntos2, suma2, true);
   }
 }
 
@@ -690,13 +726,13 @@ function rachas(puntos, contadorBien) {
 }
 
 function iniciarPuntosyRacha() {
-  document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
-  document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
+  //document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
+  //document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
 
   if (multiplayer) {
     //document.getElementById("puntos-p2").style.visibility = "visible";
-    document.getElementById("puntos-p2").innerHTML = "Puntos: " + puntos2;
-    document.getElementById("racha-p2").innerHTML = "Racha: " + racha2;
+    //document.getElementById("puntos-p2").innerHTML = "Puntos: " + puntos2;
+    //document.getElementById("racha-p2").innerHTML = "Racha: " + racha2;
   }
 }
 
@@ -714,7 +750,7 @@ function comprueba() {
     if (playing !== -1 && playing.x <= 0) {
       actual += 1;
       contadorCirculos += 1;
-      document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
+      //document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
       if (!playing.clicked) {
         let platoNormal = new Image();
         platoNormal.src = '../img/Plato.png';
@@ -723,7 +759,7 @@ function comprueba() {
         }
         racha = 0;
         contadorBien = 0;
-        document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
+        //document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
       }
       if (actual < particles.length) {
         playing = particles[actual];
@@ -742,6 +778,7 @@ function comprueba() {
     else if(racha === 4){
       document.getElementById("five").style.display = "inline";
       document.getElementById("number4").style.display ="inline";
+      document.getElementById("max").style.display ="inline";
       document.getElementById("number3").style.display = "none";
     }
     else if(racha === 0){
@@ -751,6 +788,7 @@ function comprueba() {
       document.getElementById("number2").style.display = "none";
       document.getElementById("number3").style.display = "none";
       document.getElementById("number4").style.display = "none";
+      document.getElementById("max").style.display = "none";
     }
 
     if (multiplayer) {
@@ -759,37 +797,77 @@ function comprueba() {
         if (!playing2.clicked) {
           racha2 = 0;
           contadorBien2 = 0;
-          document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
+          //document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
         }
         if (actual2 < particles2.length) {
           playing2 = particles2[actual2];
-        } else playing2 = -1;
+        } 
+        else playing2 = -1;
+      }
+      if(racha2 === 2){
+        document.getElementById("one2").style.display = "inline";
+        document.getElementById("number22").style.display = "inline";
+      }
+      else if(racha2 === 3){
+        document.getElementById("three2").style.display = "inline";
+        document.getElementById("number32").style.display ="inline";
+        document.getElementById("number22").style.display = "none";
+      }
+      else if(racha2 === 4){
+        document.getElementById("five2").style.display = "inline";
+        document.getElementById("number42").style.display ="inline";
+        document.getElementById("max2").style.display ="inline";
+        document.getElementById("number32").style.display = "none";
+      }
+      else if(racha2 === 0){
+        document.getElementById("one2").style.display = "none";
+        document.getElementById("three2").style.display = "none";
+        document.getElementById("five2").style.display = "none";
+        document.getElementById("number22").style.display = "none";
+        document.getElementById("number32").style.display = "none";
+        document.getElementById("number42").style.display = "none";
+        document.getElementById("max2").style.display = "none";
       }
     }
   }
   else{
     if(playing !== -1 && playing.x < -500){
-      if(buff.localeCompare("Blue.png") === 0)
-        puntos += pulsacionesDango1 * 100 * 1.5;
-      else if(buff.localeCompare("Mery.png") === 0)
-        puntos += pulsacionesDango1 * 300;
-      else puntos += pulsacionesDango1 * 100;
+      if(buff.localeCompare("Blue.png") === 0){
+        suma = pulsacionesDango1 * 100 * 1.5;
+        puntos += suma;
+      }
+      else if(buff.localeCompare("Mery.png") === 0){
+        suma = pulsacionesDango1 * 300;
+        puntos += suma;
+      }
+      else {
+        suma = pulsacionesDango1 * 100;
+        puntos += suma;
+      }
       actual += 1;
       contadorCirculos += 1;
-      document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
-      document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
+      //document.getElementById("puntos-p1").innerHTML = "Puntos: " + puntos;
+      go(puntos, suma, false);
+      //document.getElementById("Contador").innerHTML = "Circulos: " + contadorCirculos;
       if (actual < particles.length) {
         playing = particles[actual];
       } else playing = -1;
       if (multiplayer) {
         if (playing2 !== -1 && playing2.x < -500) {
-          if(buffMulti.localeCompare("Blue.png") === 0)
-            puntos += pulsacionesDango1 * 100 * 1.5;
-          else if(buffMulti.localeCompare("Mery.png") === 0)
-            puntos += pulsacionesDango1 * 300;
-          else puntos += pulsacionesDango1 * 100;
+          if(buffMulti.localeCompare("Blue.png") === 0){
+            suma2 = pulsacionesDango2 * 100 * 1.5;
+            puntos2 += suma2;
+          }
+          else if(buffMulti.localeCompare("Mery.png") === 0){
+            suma2 = pulsacionesDango2 * 300;
+            puntos2 += suma2;
+          }
+          else {
+            suma2 = pulsacionesDango2 * 100;
+            puntos2 += suma2;
+          }
           actual2 += 1;
-          document.getElementById("puntos-p2").innerHTML = "Puntos: " + puntos2;
+          go(puntos2, suma2, true);
           if (actual2 < particles2.length) {
             playing2 = particles2[actual2];
           } else playing2 = -1;
@@ -814,4 +892,33 @@ function seleccionaGif(buffParam, canvasParam){
   else if(buffParam.localeCompare("Perla.png") === 0)
     ruta = '../img/Perla.gif';
   gifler(ruta).animate(canvasParam);
+}
+
+//Prueba puntuaciones
+
+function go(points, sum, multi){
+  let stri = "", ta = "";
+  if(multi){ stri = "#puntos-p2"; ta = "#tag2";}
+  else {stri = "#puntos-p1"; ta = "#tag1";}
+  $({puntos: points - sum}).animate({puntos: points},{
+    duration: 1000,
+    easing:"linear",
+    step: function(now, fx){
+      $(stri).html(Math.floor(now));
+    },
+    queue:false
+  });
+  $(ta).fadeIn({
+    duration:700,
+    easing:"linear",
+    step:function(now, fx){
+      $(this).css("top", -55 * now  +"px");
+    }
+  }).fadeOut({
+    duration:300,
+    step:function(now, fx){
+      $(this).css("top",-55 * ( 2 - now) + "px");
+    }
+  }).html("+" + sum);
+
 }
