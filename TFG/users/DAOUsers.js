@@ -49,6 +49,21 @@ class DAOUsers{
         });
     }
 
+    // Lee un usuario de la base de datos a partir de su nickname
+    getUserByNickname(MongoClient, url, name, nickname, callback){
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            
+            var dbo = db.db(name);
+            dbo.collection("Users").find({"Nickname": nickname}).toArray(function(err, result) {
+                if(err) throw err;
+                console.log(result[0]);
+                callback(null, result[0]);
+                db.close();
+            });
+        });
+    }
+
     //  Comprueba que no existe un usuario en la base de datos con el nickname "nickname"
     checkUser(MongoClient, url, name, nickname, callback){
         MongoClient.connect(url, function(err, db) {
@@ -60,21 +75,9 @@ class DAOUsers{
                 db.close();
             });
         });
-    }
+    }    
 
-    //  Comprueba que el nickname y la contraseña introducidos son correctos
-    isUserCorrect(MongoClient, url, name, nickname, password, callback){
-        MongoClient.connect(url, function(err, db) {
-            if (err) throw err;
-            var dbo = db.db(name);
-            dbo.collection("Users").find({$and: [{"Nickname":nickname},{"Password":password}]}).toArray(function(err, result) {
-                if(err) throw err;
-                callback(null, result[0]);
-                db.close();
-            });
-        });
-    }
-
+    // Actualiza el avatar del jugador invitado
     updateMulti(MongoClient, url, name, image, nickname, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
@@ -86,13 +89,13 @@ class DAOUsers{
         });
     }
 
+    // Actualiza los datos de un usuario
     updateUser(MongoClient, url, name, user, callback){
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
             var dbo = db.db(name);
             dbo.collection("Users").updateOne({"Nickname": user.nickname}, 
                                               {$set:{'Email': user.email,
-                                                     'Password': user.password,
                                                      'Name': user.name,
                                                      'Image': user.image}}, function(err, result){
                 callback(null, result);
