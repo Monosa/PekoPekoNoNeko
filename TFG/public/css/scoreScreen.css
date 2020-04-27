@@ -11,6 +11,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 #mainmenu{
     margin: 0% 10%;
     opacity: 0%;
@@ -20,6 +21,7 @@ body {
     height: 50px;
     animation: movebutton 3s forwards 5s;
 }
+
 #mainmenu2{
     margin: 0% 10%;
     opacity: 0%;
@@ -27,169 +29,17 @@ body {
     color: white;
     border-radius: 10px;
     height: 50px;
-    animation: movebutton2 3s forwards 5s;
+    animation: movebutton2 3s forwards 3s;
 }
+
 @keyframes movebutton {
     to{margin: 9% 27%; opacity: 100%;}
 }
+
 @keyframes movebutton2 {
-    to{margin: 2% 42%;opacity: 100%;}
+    to{margin: 2% 42%; opacity: 100%;}
 }
-/* Pen Title */
-.pen-title {
-    padding: 50px 0;
-    text-align: center;
-    letter-spacing: 2px;
-}
-.pen-title h1 {
-    margin: 0 0 20px;
-    font-size: 48px;
-    font-weight: 300;
-}
-.pen-title h1 span {
-    display: block;
-    margin: 0 0 10px;
-    color: #d64c4c;
-    font-size: 18px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-.pen-title span {
-    font-size: 12px;
-}
-.pen-title span .fa {
-    color: #d64c4c;
-}
-.pen-title span a {
-    color: #d64c4c;
-    font-weight: 600;
-    text-decoration: none;
-}
-/* Rerun Button */
-.rerun {
-    margin: 0 0 30px;
-    text-align: center;
-}
-.rerun a {
-    cursor: pointer;
-    display: inline-block;
-    background: #d64c4c;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    border-radius: 3px;
-    padding: 10px 20px;
-    color: #fff;
-    text-decoration: none;
-    transition: 0.3s ease;
-}
-.rerun a:hover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-/* Scroll To Bottom */
-#scrollToBottom, #codepen, #portfolio {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: #d64c4c;
-    width: 56px;
-    height: 56px;
-    border-radius: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: 0.3s ease;
-    color: #fff;
-    text-align: center;
-}
-#scrollToBottom:hover, #codepen:hover, #portfolio:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-}
-#scrollToBottom i, #codepen i, #portfolio i {
-    line-height: 56px;
-}
-/* CodePen */
-#codepen {
-    bottom: 96px;
-    right: 36px;
-    background: #363636;
-    width: 44px;
-    height: 44px;
-    animation: buttonFadeInUp 1s ease;
-}
-#codepen i {
-    line-height: 44px;
-}
-/* Portfolio */
-#portfolio {
-    bottom: 150px;
-    right: 43px;
-    background: #d64c4c;
-    width: 30px;
-    height: 30px;
-    animation: buttonFadeInUp 1s ease;
-}
-#portfolio i {
-    line-height: 30px;
-}
-/* Tip */
-#tip {
-    max-width: 600px;
-    border-radius: 3px;
-    margin: 0 auto 100px;
-    line-height: 1.7em;
-    text-align: center;
-}
-#tip h1 {
-    margin: 0 0 10px;
-    color: #333;
-    font-size: 24px;
-    font-weight: 300;
-}
-#tip p {
-    margin: 0 0 10px;
-    color: #666;
-}
-#tip p b {
-    font-weight: 600;
-}
-#tip code {
-    display: block;
-    background: #232e34;
-    margin: 0 0 100px;
-    padding: 10px 20px;
-    color: #cdd3de;
-    letter-spacing: 2px;
-    text-align: left;
-}
-#tip code h1 {
-    display: block;
-    background: #263238;
-    margin: -10px -20px 20px;
-    padding: 10px 20px;
-    color: #cdd3de;
-    font-size: 18px;
-}
-#tip code h1:before {
-    content: '\f121';
-    display: inline-block;
-    margin: 0 10px 0 0;
-    color: #546e7a;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    transform: translate(0, 0);
-}
-#tip code p {
-    color: inherit;
-}
-#tip code p:nth-child(2) {
-    color: #c3e88d;
-}
-#tip code p span {
-    color: #c38fe5;
-}
-#tip code p span:nth-child(2), #tip code p span:nth-child(3), #tip code p span:nth-child(4) {
-    color: #ff5370;
-   /* color: #C3E88D;
-    */
-}
+
 .contenedor {
     margin-left: 2%;
     margin-top: 2%;
@@ -198,8 +48,12 @@ body {
 .contenedor2 {
     margin-left: 16%;
     margin-top: 2%;
-    animation: floattoleft 3s forwards 4s;
 }
+
+.multicard{
+    display: flex;
+}
+
 /* Card */
 .card {
     z-index: 1;
@@ -213,10 +67,9 @@ body {
     font-weight: 400;
     line-height: 1;
     overflow-x: hidden;
-    overflow-y: hidden;
-    
-    
+    overflow-y: hidden;   
 }
+
 .card .panel {
     position: absolute;
     width: 100%;
@@ -270,8 +123,7 @@ body {
     height: 480px;
     padding: 110px 20px;
     box-sizing: border-box;
-    text-align: center;
-   
+    text-align: center;  
 }
 .card .content div {
     display: table-cell;
@@ -476,9 +328,11 @@ body {
 @keyframes floattoleft {
     to {float: left;}
 }
+
 .song{
     max-width: 80%;
 }
+
 .rkmd-btn {
     display: inline-block;
     position: relative;
@@ -503,6 +357,7 @@ body {
     transition: all 0.3s ease-out;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.225);
 }
+
 .rkmd-btn:hover {
     text-decoration: none;
     box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.225);
@@ -558,16 +413,17 @@ body {
     opacity: 0%;
     width: 68%;
     float: right;
-    /* overflow: hidden; */
     margin-right: 4%;
     margin-top: 4%;
     animation: aparecetabla 3s forwards 5s;
 }
+
 .cardTable {
     background: #fff;
     border-radius: 0.25rem;
     box-shadow: 0 2px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .12);
 }
+
 .table {
     width: 100%;
     border-collapse: collapse;
