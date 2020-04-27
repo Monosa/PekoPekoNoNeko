@@ -6,7 +6,6 @@ const DAOUsers = require("./DAOUsers.js");
 
 const users = express.Router(); // Crea la aplicación 'users' con sus propias rutas (empezando por /users)
 
-//const pool = mysql.createPool(config.mysqlConfig);
 const daoUsers = new DAOUsers();
 var sal = 12;   // Valor necesario para el cifrado de las contraseñas
 
@@ -38,17 +37,17 @@ users.get("/signup", middlewareLogged, function (request, response) {
 users.post("/signup", function (request, response) {
     //  Comprobar que los campos obligatorios no estén vacíos
     request.checkBody("email_user", "El email del usuario está vacío").notEmpty();
+    //  Comprobar que el formato del email sea correcto
+    request.checkBody("email_user", "La dirección de correo no es válida").isEmail();
     request.checkBody("password_user", "La contraseña está vacía").notEmpty();
     request.checkBody("name_user", "El nombre del usuario está vacío").notEmpty();
     request.checkBody("nickname_user", "El nickname del usuario está vacío").notEmpty();
     //  Comprobar que la contraseña tenga un mínimo y un máximo de longitud
     request.checkBody("password_user", "La contraseña no es válida").isLength({
-        min: 4,
+        min: 8,
         max: 20
     });
-    //  Comprobar que el formato del email sea correcto
-    request.checkBody("email_user", "La dirección de correo no es válida").isEmail();
-
+    
     request.getValidationResult().then(function (result) {
         // El método isEmpty() devuelve true si las comprobaciones
         // no han detectado ningún error
@@ -65,7 +64,7 @@ users.post("/signup", function (request, response) {
                 if (err) {
                     response.status(500);
                     response.render("signup", {
-                        errorMsg: `${error.message}`
+                        errorMsg: "Error en el acceso a la base de datos. Por favor, inténtalo de nuevo."
                     });
                 }
                 if (usersWithNickname.length !== 0) {
@@ -82,14 +81,12 @@ users.post("/signup", function (request, response) {
                             });
                         }
                         user.password = cifrada;
-                        console.log("Password despues de cifrar: " + user.password);
 
-                        console.log("Password antes de insertar: " + user.password);
                         daoUsers.insertUser(MongoClient, config.url, config.name, user, function (error, id) {
                             if (error) {
                                 response.status(500);
                                 response.render("signup", {
-                                    errorMsg: `${error.message}`
+                                    errorMsg: "Error al guardar el usuario en la base de datos."
                                 });
                             } else {
                                 user.id = id;
@@ -153,7 +150,7 @@ users.post("/login", function (request, response) {
                 if (err) {
                     response.status(500);
                     response.render("login", {
-                        errorMsg: `${error.message}`
+                        errorMsg: "Error en el acceso a la base de datos."
                     });
                 }
 
@@ -208,7 +205,7 @@ users.post("/cambiaMulti", function (request, response) {
         if (error) {
             response.status(500);
             response.render("cambiaMulti", {
-                errorMsg: `${error.message}`
+                errorMsg: "Error en el acceso a la base de datos."
             });
         } else {
             response.status(200);
@@ -248,13 +245,7 @@ users.get("/editarPerfil", function (request, response) {
 users.post("/editarPerfil", function (request, response) {
     //  Comprobar que los campos obligatorios no estén vacíos
     request.checkBody("email_user", "El email del usuario está vacío").notEmpty();
-    request.checkBody("password_user", "La contraseña está vacía").notEmpty();
     request.checkBody("name_user", "El nombre del usuario está vacío").notEmpty();
-    //  Comprobar que la contraseña tenga un mínimo y un máximo de longitud
-    request.checkBody("password_user", "La contraseña no es válida").isLength({
-        min: 4,
-        max: 20
-    });
     //  Comprobar que el formato del email sea correcto
     request.checkBody("email_user", "La dirección de correo no es válida").isEmail();
 
@@ -265,14 +256,13 @@ users.post("/editarPerfil", function (request, response) {
             let user = {};
 
             user.email = request.body.email_user;
-            user.password = request.body.password_user;
             user.name = request.body.name_user;
             user.nickname = request.session.currentUserNickname;
             user.image = request.body.userAvatar + ".png";
 
             daoUsers.updateUser(MongoClient, config.url, config.name, user, function (error, res) {
                 if (res.result.ok !== 1) {
-                    response.status(500);
+                    response.status(200);
                     daoUsers.getUser(MongoClient, config.url, config.name, request.session.currentUserId, function (error, user) {
                         if (error) {
                             response.status(500);

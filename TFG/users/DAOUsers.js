@@ -75,20 +75,7 @@ class DAOUsers{
                 db.close();
             });
         });
-    }
-
-    //  Comprueba que el nickname y la contraseña introducidos son correctos
-    isUserCorrect(MongoClient, url, name, nickname, password, callback){
-        MongoClient.connect(url, function(err, db) {
-            if (err) throw err;
-            var dbo = db.db(name);
-            dbo.collection("Users").find({$and: [{"Nickname":nickname},{"Password":password}]}).toArray(function(err, result) {
-                if(err) throw err;
-                callback(null, result[0]);
-                db.close();
-            });
-        });
-    }
+    }    
 
     // Actualiza el avatar del jugador invitado
     updateMulti(MongoClient, url, name, image, nickname, callback){
@@ -109,7 +96,6 @@ class DAOUsers{
             var dbo = db.db(name);
             dbo.collection("Users").updateOne({"Nickname": user.nickname}, 
                                               {$set:{'Email': user.email,
-                                                     'Password': user.password,
                                                      'Name': user.name,
                                                      'Image': user.image}}, function(err, result){
                 callback(null, result);
