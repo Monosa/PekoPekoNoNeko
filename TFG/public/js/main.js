@@ -284,8 +284,11 @@ function cargarJuego() {
   if (multiplayer) {
     document.getElementById("bg-player1").style.top = "10%";
     document.getElementById("bg-player2").style.visibility = "visible";
+    document.getElementById("cenefa1").style.top = "0%";
+    document.getElementById("showrachas1").style.top = "4%";
     document.getElementById("bg-player2").style.top = "60%";
     document.getElementById("rachasMulti").style.visibility = "visible";
+    document.getElementById("cenefa2").style.display = "inline";
     canvas2 = document.getElementById("canvas-2");
     context2 = canvas2.getContext("2d");
   }
@@ -484,7 +487,7 @@ function compruebaAcierto(playing, player) {
   plato2.src = '../img/Plato2.png';
   let plato3 = new Image();
   plato3.src = '../img/Plato3.png';
-
+  let res, res2;
   if (!multiplayer) {
     if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
       contadorBien++;
@@ -550,8 +553,10 @@ function compruebaAcierto(playing, player) {
         racha = 0;
         //Si eligió a perla como buff no se le resta por fallar repetidas veces
         if(buff.localeCompare("Perla.png") !== 0){
-          if (contadorMal >= 2)
-            puntos -= 25;
+          if (contadorMal >= 2){
+            suma = -25;
+            puntos += suma;
+          }
         }
       }
       plato3.onload = function(){
@@ -622,8 +627,10 @@ function compruebaAcierto(playing, player) {
           contadorBien = 0;
           racha = 0;
           if(buff.localeCompare("Perla.png") !== 0){
-            if (contadorMal >= 2)
-              puntos -= 25;
+            if (contadorMal >= 2){
+              suma = -25;
+              puntos += suma;
+            }
           }
         }
         plato3.onload = function(){
@@ -633,59 +640,59 @@ function compruebaAcierto(playing, player) {
     } else if (player === 2) {
       if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
         contadorBien2++;
-        res = rachas(50, contadorBien2);
-        racha2 = res[0];
+        res2 = rachas(50, contadorBien2);
+        racha2 = res2[0];
         if(racha != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
           if(buffMulti.localeCompare("Blue.png") === 0){
-            suma2 = res[1] * 1.5;
+            suma2 = res2[1] * 1.5;
             puntos2 += suma2;
           }
           else {
-            suma2 = res[1];
+            suma2 = res2[1];
             puntos2 += suma2;
           }
         }
         plato2.onload = function(){
-          contextBg.drawImage(plato2,30,60);
+          contextBg2.drawImage(plato2,30,60);
         }
       } else if (playing.x >= 70 && playing.x <= 90) {
         contadorBien2++;
-        res = rachas(100, contadorBien2);
-        racha2 = res[0];
+        res2 = rachas(100, contadorBien2);
+        racha2 = res2[0];
         if(racha2 != 0){
           //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
           if(buffMulti.localeCompare("Blue.png") === 0){
-            suma2 = res[1] * 1.5;
+            suma2 = res2[1] * 1.5;
             puntos2 += suma2;
           }
           else {
-            suma2 = res[1];
+            suma2 = res2[1];
             puntos2 += suma2;
           }
         }
         plato2.onload = function(){
-          contextBg.drawImage(plato2,30,60);
+          contextBg2.drawImage(plato2,30,60);
         }
       } 
       //Si elige el buff de logan el rango de acierto se amplia
       else if ((buffMulti.localeCompare("Logan.png") === 0) && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)){
         contadorBien2++;
-        res = rachas(50, contadorBien2);
-        racha2 = res[0];
+        res2 = rachas(50, contadorBien2);
+        racha2 = res2[0];
         if(racha2 != 0){
-          suma2 = res[1];
+          suma2 = res2[1];
           puntos2 += suma2;
         }
         plato2.onload = function(){
-          contextBg.drawImage(plato2,30,60);
+          contextBg2.drawImage(plato2,30,60);
         }
       }
       else {
         //Si eligió el buff mantener racha
         if((buffMulti.localeCompare("Pelusa.png") === 0) && racha2 >= 4 && !buffUsado2){
-          res = rachas(100, contadorBien);
-          racha2 = res[0];
+          res2= rachas(100, contadorBien);
+          racha2 = res2[0];
           buffUsado2 = true;
         }
         else{
@@ -693,12 +700,14 @@ function compruebaAcierto(playing, player) {
           contadorBien2 = 0;
           racha2 = 0;
           if(buffMulti.localeCompare("Perla.png") !== 0){
-            if (contadorMal2 >= 2)
-              puntos2 -= 25;
+            if (contadorMal2 >= 2){
+              suma2 = -25;
+              puntos2 += suma2;
+            }
           }
         }
         plato3.onload = function(){
-          contextBg.drawImage(plato3,30,60);
+          contextBg2.drawImage(plato3,30,60);
         }
       }
     }
@@ -795,6 +804,11 @@ function comprueba() {
       if (playing2 !== -1 && playing2.x <= 0) {
         actual2 += 1;
         if (!playing2.clicked) {
+          let platoNormal2 = new Image();
+          platoNormal2.src = '../img/Plato.png';
+          platoNormal2.onload = function(){
+            contextBg2.drawImage(platoNormal2,30,60);
+        }
           racha2 = 0;
           contadorBien2 = 0;
           //document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
@@ -920,5 +934,4 @@ function go(points, sum, multi){
       $(this).css("top",-55 * ( 2 - now) + "px");
     }
   }).html("+" + sum);
-
 }
