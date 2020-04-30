@@ -75,14 +75,14 @@ body{
 .nameRacha{
     font-size: 50px;
     font-family: 'Oswald', sans-serif;
-    color: #f19fc5;
+    color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
 .nameRacha2{
     font-size: 50px;
     font-family: 'Oswald', sans-serif;
-    color: #f19fc5;
+    color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
@@ -97,7 +97,7 @@ body{
 /*Probando puntuaciones*/
 .centerPoints {
     font-family: 'Oswald', sans-serif;
-    color: #f19fc5;
+    color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     transform-style: preserve-3d;
@@ -107,7 +107,7 @@ body{
   }
   .centerPoints2 {
     font-family: 'Oswald', sans-serif;
-    color: #f19fc5;
+    color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     transform-style: preserve-3d;
@@ -117,7 +117,7 @@ body{
   }
   #puntos-p1, #puntos-p2 {
     font-family: 'Oswald', sans-serif;
-    color: #f19fc5;
+    color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     transform-style: preserve-3d;
@@ -136,7 +136,7 @@ body{
   }
   .titlePoints{
     font-family: 'Oswald', sans-serif;
-    color: #f19fc5;
+    color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     transform-style: preserve-3d;
