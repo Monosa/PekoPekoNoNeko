@@ -83,7 +83,13 @@ button {
 }
 
 .mensaje_error {
-    margin-top: 7%;
+    position: absolute;
+    width: 25%;
+    background-color: #d5d8e9;
+    border-radius: 3%;
+    margin-left: 1%;
+    top: 30%;
+    padding: 1%;
 }
 
 #tablaDeGatos {
