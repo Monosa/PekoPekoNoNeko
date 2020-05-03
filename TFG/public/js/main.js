@@ -618,7 +618,7 @@ function clic(evt) {
         }
       }
       keys = [];
-    }
+    } 
 }
 //Funcion que comprueba si aparte de las teclas correctas ha pulsado las incorrectas. Devuelve true si lo ha hecho mal
 function compruebaActivas(keys, multi, tecla, jugador){

@@ -18,6 +18,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "express-validator": "5.3.0",
+    "fs": "0.0.1-security",
     "ipaddr.js": "^1.9.1",
     "material-components-web": "^4.0.0",
     "mongodb": "^3.5.3",
