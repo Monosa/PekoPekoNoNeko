@@ -228,12 +228,12 @@ function drawParticle(part, context, imgs) {
           tam = [170, 170];
         y = 60;
       }
-      //En este caso se dibujan sushis
+      //En este caso se dibujan dorayakis
       if (part.tecla[0] === 75 || part.tecla[0] === 68) {
         context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
 
       }
-      //En este caso se dibujan dorayakis
+      //En este caso se dibujan sushis
       else if (part.tecla[0] === 70 || part.tecla[0] === 74) {
         context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
       }
@@ -259,11 +259,11 @@ function drawParticle(part, context, imgs) {
       }
       //En este caso se dibujan sushis
       if (part.tecla[0] === 83 || part.tecla[0] === 68 || part.tecla[0] === 76 || part.tecla[0] === 75) {
-        context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
+        context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
       }
       //En este caso se dibujan dorayakis
       else if (part.tecla[0] === 70 || part.tecla[0] === 74 || part.tecla[0] === 65 || part.tecla[0] === 192) {
-        context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
+        context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
       }
     }
     else{
@@ -283,7 +283,7 @@ function cargarJuego() {
     document.getElementById("bg-player1").style.top = "10%";
     document.getElementById("bg-player2").style.visibility = "visible";
     document.getElementById("cenefa1").style.top = "0%";
-    document.getElementById("showrachas1").style.top = "4%";
+    document.getElementById("showrachas1").style.top = "5%";
     document.getElementById("bg-player2").style.top = "60%";
     document.getElementById("rachasMulti").style.visibility = "visible";
     document.getElementById("cenefa2").style.display = "inline";
@@ -454,60 +454,25 @@ function clic(evt) {
         }
         keys = [];
       }
-    } else {
-      keysPlayer1 = [];
-      keysPlayer2 = [];
+    }
+    //Multiplayer 
+    else {
       keys[evt.keyCode] = true;
       //Comprobamos si ambos jugadores han hecho click:
       if (keys[65] || keys[83] || keys[68] || keys[70]) {
         //El jugador 1 ha pulsado una tecla por lo que:
         playing.clicked = true;
-        keysPlayer1 = cambiaTeclas(keys);
-      }
-      if (keys[74] || keys[75] || keys[76] || keys[192]) {
-        //El jugador 2 ha pulsado una tecla por lo que:
-        playing2.clicked = true;
-        keysPlayer2 = cambiaTeclas(keys);
-      }
-      //Pasamos a comprobar de manera individual cada jugador: 
-      if (playing.tecla[0] === 65 || playing.tecla[0] === 83) {
-        //Si se pulsa alguna de las teclas y es pequeño y solo ha pulsado las teclas correctas, acertamos
-        if ((keysPlayer1[playing.tecla[0]] || keysPlayer1[playing.tecla[1]]) && (!compruebaActivas(keys, multiplayer, playing.tecla, 1))) {
-          compruebaAcierto(playing, 1);
-          keysPlayer1 = [];
-          keys[playing.tecla[0]] = false;
-          keys[playing.tecla[1]] = false;
-        }
-        else{
-          //Si eligió el buff mantener racha
-          if((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado){
-            buffUsado = true;
+        cambiaTeclas(keys, 1);
+                //Pasamos a comprobar de manera individual cada jugador: 
+        if (playing.tecla[0] === 65 || playing.tecla[0] === 83) {
+          //Si se pulsa alguna de las teclas y es pequeño y solo ha pulsado las teclas correctas, acertamos
+          if ((keysPlayer1[playing.tecla[0]] || keysPlayer1[playing.tecla[1]]) && (!compruebaActivas(keys, multiplayer, playing.tecla[0], 1))) {
+            compruebaAcierto(playing, 1);
+            keysPlayer1 = [];
+            keys[playing.tecla[0]] = false;
+            keys[playing.tecla[1]] = false;
           }
-          else {
-            contadorMal++;
-            contadorBien = 0;
-            racha = 0;
-            //Si eligió a perla como buff no se le resta por fallar repetidas veces
-            if(buff.localeCompare("Perla.png") !== 0){
-              if (contadorMal >= 2){
-                suma = -25;
-                puntos += suma;
-              }
-            }
-          }
-          plato3.onload = function(){
-            contextBg.drawImage(plato3,30,60);
-          }
-        }
-      } else if (playing.tecla[0] === 68 || playing.tecla[0] === 70) {
-        if ((keysPlayer1[playing.tecla[0]] && keysPlayer1[playing.tecla[1]]) && (!compruebaActivas(keysPlayer1, multiplayer, playing.tecla, 1)) && keysPlayer1.filter(Boolean).length === 2) {
-          compruebaAcierto(playing, 1);
-          keysPlayer1 = [];
-          keys[playing.tecla[0]] = false;
-          keys[playing.tecla[1]] = false;
-        }
-        else {
-          if(keysPlayer1.filter(Boolean).length === 2){
+          else{
             //Si eligió el buff mantener racha
             if((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado){
               buffUsado = true;
@@ -528,69 +493,109 @@ function clic(evt) {
               contextBg.drawImage(plato3,30,60);
             }
             keysPlayer1 = [];
-            keys[68] = false;
-            keys[70] = false;
-            keys[65] = false;
-            keys[83] = false;
+              keys[68] = false;
+              keys[70] = false;
+              keys[65] = false;
+              keys[83] = false;
+          }
+        } else if (playing.tecla[0] === 68 || playing.tecla[0] === 70) {
+          if ((keysPlayer1[playing.tecla[0]] && keysPlayer1[playing.tecla[1]]) && (!compruebaActivas(keysPlayer1, multiplayer, playing.tecla[0], 1)) && keysPlayer1.filter(Boolean).length === 2) {
+            compruebaAcierto(playing, 1);
+            keysPlayer1 = [];
+            keys[playing.tecla[0]] = false;
+            keys[playing.tecla[1]] = false;
+          }
+          else {
+            if(keysPlayer1.filter(Boolean).length === 2){
+              //Si eligió el buff mantener racha
+              if((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado){
+                buffUsado = true;
+              }
+              else {
+                contadorMal++;
+                contadorBien = 0;
+                racha = 0;
+                //Si eligió a perla como buff no se le resta por fallar repetidas veces
+                if(buff.localeCompare("Perla.png") !== 0){
+                  if (contadorMal >= 2){
+                    suma = -25;
+                    puntos += suma;
+                  }
+                }
+              }
+              plato3.onload = function(){
+                contextBg.drawImage(plato3,30,60);
+              }
+              keysPlayer1 = [];
+              keys[68] = false;
+              keys[70] = false;
+              keys[65] = false;
+              keys[83] = false;
+            }
           }
         }
       }
-      if (playing2.tecla[0] === 74 || playing2.tecla[0] === 75) {
-        //Si se pulsa alguna de las teclas y es pequeño, acertamos
-        if (keysPlayer2[playing2.tecla[0]] || keysPlayer2[playing2.tecla[1]] && (!compruebaActivas(keys, multiplayer, playing2.tecla, 2))) {
-          compruebaAcierto(playing2, 2);
-          keysPlayer2 = [];
-          keys[playing2.tecla[0]] = false;
-          keys[playing2.tecla[1]] = false;
-        }
-        else {
-          contadorMal2++;
-          contadorBien2 = 0;
-          racha2 = 0;
-          //Si eligió a perla como buff no se le resta por fallar repetidas veces
-          if(buffMulti.localeCompare("Perla.png") !== 0){
-            if (contadorMal2 >= 2){
-              suma2 = -25;
-              puntos2 += suma2;
-            }
-          }
-          }
-          plato3.onload = function(){
-            contextBg2.drawImage(plato3,30,60);
-          }
-      } else if (playing2.tecla[0] === 76 || playing2.tecla[0] === 192) {
-          if ((keysPlayer2[playing2.tecla[0]] && keysPlayer2[playing2.tecla[1]]) && (!compruebaActivas(keysPlayer2, multiplayer, playing2.tecla, 2)) && keysPlayer2.filter(Boolean).length === 2) {
+      else if (keys[74] || keys[75] || keys[76] || keys[192]) {
+        //El jugador 2 ha pulsado una tecla por lo que:
+        playing2.clicked = true;
+        cambiaTeclas(keys, 2);
+        if (playing2.tecla[0] === 74 || playing2.tecla[0] === 75) {
+          //Si se pulsa alguna de las teclas y es pequeño, acertamos
+          if (keysPlayer2[playing2.tecla[0]] || keysPlayer2[playing2.tecla[1]] && (!compruebaActivas(keys, multiplayer, playing2.tecla[0], 2))) {
             compruebaAcierto(playing2, 2);
             keysPlayer2 = [];
             keys[playing2.tecla[0]] = false;
             keys[playing2.tecla[1]] = false;
           }
           else {
-            if(keysPlayer2.filter(Boolean).length === 2){
-              //Si eligió el buff mantener racha
-              if((buffMulti.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado2){
-                buffUsado2 = true;
+            contadorMal2++;
+            contadorBien2 = 0;
+            racha2 = 0;
+            //Si eligió a perla como buff no se le resta por fallar repetidas veces
+            if(buffMulti.localeCompare("Perla.png") !== 0){
+              if (contadorMal2 >= 2){
+                suma2 = -25;
+                puntos2 += suma2;
               }
-              else {
-                contadorMal2++;
-                contadorBien2 = 0;
-                racha2 = 0;
-                //Si eligió a perla como buff no se le resta por fallar repetidas veces
-                if(buffMulti.localeCompare("Perla.png") !== 0){
-                  if (contadorMal2 >= 2){
-                    suma2 = -25;
-                    puntos2 += suma2;
+            }
+            }
+            plato3.onload = function(){
+              contextBg2.drawImage(plato3,30,60);
+            }
+        } else if (playing2.tecla[0] === 76 || playing2.tecla[0] === 192) {
+            if ((keysPlayer2[playing2.tecla[0]] && keysPlayer2[playing2.tecla[1]]) && (!compruebaActivas(keysPlayer2, multiplayer, playing2.tecla[0], 2)) && keysPlayer2.filter(Boolean).length === 2) {
+              compruebaAcierto(playing2, 2);
+              keysPlayer2 = [];
+              keys[playing2.tecla[0]] = false;
+              keys[playing2.tecla[1]] = false;
+            }
+            else {
+              if(keysPlayer2.filter(Boolean).length === 2){
+                //Si eligió el buff mantener racha
+                if((buffMulti.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado2){
+                  buffUsado2 = true;
+                }
+                else {
+                  contadorMal2++;
+                  contadorBien2 = 0;
+                  racha2 = 0;
+                  //Si eligió a perla como buff no se le resta por fallar repetidas veces
+                  if(buffMulti.localeCompare("Perla.png") !== 0){
+                    if (contadorMal2 >= 2){
+                      suma2 = -25;
+                      puntos2 += suma2;
+                    }
                   }
                 }
+                plato3.onload = function(){
+                  contextBg2.drawImage(plato3,30,60);
+                }
+                keysPlayer2 = [];
+                keys[74] = false;
+                keys[75] = false;
+                keys[76] = false;
+                keys[192] = false;
               }
-              plato3.onload = function(){
-                contextBg2.drawImage(plato3,30,60);
-              }
-              keysPlayer2 = [];
-              keys[74] = false;
-              keys[75] = false;
-              keys[76] = false;
-              keys[192] = false;
             }
           }
         }
@@ -646,31 +651,27 @@ function compruebaActivas(keys, multi, tecla, jugador){
   }
   return resul;
 }
-function cambiaTeclas(keys) {
-  let keysReturn = [];
+function cambiaTeclas(keys, player) {
   if (keys[65] || keys[83] || keys[68] || keys[70]) {
     //Las teclas del jugador 1 estan activas por lo que movemos esas teclas a un array propio
     if (keys[65])
-      keysReturn[65] = true;
+      keysPlayer1[65] = true;
     if (keys[83])
-      keysReturn[83] = true;
+      keysPlayer1[83] = true;
     if (keys[68])
-      keysReturn[68] = true;
+      keysPlayer1[68] = true;
     if (keys[70])
-      keysReturn[70] = true;
-    return keysReturn;
-  } else {
-    if (keys[74] || keys[75] || keys[76] || keys[192]) {
-      if (keys[74])
-        keysReturn[74] = true;
-      if (keys[75])
-        keysReturn[75] = true;
-      if (keys[76])
-        keysReturn[76] = true;
-      if (keys[192])
-        keysReturn[192] = true;
-      return keysReturn;
-    }
+      keysPlayer1[70] = true;
+  } 
+  if (keys[74] || keys[75] || keys[76] || keys[192]) {
+    if (keys[74])
+      keysPlayer2[74] = true;
+    if (keys[75])
+      keysPlayer2[75] = true;
+    if (keys[76])
+      keysPlayer2[76] = true;
+    if (keys[192])
+      keysPlayer2[192] = true;
   }
 }
 
@@ -743,6 +744,7 @@ function compruebaAcierto(playing, player) {
         res = rachas(100, contadorBien);
         racha = res[0];
         buffUsado = true;
+        suma = null;
       }
       else{
         contadorMal++;
@@ -754,6 +756,7 @@ function compruebaAcierto(playing, player) {
             suma = -25;
             puntos += suma;
           }
+          else suma = null;
         }
       }
       plato3.onload = function(){
@@ -815,12 +818,14 @@ function compruebaAcierto(playing, player) {
           contextBg.drawImage(plato2,30,60);
         }
       } 
+      //Jugador 1 falla
       else {
         //Si eligió el buff mantener racha
         if((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado){
           res = rachas(100, contadorBien);
           racha = res[0];
           buffUsado = true;
+          suma = null;
         }
         else{
           contadorMal++;
@@ -831,6 +836,7 @@ function compruebaAcierto(playing, player) {
               suma = -25;
               puntos += suma;
             }
+            else suma = null;
           }
         }
         plato3.onload = function(){
@@ -897,6 +903,7 @@ function compruebaAcierto(playing, player) {
           res2= rachas(100, contadorBien);
           racha2 = res2[0];
           buffUsado2 = true;
+          suma2 = null;
         }
         else{
           contadorMal2++;
@@ -907,6 +914,7 @@ function compruebaAcierto(playing, player) {
               suma2 = -25;
               puntos2 += suma2;
             }
+            else suma2 = null;
           }
         }
         plato3.onload = function(){
@@ -952,6 +960,7 @@ function comprueba() {
         }
         racha = 0;
         contadorBien = 0;
+        suma = null;
         //document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
       }
       if (actual < particles.length) {
@@ -995,6 +1004,7 @@ function comprueba() {
         }
           racha2 = 0;
           contadorBien2 = 0;
+          suma2 = null;
           //document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
         }
         if (actual2 < particles2.length) {
@@ -1094,27 +1104,32 @@ function seleccionaGif(buffParam, canvasParam){
 //Prueba puntuaciones
 
 function go(points, sum, multi){
-  let stri = "", ta = "";
-  if(multi){ stri = "#puntos-p2"; ta = "#tag2";}
-  else {stri = "#puntos-p1"; ta = "#tag1";}
-  $({puntos: points - sum}).animate({puntos: points},{
-    duration: 1000,
-    easing:"linear",
-    step: function(now, fx){
-      $(stri).html(Math.floor(now));
-    },
-    queue:false
-  });
-  $(ta).fadeIn({
-    duration:700,
-    easing:"linear",
-    step:function(now, fx){
-      $(this).css("top", -55 * now  +"px");
-    }
-  }).fadeOut({
-    duration:300,
-    step:function(now, fx){
-      $(this).css("top",-55 * ( 2 - now) + "px");
-    }
-  }).html("+" + sum);
+  if(sum !== undefined && sum !== null && sum !== "undefined"){
+    let newsum;
+    if(Math.sign(sum) === 1) newsum = "+" + sum;
+    else newsum = "-" + sum;
+    let stri = "", ta = "";
+    if(multi){ stri = "#puntos-p2"; ta = "#tag2";}
+    else {stri = "#puntos-p1"; ta = "#tag1";}
+    $({puntos: points - sum}).animate({puntos: points},{
+      duration: 1000,
+      easing:"linear",
+      step: function(now, fx){
+        $(stri).html(Math.floor(now));
+      },
+      queue:false
+    });
+    $(ta).fadeIn({
+      duration:700,
+      easing:"linear",
+      step:function(now, fx){
+        $(this).css("top", -55 * now  +"px");
+      }
+    }).fadeOut({
+      duration:300,
+      step:function(now, fx){
+        $(this).css("top",-55 * ( 2 - now) + "px");
+      }
+    }).html(newsum);
+  }
 }

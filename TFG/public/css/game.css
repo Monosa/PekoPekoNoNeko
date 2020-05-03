@@ -157,7 +157,12 @@ body{
     position: absolute;
   }
   .spanRacha{
-    left: 145%;
+    left: 185%;
+    top: -69%;
+    position: absolute;
+  }
+  .spanRacha2{
+    left: 185%;
     top: -69%;
     position: absolute;
   }
