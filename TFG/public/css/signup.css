@@ -100,8 +100,7 @@ button {
   }
   #tablaDeGatos li{
     display: flex;
-    flex-direction: column-reverse;
-    
+    flex-direction: column-reverse;    
 }
 
   .element {
@@ -111,10 +110,23 @@ button {
     float: left;
     margin: 5px;
   }
-
+#buff{
+    font-size: 14px;
+    position: absolute;
+    width:105px;
+    text-align: center;
+    margin-top: -15200px;
+    background-color: rgba(255, 255, 255, 0.8);
+    -webkit-transition-delay: 0.2s;
+    border-radius: 5px;
+}
   .seleccionable:hover {
     background-color: #cc99ff;
     border-radius: 5px;
+  }
+
+  .seleccionable:hover #buff{
+    margin-top: -110px;
   }
 
   .seleccionado{
