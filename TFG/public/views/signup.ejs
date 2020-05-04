@@ -73,17 +73,15 @@
                 </div>
 
                 <button class="boton_aceptar" type="submit"> Registrarse </button>
-
-                <% if (errorMsg !== null ) { %>
-                <div class="mensaje_error">
-                    <h4>
-                        <%= errorMsg %>
-                    </h4>
-                </div>
-                <% } %>
-
             </form>
         </div>
+        <% if (errorMsg !== null ) { %>
+            <div class="mensaje_error">
+                <h4>
+                    <%= errorMsg %>
+                </h4>
+            </div>
+            <% } %>
     </div>
 </body>
 

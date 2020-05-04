@@ -70,17 +70,15 @@
                         </div>
 
                         <button class="boton_aceptar" type="submit"> Actualizar </button>
-
-                        <% if (errorMsg !== null ) { %>
-                        <div class="mensaje_error">
-                            <h4>
-                                <%= errorMsg %>
-                            </h4>
-                        </div>
-                        <% } %>
-
                     </form>
                 </div>
+                <% if (errorMsg !== null ) { %>
+                    <div class="mensaje_error">
+                        <h4>
+                            <%= errorMsg %>
+                        </h4>
+                    </div>
+                    <% } %>
             </div>
         </div>
     </div>

@@ -36,12 +36,12 @@ users.get("/signup", middlewareLogged, function (request, response) {
 
 users.post("/signup", function (request, response) {
     //  Comprobar que los campos obligatorios no estén vacíos
-    request.checkBody("email_user", "El email del usuario está vacío").notEmpty();
+    request.checkBody("email_user", "El email del usuario no puede estar vacío").notEmpty();
     //  Comprobar que el formato del email sea correcto
     request.checkBody("email_user", "La dirección de correo no es válida").isEmail();
-    request.checkBody("password_user", "La contraseña está vacía").notEmpty();
-    request.checkBody("name_user", "El nombre del usuario está vacío").notEmpty();
-    request.checkBody("nickname_user", "El nickname del usuario está vacío").notEmpty();
+    request.checkBody("password_user", "La contraseña no puede estar vacía").notEmpty();
+    request.checkBody("name_user", "El nombre del usuario no puede estar vacío").notEmpty();
+    request.checkBody("nickname_user", "El nickname del usuario no puede estar vacío").notEmpty();
     //  Comprobar que la contraseña tenga un mínimo y un máximo de longitud
     request.checkBody("password_user", "La contraseña no es válida").isLength({
         min: 8,
@@ -137,8 +137,8 @@ users.get("/login", middlewareLogged, function (request, response) {
 });
 
 users.post("/login", function (request, response) {
-    request.checkBody("nickname_user", "El nickname del usuario está vacío").notEmpty();
-    request.checkBody("password_user", "La constraseña del usuario está vacía").notEmpty();
+    request.checkBody("nickname_user", "El nickname del usuario no puede estar vacío").notEmpty();
+    request.checkBody("password_user", "La constraseña del usuario no puede estar vacía").notEmpty();
 
     request.getValidationResult().then(function (result) {
         // El método isEmpty() devuelve true si las comprobaciones
@@ -244,8 +244,8 @@ users.get("/editarPerfil", function (request, response) {
 
 users.post("/editarPerfil", function (request, response) {
     //  Comprobar que los campos obligatorios no estén vacíos
-    request.checkBody("email_user", "El email del usuario está vacío").notEmpty();
-    request.checkBody("name_user", "El nombre del usuario está vacío").notEmpty();
+    request.checkBody("email_user", "El email del usuario no puede estar vacío").notEmpty();
+    request.checkBody("name_user", "El nombre del usuario no puede estar vacío").notEmpty();
     //  Comprobar que el formato del email sea correcto
     request.checkBody("email_user", "La dirección de correo no es válida").isEmail();
 
