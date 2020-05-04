@@ -88,27 +88,6 @@ $("#myAudio").bind("ended", function () {
     x.style.display = "block";
 });
 
-function mostrarInformacionTecla(evObject) {
-    var tecla = evObject.keyCode;
-    //control.innerHTML = 'Tecla pulsada: ' + tecla + " " + typeof(tecla);
-    //La tecla 32 es la barra espaciadora
-
-    if (tecla === 106 || tecla === 107) {
-        tiempos.push([mss, tecla]);
-    }
-}
-
-
-
-function iniciarCronometroYPuntos() {
-    h = 0;
-    m = 0;
-    s = 0;
-    ms = 0;
-    mss = 0;
-}
-
-
 function cronometrar() {
     escribir();
     id = setInterval(escribir, 1);

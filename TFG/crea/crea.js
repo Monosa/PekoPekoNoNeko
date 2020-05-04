@@ -47,7 +47,7 @@ Crea.get("/", function (request, response) {
 });
 
 Crea.post("/Fase2", cpUpload, function (request, response) {
-  console.log("Entra");
+  
   let datos = {
     songname: request.body.namesong,
     authorname: request.body.nameauthor,
