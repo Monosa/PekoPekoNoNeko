@@ -85,6 +85,8 @@ nav {
     flex-direction: column;
     justify-content: center;
     margin-top: 5%;
+    margin-left: 14%;
+    width: 70%;
 }
 
 .titulo_ventana {
