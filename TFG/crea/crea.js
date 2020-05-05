@@ -47,7 +47,7 @@ Crea.get("/", function (request, response) {
 });
 
 Crea.post("/Fase2", cpUpload, function (request, response) {
-  
+
   let datos = {
     songname: request.body.namesong,
     authorname: request.body.nameauthor,
@@ -99,17 +99,17 @@ Crea.post("/guardarNivel", function (request, response) {
     } else {
       daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
         if (error) {
-            response.status(500);
-            console.log(`${error.message}`);
+          response.status(500);
+          console.log(`${error.message}`);
         } else {
-            response.status(200);
-            response.render("songSelection", { canciones: listaCanciones, errorMsg: null });
+          response.status(200);
+          response.render("songSelection", { canciones: listaCanciones, errorMsg: null });
         }
-    });
-  }
+      });
+    }
   });
 });
-function creaDatos(request){
+function creaDatos(request) {
   //Devuelve un array con todos los datos en este orden: datos, datosMulti, datosTercios, datosMultiTercios, datosMitad, datosMultiMitad
   return [{
     songparent: request.body.songparent,

@@ -28,7 +28,7 @@ Scores.post("/", function (request, response) {
     daoScores.insertScore(MongoClient, config.url, config.name, datos, function (error, id) {
         if (error) {
             response.status(500);
-            response.render("scoreScreen", {data: null, puntuaciones: null, errorMsg: `${error.message}`});
+            response.render("scoreScreen", { data: null, puntuaciones: null, errorMsg: `${error.message}` });
         } else {
             daoScores.getUserSongScores(MongoClient, config.url, config.name, datos.songid, datos.nick, function (error, result) {
                 if (error) {
@@ -36,7 +36,7 @@ Scores.post("/", function (request, response) {
                     response.redirect("songs/");
                 } else {
                     response.status(200);
-                    response.render("scoreScreen", {data: datos, puntuaciones: result, errorMsg: null});
+                    response.render("scoreScreen", { data: datos, puntuaciones: result, errorMsg: null });
                 }
             });
         }

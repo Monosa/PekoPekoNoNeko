@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Short+Stack&display=swap');
-
-*{
+* {
     padding: 0;
     margin: 0;
 }
@@ -13,13 +12,13 @@ body {
     margin-top: 2.5% !important;
 }
 
-.titulo{
+.titulo {
     display: flex;
     justify-content: center;
     padding: 2%;
 }
 
-.listaCanciones{
+.listaCanciones {
     display: flex;
     justify-content: center;
 }
@@ -53,7 +52,7 @@ body {
     display: none;
 }
 
-.listaCanciones ul li a:hover + table, .listaCanciones ul li table:hover {
+.listaCanciones ul li a:hover+table, .listaCanciones ul li table:hover {
     display: table;
 }
 
@@ -80,8 +79,6 @@ body {
 .table tr:last-child {
     border: 0;
 }
-
-
 
 .table .left {
     text-align: left;

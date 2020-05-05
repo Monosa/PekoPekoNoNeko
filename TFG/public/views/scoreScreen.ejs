@@ -52,43 +52,43 @@
         </div>
       </div>
 
-    <% if(data.multi.localeCompare("true") === 0){ %>
-    <% console.log(typeof data.multi) %>
-    <div class="contenedor2">
-      <div class="card">
-        <div class="ripple"></div>
-        <div class="ripple"></div>
-        <div class="panel top">
-          <div class="rank">Points</div>
-          <div class="suit"><%=data.puntos2%></div>
-          <div class="icon"><svg>
-              <defs>
-                <pattern id="img2" patternUnits="userSpaceOnUse" width="21" height="21">
-                  <image xlink:href="../img/<%=data.userMulti%>" width="21" height="21" />
-                </pattern>
-              </defs>
-              <rect width="21" height="21" fill="url(#img2)" />
-            </svg></div>
-        </div>
-        <div class="content #{className}">
-          <div><img class="song" src="../img/<%=data.imagen%>"></div>
-        </div>
+      <% if(data.multi.localeCompare("true") === 0){ %>
+      <% console.log(typeof data.multi) %>
+      <div class="contenedor2">
+        <div class="card">
+          <div class="ripple"></div>
+          <div class="ripple"></div>
+          <div class="panel top">
+            <div class="rank">Points</div>
+            <div class="suit"><%=data.puntos2%></div>
+            <div class="icon"><svg>
+                <defs>
+                  <pattern id="img2" patternUnits="userSpaceOnUse" width="21" height="21">
+                    <image xlink:href="../img/<%=data.userMulti%>" width="21" height="21" />
+                  </pattern>
+                </defs>
+                <rect width="21" height="21" fill="url(#img2)" />
+              </svg></div>
+          </div>
+          <div class="content #{className}">
+            <div><img class="song" src="../img/<%=data.imagen%>"></div>
+          </div>
 
-        <div class="panel bottom">
-          <div class="rank">Points</div>
-          <div class="suit"><%=data.puntos2%></div>
-          <div class="icon"><svg>
-              <defs>
-                <pattern id="img2" patternUnits="userSpaceOnUse" width="21" height="21">
-                  <image xlink:href="../img/<%=data.userMulti%>" width="21" height="21" />
-                </pattern>
-              </defs>
-              <rect width="21" height="21" fill="url(#img2)" />
-            </svg></div>
+          <div class="panel bottom">
+            <div class="rank">Points</div>
+            <div class="suit"><%=data.puntos2%></div>
+            <div class="icon"><svg>
+                <defs>
+                  <pattern id="img2" patternUnits="userSpaceOnUse" width="21" height="21">
+                    <image xlink:href="../img/<%=data.userMulti%>" width="21" height="21" />
+                  </pattern>
+                </defs>
+                <rect width="21" height="21" fill="url(#img2)" />
+              </svg></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <%} else{ %>
     <div class="contenedortabla">
       <div class="cardTable">

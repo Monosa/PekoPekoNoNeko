@@ -1,13 +1,14 @@
-body{
+body {
     background-image: url('../img/FondoSong.png');
     background-size: 100%;
 }
 
-#gifCanvas1{
+#gifCanvas1 {
     width: 68% !important;
     padding-left: 27% !important;
 }
-#gifCanvas2{
+
+#gifCanvas2 {
     width: 68% !important;
     padding-left: 27% !important;
     margin-top: -15%;
@@ -24,69 +25,80 @@ body{
     width: auto;
     left: 28%;
 }
+
 #number2 {
     position: absolute;
     top: -16%;
     width: 60%;
     left: 104%;
 }
+
 #number3 {
     top: 1%;
     position: absolute;
     width: 31%;
     left: 115%;
 }
+
 #number4 {
     position: absolute;
     top: -8%;
     left: 110%;
     width: 40%;
 }
+
 #max {
     position: absolute;
     top: 4%;
     width: 87%;
     left: 158%;
 }
+
 #number22 {
     position: absolute;
     top: -2%;
     width: 60%;
     left: 104%;
 }
+
 #number32 {
     top: 0%;
     position: absolute;
     width: 31%;
     left: 115%;
 }
+
 #number42 {
     position: absolute;
     top: -5%;
     left: 110%;
     width: 40%;
 }
+
 #max2 {
     position: absolute;
     top: 7%;
     width: 87%;
     left: 158%;
 }
-.nameRacha{
+
+.nameRacha {
     font-size: 50px;
     font-family: 'Oswald', sans-serif;
     color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
-.nameRacha2{
+
+.nameRacha2 {
     font-size: 50px;
     font-family: 'Oswald', sans-serif;
     color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
-.namePuntos{
+
+.namePuntos {
     font-size: 50px;
     font-family: 'Oswald', sans-serif;
     top: 20%;
@@ -95,6 +107,7 @@ body{
 }
 
 /*Probando puntuaciones*/
+
 .centerPoints {
     font-family: 'Oswald', sans-serif;
     color: #f8a0a5;
@@ -104,8 +117,9 @@ body{
     width: 25%;
     display: flex;
     transform: translateY(-50%) translateX(-50%);
-  }
-  .centerPoints2 {
+}
+
+.centerPoints2 {
     font-family: 'Oswald', sans-serif;
     color: #f8a0a5;
     font-weight: 900;
@@ -114,61 +128,70 @@ body{
     display: flex;
     width: 25%;
     transform: translateY(-50%) translateX(-50%);
-  }
-  #puntos-p1, #puntos-p2 {
+}
+
+#puntos-p1, #puntos-p2 {
     font-family: 'Oswald', sans-serif;
     color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     transform-style: preserve-3d;
-    font-size:50px;
+    font-size: 50px;
     line-height: 50px;
-  }
-  #tag1, #tag2 {
+}
+
+#tag1, #tag2 {
     transform-style: preserve-3d;
     position: absolute;
     display: none;
     top: 45px;
-    left:50%;
+    left: 50%;
     transform: translateX(-50%);
-    font-size:50px;
+    font-size: 50px;
     line-height: 50px;
-  }
-  .titlePoints{
+}
+
+.titlePoints {
     font-family: 'Oswald', sans-serif;
     color: #f8a0a5;
     font-weight: 900;
     text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     transform-style: preserve-3d;
     transform: translateX(-50%);
-    font-size:50px;
+    font-size: 50px;
     line-height: 50px;
-  }
-  .cenefa{
+}
+
+.cenefa {
     width: -webkit-fill-available;
     height: 360px;
     top: 25%;
     position: absolute;
-  }
-  .cenefa2{
+}
+
+.cenefa2 {
     width: -webkit-fill-available;
     height: 360px;
     top: 50%;
     position: absolute;
-  }
-  .spanRacha{
+}
+
+.spanRacha {
     left: 185%;
     top: -69%;
     position: absolute;
-  }
-  .spanRacha2{
+}
+
+.spanRacha2 {
     left: 185%;
     top: -69%;
     position: absolute;
-  }
-  #rachasMulti{
-      top: 55% !important;
-  }
-  #animation2{
-      margin-top: -5.2% !important;
-  }
+}
+
+#rachasMulti {
+    top: 55% !important;
+}
+
+#animation2 {
+    margin-top: -5.2% !important;
+}

@@ -1,43 +1,43 @@
-class DAOScores{
+class DAOScores {
 
-   insertScore(MongoClient, url, name, datos, callback){
-        MongoClient.connect(url, function(err, db){
-            if(err) throw err;
-            else{
+    insertScore(MongoClient, url, name, datos, callback) {
+        MongoClient.connect(url, function (err, db) {
+            if (err) throw err;
+            else {
                 var dbo = db.db(name);
                 var oid = new MongoClient.ObjectID(datos.user);
 
-                if(datos.puntos > 0){   //Sólo se guarda la puntuación si es mayor que 0
-                    dbo.collection("Scores").insertOne({            
-                        "UserId":  oid,
+                if (datos.puntos > 0) {   //Sólo se guarda la puntuación si es mayor que 0
+                    dbo.collection("Scores").insertOne({
+                        "UserId": oid,
                         "Nick": datos.nick,
                         "IdCancion": new MongoClient.ObjectID(datos.songid),
                         "IdDificultad": parseInt(datos.difid),
                         "Puntos": parseInt(datos.puntos)
-                    }, function(err, resultado) {
-                        if(err){
+                    }, function (err, resultado) {
+                        if (err) {
                             throw err;
-                        }else{
+                        } else {
                             console.log(resultado);
                             callback(null, resultado.insertedId);
                             db.close();
                         }
                     });
-                }else{
+                } else {
                     callback(null, null);
                 }
             }
         });
     }
 
-    getSongScores(MongoClient, url, name, songid, callback){
-        MongoClient.connect(url, function(err, db){
-            if(err) throw err;
-            else{
+    getSongScores(MongoClient, url, name, songid, callback) {
+        MongoClient.connect(url, function (err, db) {
+            if (err) throw err;
+            else {
                 var dbo = db.db(name);
-                dbo.collection("Scores").find({'IdCancion':new MongoClient.ObjectID(songid)}).toArray(function(err,result){
-                    if(err) throw err;
-                    else{
+                dbo.collection("Scores").find({ 'IdCancion': new MongoClient.ObjectID(songid) }).toArray(function (err, result) {
+                    if (err) throw err;
+                    else {
                         callback(null, result);
                         db.close();
                     }
@@ -46,14 +46,14 @@ class DAOScores{
         });
     }
 
-    getAllScores(MongoClient, url, name, callback){
-        MongoClient.connect(url, function(err, db){
-            if(err) throw err;
-            else{
+    getAllScores(MongoClient, url, name, callback) {
+        MongoClient.connect(url, function (err, db) {
+            if (err) throw err;
+            else {
                 var dbo = db.db(name);
-                dbo.collection("Scores").find({}).sort({ 'Puntos': -1 }).toArray(function(err, scores){
-                    if(err) throw err;
-                    else{
+                dbo.collection("Scores").find({}).sort({ 'Puntos': -1 }).toArray(function (err, scores) {
+                    if (err) throw err;
+                    else {
                         callback(null, scores);
                         db.close();
                     }
@@ -61,15 +61,15 @@ class DAOScores{
             }
         });
     }
-    
-    getUserSongScores(MongoClient, url, name, songid, nick, callback){
-        MongoClient.connect(url, function(err, db){
-            if(err) throw err;
-            else{
+
+    getUserSongScores(MongoClient, url, name, songid, nick, callback) {
+        MongoClient.connect(url, function (err, db) {
+            if (err) throw err;
+            else {
                 var dbo = db.db(name);
-                dbo.collection("Scores").find({$and: [{'IdCancion': new MongoClient.ObjectID(songid)}, {'Nick': nick}]}).sort({ 'Puntos': -1 }).toArray(function(err,result){
-                    if(err) throw err;
-                    else{
+                dbo.collection("Scores").find({ $and: [{ 'IdCancion': new MongoClient.ObjectID(songid) }, { 'Nick': nick }] }).sort({ 'Puntos': -1 }).toArray(function (err, result) {
+                    if (err) throw err;
+                    else {
                         callback(null, result);
                         db.close();
                     }

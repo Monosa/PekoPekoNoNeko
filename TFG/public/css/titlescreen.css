@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Short+Stack&display=swap');
-
-*{
+* {
     padding: 0;
     margin: 0;
 }
@@ -23,13 +22,13 @@ body {
     font-weight: bolder;
 }
 
-.title{
+.title {
     font-family: 'Short Stack', cursive;
     text-shadow: 6px 4px 8px darkslategrey;
     font-size: 60px;
 }
 
-.start-message{
+.start-message {
     animation: blink 2s linear infinite;
     font-family: 'Short Stack', cursive;
     font-size: x-large;

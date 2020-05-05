@@ -1,9 +1,9 @@
-
 * {
     padding: 0;
     margin: 0;
 }
-canvas{
+
+canvas {
     display: flex;
     max-width: 82%;
 }
@@ -18,12 +18,11 @@ nav.navbar {
 }
 
 .project-name {
-
     color: whitesmoke;
     text-decoration: none;
 }
 
-#info{
+#info {
     width: 18%;
     height: 242px;
 }
@@ -63,65 +62,64 @@ nav.navbar {
     max-height: 100%;
     height: 250px !important;
 }
-.mdc-card__actions{
+
+.mdc-card__actions {
     justify-content: center !important;
-} 
-.card{
+}
+
+.card {
     height: 297.9px !important;
 }
 
 @media (max-width: 768px) {
-    .carousel-inner .carousel-item > div {
+    .carousel-inner .carousel-item>div {
         display: none;
     }
-    .carousel-inner .carousel-item > div:first-child {
+    .carousel-inner .carousel-item>div:first-child {
         display: block;
     }
 }
 
-.carousel-inner .carousel-item.active,
-.carousel-inner .carousel-item-next,
-.carousel-inner .carousel-item-prev {
+.carousel-inner .carousel-item.active, .carousel-inner .carousel-item-next, .carousel-inner .carousel-item-prev {
     display: flex;
 }
 
 /* display 3 */
+
 @media (min-width: 768px) {
-    
-    .carousel-inner .carousel-item-right.active,
-    .carousel-inner .carousel-item-next {
-      transform: translateX(33.333%);
+    .carousel-inner .carousel-item-right.active, .carousel-inner .carousel-item-next {
+        transform: translateX(33.333%);
     }
-    
-    .carousel-inner .carousel-item-left.active, 
-    .carousel-inner .carousel-item-prev {
-      transform: translateX(-33.333%);
+    .carousel-inner .carousel-item-left.active, .carousel-inner .carousel-item-prev {
+        transform: translateX(-33.333%);
     }
 }
 
-.carousel-inner .carousel-item-right,
-.carousel-inner .carousel-item-left{ 
-  transform: translateX(0);
+.carousel-inner .carousel-item-right, .carousel-inner .carousel-item-left {
+    transform: translateX(0);
 }
 
 .image-upload>input {
     display: none;
 }
-.image-upload{
-    float:right;
+
+.image-upload {
+    float: right;
     padding-top: 17%;
 }
 
-.Instrucciones{
+.Instrucciones {
     position: absolute;
     top: 55%;
     text-align: center;
 }
-.Botones{
+
+.Botones {
     text-align: center;
     margin-top: 1%;
 }
-#descarga, #empezar{
+
+#descarga, #empezar {
     font-family: 'Short Stack', cursive;
     border-radius: 10px;
     background-color: #ec4f11;
@@ -129,23 +127,27 @@ nav.navbar {
     color: white;
     height: 50px;
 }
-.imagenpeq{
+
+.imagenpeq {
     top: 30%;
     left: 21.6%;
     position: absolute;
     width: 5.3%;
     display: none;
 }
-.crea{
-    width:100%;
+
+.crea {
+    width: 100%;
 }
-.dang{
+
+.dang {
     top: 29%;
     position: absolute;
     left: 21%;
     display: none;
 }
-.imagengrande{
+
+.imagengrande {
     top: 26.5%;
     left: 19.7%;
     position: absolute;
@@ -177,6 +179,7 @@ nav.navbar {
     transition: all 0.3s ease-out;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.225);
 }
+
 .rkmd-btn:hover {
     text-decoration: none;
     box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.225);
@@ -191,6 +194,7 @@ nav.navbar {
     user-select: none;
     z-index: 1;
 }
+
 .ripple-effect .ripple {
     display: block;
     position: absolute;
@@ -199,33 +203,43 @@ nav.navbar {
     transform: scale(0);
     pointer-events: none;
 }
+
 .ripple-effect.ripple-dark .ripple {
     background: rgba(0, 0, 0, 0.1) !important;
 }
+
 .ripple-effect.ripple-red .ripple {
     background: rgba(244, 67, 54, 0.725) !important;
 }
+
 .ripple-effect.ripple-orange .ripple {
     background: rgba(255, 152, 0, 0.725) !important;
 }
+
 .ripple-effect.ripple-yellow .ripple {
     background: rgba(255, 235, 59, 0.725) !important;
 }
+
 .ripple-effect.ripple-green .ripple {
     background: rgba(76, 175, 80, 0.725) !important;
 }
+
 .ripple-effect.ripple-purple .ripple {
     background: rgba(156, 39, 176, 0.725) !important;
 }
+
 .ripple-effect.ripple-teal .ripple {
     background: rgba(0, 150, 136, 0.725) !important;
 }
+
 .ripple-effect.ripple-pink .ripple {
     background: rgba(233, 30, 99, 0.725) !important;
 }
+
 .ripple-effect .animated {
     animation: ripple 0.6s linear;
 }
-.inst{
+
+.inst {
     width: 80%;
 }

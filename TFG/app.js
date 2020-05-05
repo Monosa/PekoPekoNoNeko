@@ -23,7 +23,7 @@ app.use(express.static(ficherosEstaticos));
 
 // Middlewares
 app.use(expressValidator());
-app.use(bodyParser.urlencoded({extended: true})); //body-parser
+app.use(bodyParser.urlencoded({ extended: true })); //body-parser
 
 
 const middlewareSession = session({
@@ -31,7 +31,7 @@ const middlewareSession = session({
     secret: "foobar34",
     resave: false,
     store: new MongoStore({
-        url: config.url 
+        url: config.url
     })
 });
 
@@ -48,7 +48,7 @@ app.get("/", function (request, response) {
     response.sendFile(path.join(__dirname, "public", "titlescreen.html"));
 });
 
-app.get("/play", function(request, response){
+app.get("/play", function (request, response) {
     response.status(200);
     response.sendFile(path.join(__dirname, "public", "game.html"));
 })

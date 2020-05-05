@@ -24,36 +24,43 @@
                                 <ul id="tablaDeGatos2">
                                     <li class="element seleccionable" id="Blue" onclick="cambiarClases(id)">
                                         <p id="buff">Multiplica los aciertos</p>
-                                        <img src="/img/Blue.png" width="121px" height="128px"></li>
+                                        <img src="/img/Blue.png" width="121px" height="128px">
+                                    </li>
                                     <li class="element seleccionable" id="Chesire" onclick="cambiarClases(id)">
                                         <p id="buff">500 puntos extra</p>
-                                        <img src="/img/Chesire.png" width="109px" height="122px"></li>
+                                        <img src="/img/Chesire.png" width="109px" height="122px">
+                                    </li>
                                     <li class="element seleccionable" id="Logan" onclick="cambiarClases(id)">
                                         <p id="buff">Acierto mayor</p>
-                                        <img src="/img/Logan.png" width="100px" height="145px"></li>
+                                        <img src="/img/Logan.png" width="100px" height="145px">
+                                    </li>
                                     <li class="element seleccionable" id="Mery" onclick="cambiarClases(id)">
                                         <p id="buff">Multiplica dangos x 3</p>
-                                        <img src="/img/Mery.png" width="108px" height="122px"></li>
+                                        <img src="/img/Mery.png" width="108px" height="122px">
+                                    </li>
                                     <li class="element seleccionable" id="Pelusa" onclick="cambiarClases(id)">
                                         <p id="buff">Salva la racha</p>
-                                        <img src="/img/Pelusa.png" width="107px" height="144px"></li>
+                                        <img src="/img/Pelusa.png" width="107px" height="144px">
+                                    </li>
                                     <li class="element seleccionable" id="Perla" onclick="cambiarClases(id)">
                                         <p id="buff">No penaliza fallos</p>
-                                        <img src="/img/Perla.png" width="107px" height="105px"></li>
+                                        <img src="/img/Perla.png" width="107px" height="105px">
+                                    </li>
                                 </ul>
                                 </input>
                             </div>
                         </div>
-                        <button id="buffMulti" class="rkmd-btn btn-lightBlue ripple-effect mar35" type="submit"> Confirmar </button>
+                        <button id="buffMulti" class="rkmd-btn btn-lightBlue ripple-effect mar35" type="submit">
+                            Confirmar </button>
                     </form>
                 </div>
                 <% if (errorMsg !== null ) { %>
-                    <div class="mensaje_error">
-                        <h4>
-                            <%= errorMsg %>
-                        </h4>
-                    </div>
-                    <% } %>
+                <div class="mensaje_error">
+                    <h4>
+                        <%= errorMsg %>
+                    </h4>
+                </div>
+                <% } %>
             </div>
         </div>
     </div>

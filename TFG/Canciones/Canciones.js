@@ -1,5 +1,5 @@
 const express = require("express");
-const MongoClient=require('mongodb');
+const MongoClient = require('mongodb');
 var cookieParser = require('cookie-parser');
 const path = require("path");
 const multer = require("multer");
@@ -28,14 +28,14 @@ Canciones.get("/", function (request, response) {
     });
 });
 
-Canciones.post("/cambiaModo", function(request, response){
+Canciones.post("/cambiaModo", function (request, response) {
     request.session.multijugador = request.body.multi;
     request.session.save();
     console.log("Valor de session.multijugador: " + request.session.multijugador);
     response.status(200);
 });
 
-Canciones.post("/play", function(request, response){
+Canciones.post("/play", function (request, response) {
     let idcancion = request.body.idcancion;
     let iddificultad = request.body.iddificultad;
     let userId = request.session.currentUserId;
@@ -43,13 +43,13 @@ Canciones.post("/play", function(request, response){
     let userImage = request.session.currentUserImg;
     let multi = request.session.multijugador;
     let usrMulti = request.session.currentUserImgMulti;
-    daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion, iddificultad, multi, function(error, cancion){
-        if(error){
+    daoCanciones.getCancion(MongoClient, config.url, config.name, idcancion, iddificultad, multi, function (error, cancion) {
+        if (error) {
             response.status(500);
-            response.render("songSelection", { canciones: null, errorMsg: `${error.message}`});
-        }else{
+            response.render("songSelection", { canciones: null, errorMsg: `${error.message}` });
+        } else {
             response.status(200);
-            response.render("game", { tiempos: JSON.stringify(cancion[1]['Value']['tiempos']), song: cancion[0], multi: multi, difid: iddificultad, userid: userId, nick: userNickname, usrImg: userImage, usrMulti : usrMulti, errorMsg: null });
+            response.render("game", { tiempos: JSON.stringify(cancion[1]['Value']['tiempos']), song: cancion[0], multi: multi, difid: iddificultad, userid: userId, nick: userNickname, usrImg: userImage, usrMulti: usrMulti, errorMsg: null });
         }
     });
 });

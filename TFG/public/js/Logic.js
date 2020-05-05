@@ -28,8 +28,8 @@ window.onload = function () {
     document.getElementById("descarga").style.display = "block";
   }
 
-  document.getElementById("descarga").onclick = function(){
-    
+  document.getElementById("descarga").onclick = function () {
+
     document.getElementById("value").value = JSON.stringify(obj);
     document.getElementById("valueMulti").value = JSON.stringify(objMulti);
     document.getElementById("valueTercios").value = JSON.stringify(objTercios);
@@ -113,7 +113,7 @@ function drawPattern(context, canvas, bgImg) {
   plato.onload = function () {
     context.drawImage(plato, 30, 60);
   }
- 
+
   var gifCanvas = document.getElementById("gifCanvas");
 
   gifler('../img/Gatete.gif').animate(gifCanvas);
@@ -129,75 +129,75 @@ function download_song() {
 }
 
 function mostrarInformacionTecla(evObject) {
-  if(!cuentaAtras){
-  var tecla = evObject.keyCode;
-  muestraPulsado(tecla);
-  var teclaMulti1, teclaMulti2;
-  keys[tecla] = true;
-  var t = {
-    tiempo: new Date().getTime() - mss,
-    tecla: [tecla, complementario(tecla)]
-  }
-  if(tecla === 68 || tecla === 75){
-    teclaMulti1 = [83,68];
-    teclaMulti2 = [75,76];
-  }
-  else if(tecla === 70 || tecla === 74){
-    teclaMulti1 = [65,70];
-    teclaMulti2 = [74,192];
-  }
-  
-  var tMulti = {
-    tiempo: new Date().getTime() - mss + 2000,
-    tecla: teclaMulti1,
-    tecla2: teclaMulti2
-  }
+  if (!cuentaAtras) {
+    var tecla = evObject.keyCode;
+    muestraPulsado(tecla);
+    var teclaMulti1, teclaMulti2;
+    keys[tecla] = true;
+    var t = {
+      tiempo: new Date().getTime() - mss,
+      tecla: [tecla, complementario(tecla)]
+    }
+    if (tecla === 68 || tecla === 75) {
+      teclaMulti1 = [83, 68];
+      teclaMulti2 = [75, 76];
+    }
+    else if (tecla === 70 || tecla === 74) {
+      teclaMulti1 = [65, 70];
+      teclaMulti2 = [74, 192];
+    }
 
-  if (tecla === 68 || tecla === 70) {
-    t.tipo = 300;
-    tMulti.tipo = 300;
-  }else if(tecla === 74 || tecla == 75){
-    t.tipo = 600
-    tMulti.tipo = 600;
-  }
-  else if(tecla === 71 || tecla === 72){
-    //Esto implica que quiere dibujar un dango
-    //Al dibujar un dango tenemos que dejar un espacio suficiente para que no se añadan mas
-    //sushis o dorayakis o dangos mientras este se fuera a mostrar
-    cuentaAtras = true;
-    timeLeft = new Date().getTime() + 4000;
-    t.tipo = 1000;
-    tMulti.tipo = 1000;
-  }
+    var tMulti = {
+      tiempo: new Date().getTime() - mss + 2000,
+      tecla: teclaMulti1,
+      tecla2: teclaMulti2
+    }
 
-  obj.tiempos.push(t);
-  objMulti.tiempos.push(tMulti);
+    if (tecla === 68 || tecla === 70) {
+      t.tipo = 300;
+      tMulti.tipo = 300;
+    } else if (tecla === 74 || tecla == 75) {
+      t.tipo = 600
+      tMulti.tipo = 600;
+    }
+    else if (tecla === 71 || tecla === 72) {
+      //Esto implica que quiere dibujar un dango
+      //Al dibujar un dango tenemos que dejar un espacio suficiente para que no se añadan mas
+      //sushis o dorayakis o dangos mientras este se fuera a mostrar
+      cuentaAtras = true;
+      timeLeft = new Date().getTime() + 4000;
+      t.tipo = 1000;
+      tMulti.tipo = 1000;
+    }
+
+    obj.tiempos.push(t);
+    objMulti.tiempos.push(tMulti);
   }
   else {
-    if(timeLeft < new Date().getTime())
+    if (timeLeft < new Date().getTime())
       cuentaAtras = false;
   }
 }
-function calcula(){
-  obj.tiempos.forEach(function(value, i){
-    if(i % 2 === 0)
+function calcula() {
+  obj.tiempos.forEach(function (value, i) {
+    if (i % 2 === 0)
       objMitad.tiempos.push(value);
   });
-  objMulti.tiempos.forEach(function(value, i){
-    if(i % 2 === 0)
+  objMulti.tiempos.forEach(function (value, i) {
+    if (i % 2 === 0)
       objMultiMitad.tiempos.push(value);
   });
-  obj.tiempos.forEach(function(value, i){
-    if(i % 3 !== 0)
+  obj.tiempos.forEach(function (value, i) {
+    if (i % 3 !== 0)
       objTercios.tiempos.push(value);
   });
-  objMulti.tiempos.forEach(function(value, i){
-    if(i % 3 !== 0)
+  objMulti.tiempos.forEach(function (value, i) {
+    if (i % 3 !== 0)
       objMultiTercios.tiempos.push(value);
   });
 }
 
-function complementario(tecla){
+function complementario(tecla) {
   if (tecla === 68)
     return 75;
   else if (tecla === 70)
@@ -207,8 +207,8 @@ function complementario(tecla){
   else if (tecla === 74)
     return 70;
 }
-function muestraPulsado(tecla){
-  switch (tecla){
+function muestraPulsado(tecla) {
+  switch (tecla) {
     case 68:
       document.getElementById("sushgrand").style.display = "block";
       document.getElementById("sushchiq").style.display = "none";
@@ -252,5 +252,5 @@ function muestraPulsado(tecla){
       document.getElementById("dorgrand").style.display = "none";
       break;
   }
-  
+
 }

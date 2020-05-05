@@ -47,7 +47,7 @@ users.post("/signup", function (request, response) {
         min: 8,
         max: 20
     });
-    
+
     request.getValidationResult().then(function (result) {
         // El método isEmpty() devuelve true si las comprobaciones
         // no han detectado ningún error
