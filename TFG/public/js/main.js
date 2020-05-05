@@ -960,7 +960,10 @@ function comprueba() {
         }
         racha = 0;
         contadorBien = 0;
-        suma = null;
+        contadorMal++;
+        suma = -25;
+        puntos += suma;
+        go(puntos, suma, false);
         //document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
       }
       if (actual < particles.length) {
@@ -1004,7 +1007,10 @@ function comprueba() {
         }
           racha2 = 0;
           contadorBien2 = 0;
-          suma2 = null;
+          contadorMal2 += 1;
+          suma2 = -25;
+          puntos2 += suma2;
+          go(puntos2, suma2, true);
           //document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
         }
         if (actual2 < particles2.length) {
@@ -1107,7 +1113,7 @@ function go(points, sum, multi){
   if(sum !== undefined && sum !== null && sum !== "undefined"){
     let newsum;
     if(Math.sign(sum) === 1) newsum = "+" + sum;
-    else newsum = "-" + sum;
+    else newsum = sum;
     let stri = "", ta = "";
     if(multi){ stri = "#puntos-p2"; ta = "#tag2";}
     else {stri = "#puntos-p1"; ta = "#tag1";}

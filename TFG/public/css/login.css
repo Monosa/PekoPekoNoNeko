@@ -74,13 +74,14 @@ button{
     border-radius: 10px;
     background-color: #b881d8;
     color: white;
-    width: 18%;
-    height: 25%;
+    width: auto;
+    height: 50px;
 }
 
 #login_button{
     margin-left: 41%;
     margin-top: 3%;
+    width: 110px!important;
 }
 
 .boton_aceptar{
