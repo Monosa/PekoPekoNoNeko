@@ -1,9 +1,3 @@
-/* En el modo multijugador van a cambiar las teclas, ya qu elo que proponemos con el modo multijugador es 
-   que dos jugadores utilicen el mismo teclado para jugar. Las teclas elegidas han sido asdf para el jugador 1
-   y jklñ para el jugador 2 (hay que valorar que pasa con otro tipo de teclados??) */
-
-/* ¡¡¡Es necesario debido al modo multijugador crear un conversor de datos de un jugador a multijugador!!!*/
-
 let songid;
 let difid;
 let tiempos;
