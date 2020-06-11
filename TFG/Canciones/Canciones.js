@@ -16,11 +16,9 @@ Canciones.use(cookieParser('secret'));
 
 Canciones.get("/", function (request, response) {
     request.session.multijugador = false;
-    console.log(request.session);
     daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
         if (error) {
             response.status(500);
-            console.log(`${error.message}`);
         } else {
             response.status(200);
             response.render("songSelection", { canciones: listaCanciones, errorMsg: null });
@@ -31,7 +29,6 @@ Canciones.get("/", function (request, response) {
 Canciones.post("/cambiaModo", function (request, response) {
     request.session.multijugador = request.body.multi;
     request.session.save();
-    console.log("Valor de session.multijugador: " + request.session.multijugador);
     response.status(200);
 });
 

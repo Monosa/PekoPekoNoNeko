@@ -1,6 +1,5 @@
 var tiempos = [];
 
-
 window.onload = function () {
     document.onkeypress = this.mostrarInformacionTecla;
 
@@ -8,8 +7,6 @@ window.onload = function () {
     drawInitialCanvas();
 };
 
-//  Places a background image in a background canvas and draws the square over it
-//  Places a background image in a background canvas and draws the square over it
 function drawInitialCanvas() {
     var canvasBg = document.getElementById("bg_canvas_1");
     var contextBg = canvasBg.getContext("2d");
@@ -19,7 +16,6 @@ function drawInitialCanvas() {
 
     bgImg.src = "../img/image.png";
     bgImg.onload = function () {
-        //contextBg.drawImage(bgImg, 0, 0);
         drawPattern(contextBg, canvasBg, bgImg);
     }
     var alrededor = new Image();

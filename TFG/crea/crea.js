@@ -1,4 +1,3 @@
-const path = require("path");
 const express = require("express");
 const MongoClient = require('mongodb');
 const DAOCanciones = require("../Canciones/DAOCanciones.js");
@@ -22,7 +21,6 @@ var storage = multer.diskStorage({
 var upload = multer({
   storage: storage
 });
-//var uploadAudio = multer({ dest: './public/media/' });
 var cpUpload = upload.fields([{
   name: 'imagen',
   maxCount: 1
@@ -61,7 +59,6 @@ Crea.post("/Fase2", cpUpload, function (request, response) {
   fs.rename(request.files['song'][0].path, "../TFG/public/media/" + datos.audio, function (err) {
     if (err) throw err;
   });
-  //let user = request.body.user;
 
   daoCanciones.insertSong(MongoClient, config.url, config.name, datos, function (error, result) {
 
@@ -86,7 +83,6 @@ Crea.post("/Fase2", cpUpload, function (request, response) {
 });
 
 Crea.post("/guardarNivel", function (request, response) {
-  console.log("Entrada en la función guardarNivel");
   //ConjuntoDatos tiene los 6 objetos de datos para los 6 tipos de secuencias por cancion que vamos a ofrecer  
   let conjuntoDatos = creaDatos(request);
   daoCanciones.insertSecuencias(MongoClient, config.url, config.name, conjuntoDatos, function (error, result) {
@@ -100,7 +96,6 @@ Crea.post("/guardarNivel", function (request, response) {
       daoCanciones.getListaCanciones(MongoClient, config.url, config.name, function (error, listaCanciones) {
         if (error) {
           response.status(500);
-          console.log(`${error.message}`);
         } else {
           response.status(200);
           response.render("songSelection", { canciones: listaCanciones, errorMsg: null });

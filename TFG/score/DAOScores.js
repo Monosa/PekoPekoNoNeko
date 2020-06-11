@@ -18,7 +18,6 @@ class DAOScores {
                         if (err) {
                             throw err;
                         } else {
-                            console.log(resultado);
                             callback(null, resultado.insertedId);
                             db.close();
                         }

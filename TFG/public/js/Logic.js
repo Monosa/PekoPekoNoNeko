@@ -17,8 +17,7 @@ window.onload = function () {
   drawInitialCanvas();
 
   document.getElementById("empezar").onclick = function () {
-    console.log("Leída la pulsación del botón 'Empezar'");
-    var x = document.getElementById("myAudio");
+    let x = document.getElementById("myAudio");
     mss = new Date().getTime();
     x.play();
   }
@@ -43,18 +42,17 @@ window.onload = function () {
 
 //  Places a background image in a background canvas and draws the square over it
 function drawInitialCanvas() {
-  var canvasBg = document.getElementById("bg_canvas_1");
-  var contextBg = canvasBg.getContext("2d");
+  let canvasBg = document.getElementById("bg_canvas_1");
+  let contextBg = canvasBg.getContext("2d");
   canvasBg.width = window.innerWidth;
   canvasBg.height = 300;
-  var bgImg = new Image();
+  let bgImg = new Image();
 
   bgImg.src = "../img/image.png";
   bgImg.onload = function () {
-    //contextBg.drawImage(bgImg, 0, 0);
     drawPattern(contextBg, canvasBg, bgImg);
   }
-  var alrededor = new Image();
+  let alrededor = new Image();
   alrededor.src = "../img/alrededor.png";
   alrededor.onload = function () {
     contextBg.drawImage(alrededor, 30, 60);
@@ -66,22 +64,20 @@ function drawInitialCanvas() {
   canvas.height = 300;
 
   if (multiplayer) {
-    console.log("Entrada en la opción multiplayer");
-    var player2 = document.getElementById("bg-player2");
+    let player2 = document.getElementById("bg-player2");
     player2.setAttribute("visibility", "visible");
 
-    var canvasBg2 = document.getElementById("bg_canvas_2");
-    var contextBg2 = canvasBg.getContext("2d");
+    let canvasBg2 = document.getElementById("bg_canvas_2");
+    let contextBg2 = canvasBg.getContext("2d");
     canvasBg2.width = window.innerWidth;
     canvasBg2.height = 300;
-    var bgImg2 = new Image();
+    let bgImg2 = new Image();
 
     bgImg2.src = "../img/image.png";
     bgImg2.onload = function () {
-      //contextBg.drawImage(bgImg, 0, 0);
       drawPattern(contextBg2, canvasBg2, bgImg2);
     }
-    var alrededor2 = new Image();
+    let alrededor2 = new Image();
     alrededor2.src = "../img/alrededor.png";
     alrededor2.onload = function () {
       contextBg2.drawImage(alrededor2, 30, 60);
@@ -99,42 +95,32 @@ function drawPattern(context, canvas, bgImg) {
   context.fillStyle = context.createPattern(bgImg, "repeat-x");
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  //  Creates the square
-  /*var gradient = context.createLinearGradient(10, 50, 50, 10);
-  gradient.addColorStop("0", "magenta");
-  gradient.addColorStop("0.5", "blue");
-  gradient.addColorStop("1.0", "red");
-  context.strokeStyle = gradient;
-  context.lineWidth = 5;
-  context.strokeRect(30, 100, 100, 100);
-  */
-  var plato = new Image();
+  let plato = new Image();
   plato.src = '../img/Plato.png';
   plato.onload = function () {
     context.drawImage(plato, 30, 60);
   }
 
-  var gifCanvas = document.getElementById("gifCanvas");
+  let gifCanvas = document.getElementById("gifCanvas");
 
   gifler('../img/Gatete.gif').animate(gifCanvas);
 }
 
 function download_song() {
-  var file = new Blob(tiempos, {
+  let file = new Blob(tiempos, {
     type: 'text/plain'
   });
-  var x = document.getElementById("descarga");
+  let x = document.getElementById("descarga");
   x.download = "archivo.txt";
-  console.log(tiempos);
 }
 
 function mostrarInformacionTecla(evObject) {
   if (!cuentaAtras) {
-    var tecla = evObject.keyCode;
+    let tecla = evObject.keyCode;
     muestraPulsado(tecla);
-    var teclaMulti1, teclaMulti2;
+    let teclaMulti1, teclaMulti2;
     keys[tecla] = true;
-    var t = {
+    let t = {
       tiempo: new Date().getTime() - mss,
       tecla: [tecla, complementario(tecla)]
     }
@@ -147,7 +133,7 @@ function mostrarInformacionTecla(evObject) {
       teclaMulti2 = [74, 192];
     }
 
-    var tMulti = {
+    let tMulti = {
       tiempo: new Date().getTime() - mss + 2000,
       tecla: teclaMulti1,
       tecla2: teclaMulti2

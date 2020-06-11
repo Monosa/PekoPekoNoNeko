@@ -24,7 +24,6 @@ Scores.post("/", function (request, response) {
         nick: request.body.nick,
         multi: request.body.multi
     }
-    console.log(datos.multi);
     daoScores.insertScore(MongoClient, config.url, config.name, datos, function (error, id) {
         if (error) {
             response.status(500);

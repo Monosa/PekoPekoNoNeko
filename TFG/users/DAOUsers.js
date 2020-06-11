@@ -11,7 +11,7 @@ class DAOUsers {
                     callback(new Error("Se deben llenar los campos obligatorios"), null);
                 }
 
-                var dbo = db.db(name);
+                let dbo = db.db(name);
                 dbo.collection("Users").insertOne({
                     "Name": user.name,
                     "Nickname": user.nickname,
@@ -23,7 +23,6 @@ class DAOUsers {
                     if (err) {
                         throw err;
                     } else {
-                        console.log(resultado);
                         callback(null, resultado.insertedId);
                         db.close();
                     }
@@ -37,12 +36,11 @@ class DAOUsers {
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
 
-            var o_id = new MongoClient.ObjectID(id);
+            let o_id = new MongoClient.ObjectID(id);
 
-            var dbo = db.db(name);
+            let dbo = db.db(name);
             dbo.collection("Users").find({ "_id": o_id }).toArray(function (err, result) {
                 if (err) throw err;
-                console.log(result[0]);
                 callback(null, result[0]);
                 db.close();
             });
@@ -54,10 +52,9 @@ class DAOUsers {
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
 
-            var dbo = db.db(name);
+            let dbo = db.db(name);
             dbo.collection("Users").find({ "Nickname": nickname }).toArray(function (err, result) {
                 if (err) throw err;
-                console.log(result[0]);
                 callback(null, result[0]);
                 db.close();
             });
@@ -68,7 +65,7 @@ class DAOUsers {
     checkUser(MongoClient, url, name, nickname, callback) {
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db(name);
+            let dbo = db.db(name);
             dbo.collection("Users").find({ "Nickname": nickname }).toArray(function (err, result) {
                 if (err) throw err;
                 callback(null, result);
@@ -81,7 +78,7 @@ class DAOUsers {
     updateMulti(MongoClient, url, name, image, nickname, callback) {
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db(name);
+            let dbo = db.db(name);
             dbo.collection("Users").updateOne({ "Nickname": nickname }, { $set: { 'ImageMulti': image } }, function (err, result) {
                 callback(null, result);
                 db.close();
@@ -93,7 +90,7 @@ class DAOUsers {
     updateUser(MongoClient, url, name, user, callback) {
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db(name);
+            let dbo = db.db(name);
             dbo.collection("Users").updateOne({ "Nickname": user.nickname },
                 {
                     $set: {

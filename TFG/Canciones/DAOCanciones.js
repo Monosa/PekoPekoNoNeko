@@ -18,10 +18,8 @@ class DAOCanciones {
             var dbo = db.db(name);
             dbo.collection("Songs").find({ "_id": new MongoClient.ObjectId(id) }).toArray(function (err, result) {
                 if (err) throw err;
-                console.log("ID CANCION: " + new MongoClient.ObjectId(result[0]['_id']), " ID DIFICULTAD: " + iddif, " MULTI: " + multi);
                 dbo.collection("Secuencias").find({ $and: [{ 'Songparent': new MongoClient.ObjectId(result[0]['_id']) }, { 'Secid': parseInt(iddif) }, { 'Multi': multi }] }).toArray(function (err, result2) {
                     if (err) throw err;
-                    console.log("RESULTADO DE FIND EN SECUENCIAS: " + result2[0]['Multi']);
                     var devolver = [result[0], result2[0]];
                     callback(null, devolver);
                 });
@@ -55,9 +53,6 @@ class DAOCanciones {
                                 if (err) {
                                     throw err;
                                 } else {
-                                    console.log(resultado);
-                                    console.log("DEVOLVEMOS:" + resultado.ops[0]);
-                                    //Tenemos que devolver SongId
                                     callback(null, resultado.ops[0]); // Devuelve la canción entera, con todos sus atributos
                                     db.close();
                                 }
@@ -80,7 +75,6 @@ class DAOCanciones {
                         // Implica que no hay aun registro para esa cancion, por lo que insertamos todas sus secuencias                       
                         if (result.length === 0) {
                             conjuntoDatos.forEach(function (value, i) {
-                                console.log(i);
                                 dbo.collection("Secuencias").insertOne({
                                     "Songparent": new MongoClient.ObjectID(value.songparent),
                                     "Secid": value.secid,

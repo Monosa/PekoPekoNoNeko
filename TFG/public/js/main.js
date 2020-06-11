@@ -122,8 +122,6 @@ function drawPattern(context, canvas, bgImg) {
 }
 
 function loadDorayakis(canvas, context) {
-  // a ghost canvas that will keep our original image
-  //Canvas rojo
   //img c es por chiquito r es por rojo, g es por grande, a es por azul
   let imgcr = new Image();
   let imgca = new Image();
@@ -175,26 +173,21 @@ function animate(time, context, canvas, particles, imgs) {
 function update(part, elapsedTime) {
 
   if (elapsedTime >= part.timing) {
-    // is this arc still visible on the canvas
     if (part.size !== 1000) {
       if (part.x > -part.size / 2) {
-        // if yes+yes, move this arc by the specified moveX
         part.x -= part.vx;
         if (part.x <= -part.size / 2) {
           part.moving = false;
         }
-        // report that we moved this arc
         return (true);
       } else return (true);
     }
     else {
       if (part.x > -728) {
-        // if yes+yes, move this arc by the specified moveX
         part.x -= part.vx;
         if (part.x <= -728 / 2) {
           part.moving = false;
         }
-        // report that we moved this arc
         return (true);
       } else return (true);
     }
@@ -958,7 +951,6 @@ function comprueba() {
         suma = -25;
         puntos += suma;
         go(puntos, suma, false);
-        //document.getElementById("racha-p1").innerHTML = "Racha: " + racha;
       }
       if (actual < particles.length) {
         playing = particles[actual];
@@ -1005,7 +997,6 @@ function comprueba() {
           suma2 = -25;
           puntos2 += suma2;
           go(puntos2, suma2, true);
-          //document.getElementById("racha-p1").innerHTML = "Racha: " + racha2;
         }
         if (actual2 < particles2.length) {
           playing2 = particles2[actual2];

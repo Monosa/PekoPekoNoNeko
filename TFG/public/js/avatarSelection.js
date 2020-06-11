@@ -1,4 +1,3 @@
-
 function cambiarClases(id) {
     var elems = document.getElementsByClassName("seleccionado");
     if (elems.length != 0) {
