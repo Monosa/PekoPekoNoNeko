@@ -1,271 +1,145 @@
-let songid;
-let difid;
-let tiempos;
-let particles = [],
-  particles2 = [];
-let puntos = 0,
-  puntos2 = 0;
+let circles;
+let particles = [], particles2 = [];
+let score = 0, score2 = 0;
 let startTime = null;
-let actual = 0,
-  actual2 = 0;
+let actual = 0, actual2 = 0;
 let playing, playing2;
-let settings;
 let multiplayer;
-let contadorBien = 0,
-  contadorBien2 = 0;
-let contadorMal = 0,
-  contadorMal2 = 0;
-let racha = 0,
-  racha2 = 0;
-let contadorCirculos = 0;
+let hits = 0, hits2 = 0;
+let misses = 0, misses2 = 0;
+let streak = 0, streak2 = 0;
 let canvas;
-let keys = [], keysPlayer1 = [], keysPlayer2 = [];
-let pulsacionesDango1 = 0, pulsacionesDango2 = 0;
-let buffUsado = false, buffUsado2 = false;
-let contextBg, contextBg2;
-let suma, suma2;
-//La siguiente variable es el buff que tiene elegido el usuario
+let dangoStrokes1 = 0, dangoStrokes2 = 0;
+let usedAvatar = false, usedAvatar2 = false;
+let backgroundContext, backgroundContext2;
+let sum, sum2;
+let avatar, avatar2;
+
 /*
 Chesire es sumador
 Blue es Multiplicador
-Pelusa es Salva racha
+Pelusa es Salva streak
 Logan es Rango acierto mas grande
 Perla es sin penalizacion por fallo
 Mery es multiplicador dango X3
 */
-let buff, buffMulti;
+
 
 window.onload = function () {
-  document.onkeydown = this.clic;
+  document.onkeydown = this.click;
   document.onkeyup = this.keysReleased;
 
+  // Checks if the game if going to be played on multiplayer mode
   if (JSON.parse(sessionStorage.getItem("multijugador")) === null) {
     multiplayer = false;
   } else {
     multiplayer = JSON.parse(sessionStorage.getItem("multijugador"));
   }
 
-  buffMulti = document.getElementById("imgMulti").value;
-  buff = document.getElementById("img").value;
+  // Stores the buffs of the two different players
+  avatar2 = document.getElementById("imgMulti").value;
+  avatar = document.getElementById("img").value;
 
+  // Draws the backgroud canvas
   drawInitialCanvas();
 
-  settings = {
-    density: 1,
-    startingX: canvas.width + 25
-  };
+  // Reads the song secuence 
+  let sequence = document.getElementById("sequence").innerHTML;
+  circles = JSON.parse(sequence);
 
-  let tiempo = document.getElementById("tiempos").innerHTML;
-  tiempos = JSON.parse(tiempo);
-
-  cargarJuego();
+  loadGame();
 
   sessionStorage.clear();
 };
 
-//  Places a background image in a background canvas and draws the square over it
+//  Places a background image in a background canvas and sets the width and height of the canvas in which the circles are going to be drawn
 function drawInitialCanvas() {
-  let canvasBg = document.getElementById("bg_canvas_1");
-  contextBg = canvasBg.getContext("2d");
-  canvasBg.width = window.innerWidth;
-  canvasBg.height = 300;
-  let bgImg = new Image();
+  // Background canvas for player 1
+  let backgroundCanvas = document.getElementById("bg_canvas_1");
+  backgroundContext = backgroundCanvas.getContext("2d");
+  backgroundCanvas.width = window.innerWidth;
+  backgroundCanvas.height = 300;
+  let backgroundImg = new Image();
 
-  bgImg.src = "../img/image.png";
-  bgImg.onload = function () {
-    drawPattern(contextBg, canvasBg, bgImg);
+  backgroundImg.src = "../img/esterilla.png";
+  backgroundImg.onload = function () {
+    drawPattern(backgroundContext, backgroundCanvas, backgroundImg);
   }
 
-  //  Sets the width and height of the canvas in which the circles are going to be drawn
+  // Main canvas for player 1
   canvas = document.getElementById("canvas-1");
   canvas.width = window.innerWidth;
   canvas.height = 300;
 
   if (multiplayer) {
-    let canvasBg2 = document.getElementById("bg_canvas_2");
-    contextBg2 = canvasBg2.getContext("2d");
-    canvasBg2.width = window.innerWidth;
-    canvasBg2.height = 300;
-    let bgImg2 = new Image();
+    // Background canvas for player 2
+    let backgroundCanvas2 = document.getElementById("bg_canvas_2");
+    backgroundContext2 = backgroundCanvas2.getContext("2d");
+    backgroundCanvas2.width = window.innerWidth;
+    backgroundCanvas2.height = 300;
+    let backgroundImg2 = new Image();
 
-    bgImg2.src = "../img/image.png";
-    bgImg2.onload = function () {
-      drawPattern(contextBg2, canvasBg2, bgImg2);
+    backgroundImg2.src = "../img/esterilla.png";
+    backgroundImg2.onload = function () {
+      drawPattern(backgroundContext2, backgroundCanvas2, backgroundImg2);
     }
 
-    //  Sets the width and height of the canvas in which the circles are going to be drawn
+    // Main canvas for player 2
     canvas2 = document.getElementById("canvas-2");
     canvas2.width = window.innerWidth;
     canvas2.height = 300;
   }
 }
 
-
-function drawPattern(context, canvas, bgImg) {
-  //  Creates pattern to fill the entire canvas with the image
-  context.fillStyle = context.createPattern(bgImg, "repeat-x");
+// Draws the target position and the avatar of the players
+function drawPattern(context, canvas, backgroundImg) {
+  // Fills the background canvas with the passed image
+  context.fillStyle = context.createPattern(backgroundImg, "repeat-x");
   context.fillRect(0, 0, canvas.width, canvas.height);
 
+  // Draws the target position
   let plato = new Image();
   plato.src = '../img/Plato.png';
   plato.onload = function () {
     context.drawImage(plato, 30, 60);
   }
 
+  // Draws the avatar of the players on the canvas
   let gifCanvas1 = document.getElementById("gifCanvas1");
   let gifCanvas2 = document.getElementById("gifCanvas2");
 
   if (multiplayer)
-    seleccionaGif(buffMulti, gifCanvas2);
-  seleccionaGif(buff, gifCanvas1);
+    drawGif(avatar2, gifCanvas2);
 
+  drawGif(avatar, gifCanvas1);
 }
 
-function loadDorayakis(canvas, context) {
-  //img c es por chiquito r es por rojo, g es por grande, a es por azul
-  let imgcr = new Image();
-  let imgca = new Image();
-  let imgcd = new Image();
-  imgcr.src = "../img/RojoChiquito2.png";
-  imgca.src = "../img/AzulEscalado.png";
-  imgcd.src = "../img/dango2.png";
-  return [imgcr, imgca, imgcd];
-}
+// Selects and draws the gif asociated with the player's avatar
+function drawGif(avatar, canvas) {
+  let file = "";
+  if (avatar.localeCompare("Pelusa.png") === 0)
+    file = '../img/Pelusa.gif';
+  else if (avatar.localeCompare("Logan.png") === 0)
+    file = '../img/Logan.gif';
+  else if (avatar.localeCompare("Mery.png") === 0)
+    file = '../img/Mery.gif';
+  else if (avatar.localeCompare("Chesire.png") === 0)
+    file = '../img/Chesire.gif';
+  else if (avatar.localeCompare("Blue.png") === 0)
+    file = '../img/Blue.gif';
+  else if (avatar.localeCompare("Perla.png") === 0)
+    file = '../img/Perla.gif';
 
-function animate(time, context, canvas, particles, imgs) {
-  // set startTime if it isn't already set
-  if (startTime === null) {
-    startTime = time;
-  }
-  // calc elapsedTime
-  let elapsedTime = time - startTime;
-
-  context.clearRect(0, 0, canvas.width, canvas.height);
-
-  // assume no further animating is necessary
-  // The for-loop may change the assumption 
-  let continueAnimating = false;
-
-  for (let i = 0; i < particles.length; i++) {
-    let part = particles[i];
-
-    // update this circle & report if it wasMoved
-    let wasMoved = update(part, elapsedTime);
-    // if it wasMoved, then change assumption to continueAnimating
-    if (wasMoved || part.moving) {
-      continueAnimating = true;
-
-    }
-
-    // draw this arc at its current position
-    drawParticle(part, context, imgs);
-  }
-
-  // if update() reported that it moved something
-  // then request another animation loop
-  if (continueAnimating) {
-    window.requestAnimationFrame(function (time) {
-      animate(time, context, canvas, particles, imgs)
-    });
-  }
-}
-
-function update(part, elapsedTime) {
-
-  if (elapsedTime >= part.timing) {
-    if (part.size !== 1000) {
-      if (part.x > -part.size / 2) {
-        part.x -= part.vx;
-        if (part.x <= -part.size / 2) {
-          part.moving = false;
-        }
-        return (true);
-      } else return (true);
-    }
-    else {
-      if (part.x > -728) {
-        part.x -= part.vx;
-        if (part.x <= -728 / 2) {
-          part.moving = false;
-        }
-        return (true);
-      } else return (true);
-    }
-  }
-  return (false);
+  gifler(file).animate(canvas);
 }
 
 
-function drawParticle(part, context, imgs) {
-  //74 y 70 son sushis, 75 68 son dorayakis
-  context.beginPath();
-  let tam = [0, 0];
-  let y = 0;
-  if (!multiplayer) {
-    //Si el tipo es 1000 es el indicador de que dibujamos el dango
-    if (part.size !== 1000) {
-      //Si el primer elemento de tecla es 68 o 70 se dibijan las cosas en pequeño
-      if (part.tecla[0] === 68 || part.tecla[0] === 70) {
-        tam = [100, 100];
-        y = 100;
-      }
-      //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
-      else {
-        if (part.tecla[0] === 74 || part.tecla[0] === 75)
-          tam = [170, 170];
-        y = 60;
-      }
-      //En este caso se dibujan dorayakis
-      if (part.tecla[0] === 75 || part.tecla[0] === 68) {
-        context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
-
-      }
-      //En este caso se dibujan sushis
-      else if (part.tecla[0] === 70 || part.tecla[0] === 74) {
-        context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
-      }
-    }
-    //Dibujamos el dango
-    else {
-      context.drawImage(imgs[2], part.x, 60, 728, 170);
-    }
-  }
-  //Caso para el multijugador
-  else {
-    if (part.size !== 1000) {
-      //Si el primer elemento de tecla es 83 o 68 en el caso del jugador que usa las teclas de la izquierda, 
-      //o 75 o 76 en el caso del jugador de la derecha se dibujan las cosas en pequeño
-      if (part.tecla[0] === 83 || part.tecla[0] === 65 || part.tecla[0] === 75 || part.tecla[0] === 74) {
-        tam = [100, 100];
-        y = 100;
-      }
-      //Si el primer elemento de tecla es 74 o 75 se dibujan en grande
-      else if (part.tecla[0] === 68 || part.tecla[0] === 70 || part.tecla[0] === 76 || part.tecla[0] === 192) {
-        tam = [170, 170];
-        y = 60;
-      }
-      //En este caso se dibujan sushis
-      if (part.tecla[0] === 83 || part.tecla[0] === 68 || part.tecla[0] === 76 || part.tecla[0] === 75) {
-        context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
-      }
-      //En este caso se dibujan dorayakis
-      else if (part.tecla[0] === 70 || part.tecla[0] === 74 || part.tecla[0] === 65 || part.tecla[0] === 192) {
-        context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
-      }
-    }
-    else {
-      context.drawImage(imgs[2], part.x, 60, 728, 170);
-    }
-  }
-}
-
-function cargarJuego() {
+function loadGame() {
   let canvas2, context2;
-  let canvas = document.getElementById("canvas-1");
+  //let canvas = document.getElementById("canvas-1");
   let context = canvas.getContext("2d");
 
-
-
+  // Modifies the screen to fit the track for player 2
   if (multiplayer) {
     document.getElementById("bg-player1").style.top = "10%";
     document.getElementById("bg-player2").style.visibility = "visible";
@@ -278,40 +152,39 @@ function cargarJuego() {
     context2 = canvas2.getContext("2d");
   }
 
-  $("#player").bind("ended", function () {
-    let x = document.getElementById("myAudio");
-    x.play();
-    comprobar();
+  // Once the countdown has ended
+  $("#countdown").bind("ended", function () {
+    let song = document.getElementById("song");
+    song.play();
+    setInterval(checkMissedCircleAndUpdate, 1);
 
-    let imgs = loadDorayakis(canvas, context);
+    let imgs = loadDorayakis();
 
     if (multiplayer) {
-      loadDorayakis(canvas2, context2);
-
-      for (let i = 0; i < tiempos.length; i++) {
+      for (let i = 0; i < circles.length; i++) {
         particles2.push({
-          x: settings.startingX,
-          timing: tiempos[i].tiempo,
-          size: tiempos[i].tipo,
-          vx: 15,
+          x: canvas.width + 25,
+          timing: circles[i].tiempo,
+          size: circles[i].tipo,
+          speed: 15,
           moving: true,
           clicked: false,
-          tecla: tiempos[i].tecla2,
+          keys: circles[i].tecla2,
         });
       }
 
       playing2 = particles2[0];
     }
 
-    for (let i = 0; i < tiempos.length; i++) {
+    for (let i = 0; i < circles.length; i++) {
       particles.push({
-        x: settings.startingX,
-        timing: tiempos[i].tiempo,
-        size: tiempos[i].tipo,
-        vx: 15,
+        x: canvas.width + 25,
+        timing: circles[i].tiempo,
+        size: circles[i].tipo,
+        speed: 15,
         moving: true,
         clicked: false,
-        tecla: tiempos[i].tecla,
+        keys: circles[i].tecla,
       });
     }
 
@@ -328,789 +201,581 @@ function cargarJuego() {
     }
   });
 
-  $("#myAudio").bind("ended", function () {
-    //Si eligió el buff sumador le sumamos 500 puntos al resultado final
-    if (buff.localeCompare("Chesire.png") === 0)
-      document.getElementById("usePoints").value = puntos + 500;
-    else document.getElementById("usePoints").value = puntos;
+  // Once the song has finished
+  $("#song").bind("ended", function () {
+    // If the adder avatar what chosen we add 500 point to the final result
+    if (avatar.localeCompare("Chesire.png") === 0)
+      document.getElementById("usePoints").value = score + 500;
+    else document.getElementById("usePoints").value = score;
+
     if (multiplayer) {
-      //Si eligió el buff sumador le sumamos 500 puntos al resultado final
-      if (buffMulti.localeCompare("Chesire.png") === 0)
-        document.getElementById("usePoints2").value = puntos2 + 500;
-      else document.getElementById("usePoints2").value = puntos2;
+      if (avatar2.localeCompare("Chesire.png") === 0)
+        document.getElementById("usePoints2").value = score2 + 500;
+      else document.getElementById("usePoints2").value = score2;
     }
+
     document.getElementById("multi").value = multiplayer;
-    document.forms["submitScore"].submit();
+    document.forms["submitScore"].submit(); // Submits the scores
   });
 }
 
-//Funcion que se lanza cada vez que hay un clic
-function clic(evt) {
-  let plato3 = new Image();
-  plato3.src = '../img/Plato3.png';
-  //Size 1000 implica que es un dango, si es distinto de 1000 es o sushi o dorayaki
-  if (playing.size !== 1000) {
-    //Se supone que se dibujan las cosas en pequeño si son las teclas 68 y 70 la primera tecla (o sea, la de un jugador. En el caso de multijugador eso cambia).
-    if (!multiplayer) {
-      playing.clicked = true;
-      keys[evt.keyCode] = true;
-      //Si se requiere pequeño
-      if (playing.tecla[0] === 68 || playing.tecla[0] === 70) {
-        //Si se pulsa alguna de las teclas (solo 68 o 70 porque ) y es pequeño, y las otras teclas de juego no estan activas, acertamos
-        if ((keys[playing.tecla[0]] || keys[playing.tecla[1]]) && (!compruebaActivas(keys, multiplayer, playing.tecla[0], 1))) {
-          compruebaAcierto(playing);
-          keys = [];
-        }
-        //fallo
-        else {
-          //Si eligió el buff mantener racha
-          if ((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado) {
-            buffUsado = true;
-          }
-          else {
-            contadorMal++;
-            contadorBien = 0;
-            racha = 0;
-            //Si eligió a perla como buff no se le resta por fallar repetidas veces
-            if (buff.localeCompare("Perla.png") !== 0) {
-              if (contadorMal >= 2) {
-                suma = -25;
-                puntos += suma;
-              }
-            }
-          }
-          plato3.onload = function () {
-            contextBg.drawImage(plato3, 30, 60);
-          }
-          keys = [];
-        }
-      }
-      //Si se requiere grande
-      else if (playing.tecla[0] === 74 || playing.tecla[0] === 75) {
-        //Si se pulsan las dos teclas requeridas para grande y es grande, y no estan pulsadas las del otro alimento, acertamos
-        //Añadimos una segunda comprobacion en la que se verifica si ha pasado dos veces por clic en el caso de alimentos grandes
-        if ((keys[playing.tecla[0]] && keys[playing.tecla[1]]) && (!compruebaActivas(keys, multiplayer, playing.tecla[0], 1)) && keys.filter(Boolean).length === 2) {
-          compruebaAcierto(playing);
-          keys = [];
-        }
-        else {
-          if (keys.filter(Boolean).length === 2) {
-            //Si eligió el buff mantener racha
-            if ((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado) {
-              buffUsado = true;
-            }
-            else {
-              contadorMal++;
-              contadorBien = 0;
-              racha = 0;
-              //Si eligió a perla como buff no se le resta por fallar repetidas veces
-              if (buff.localeCompare("Perla.png") !== 0) {
-                if (contadorMal >= 2) {
-                  suma = -25;
-                  puntos += suma;
-                }
-              }
-            }
-            plato3.onload = function () {
-              contextBg.drawImage(plato3, 30, 60);
-            }
-            keys = [];
-          }
-        }
-      }
-      //El jugador ha pulsado pero no las teclas indicadas
-      else {
-        //Si eligió el buff mantener racha
-        if ((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado) {
-          buffUsado = true;
-        }
-        else {
-          contadorMal++;
-          contadorBien = 0;
-          racha = 0;
-          //Si eligió a perla como buff no se le resta por fallar repetidas veces
-          if (buff.localeCompare("Perla.png") !== 0) {
-            if (contadorMal >= 2) {
-              suma = -25;
-              puntos += suma;
-            }
-          }
-        }
-        plato3.onload = function () {
-          contextBg.drawImage(plato3, 30, 60);
-        }
-        keys = [];
-      }
-    }
-    //Multiplayer 
-    else {
-      keys[evt.keyCode] = true;
-      //Comprobamos si ambos jugadores han hecho click:
-      if (keys[65] || keys[83] || keys[68] || keys[70]) {
-        //El jugador 1 ha pulsado una tecla por lo que:
-        playing.clicked = true;
-        cambiaTeclas(keys, 1);
-        //Pasamos a comprobar de manera individual cada jugador: 
-        if (playing.tecla[0] === 65 || playing.tecla[0] === 83) {
-          //Si se pulsa alguna de las teclas y es pequeño y solo ha pulsado las teclas correctas, acertamos
-          if ((keysPlayer1[playing.tecla[0]] || keysPlayer1[playing.tecla[1]]) && (!compruebaActivas(keys, multiplayer, playing.tecla[0], 1))) {
-            compruebaAcierto(playing, 1);
-            keysPlayer1 = [];
-            keys[playing.tecla[0]] = false;
-            keys[playing.tecla[1]] = false;
-          }
-          else {
-            //Si eligió el buff mantener racha
-            if ((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado) {
-              buffUsado = true;
-            }
-            else {
-              contadorMal++;
-              contadorBien = 0;
-              racha = 0;
-              //Si eligió a perla como buff no se le resta por fallar repetidas veces
-              if (buff.localeCompare("Perla.png") !== 0) {
-                if (contadorMal >= 2) {
-                  suma = -25;
-                  puntos += suma;
-                }
-              }
-            }
-            plato3.onload = function () {
-              contextBg.drawImage(plato3, 30, 60);
-            }
-            keysPlayer1 = [];
-            keys[68] = false;
-            keys[70] = false;
-            keys[65] = false;
-            keys[83] = false;
-          }
-        } else if (playing.tecla[0] === 68 || playing.tecla[0] === 70) {
-          if ((keysPlayer1[playing.tecla[0]] && keysPlayer1[playing.tecla[1]]) && (!compruebaActivas(keysPlayer1, multiplayer, playing.tecla[0], 1)) && keysPlayer1.filter(Boolean).length === 2) {
-            compruebaAcierto(playing, 1);
-            keysPlayer1 = [];
-            keys[playing.tecla[0]] = false;
-            keys[playing.tecla[1]] = false;
-          }
-          else {
-            if (keysPlayer1.filter(Boolean).length === 2) {
-              //Si eligió el buff mantener racha
-              if ((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado) {
-                buffUsado = true;
-              }
-              else {
-                contadorMal++;
-                contadorBien = 0;
-                racha = 0;
-                //Si eligió a perla como buff no se le resta por fallar repetidas veces
-                if (buff.localeCompare("Perla.png") !== 0) {
-                  if (contadorMal >= 2) {
-                    suma = -25;
-                    puntos += suma;
-                  }
-                }
-              }
-              plato3.onload = function () {
-                contextBg.drawImage(plato3, 30, 60);
-              }
-              keysPlayer1 = [];
-              keys[68] = false;
-              keys[70] = false;
-              keys[65] = false;
-              keys[83] = false;
-            }
-          }
-        }
-      }
-      else if (keys[74] || keys[75] || keys[76] || keys[192]) {
-        //El jugador 2 ha pulsado una tecla por lo que:
-        playing2.clicked = true;
-        cambiaTeclas(keys, 2);
-        if (playing2.tecla[0] === 74 || playing2.tecla[0] === 75) {
-          //Si se pulsa alguna de las teclas y es pequeño, acertamos
-          if (keysPlayer2[playing2.tecla[0]] || keysPlayer2[playing2.tecla[1]] && (!compruebaActivas(keys, multiplayer, playing2.tecla[0], 2))) {
-            compruebaAcierto(playing2, 2);
-            keysPlayer2 = [];
-            keys[playing2.tecla[0]] = false;
-            keys[playing2.tecla[1]] = false;
-          }
-          else {
-            contadorMal2++;
-            contadorBien2 = 0;
-            racha2 = 0;
-            //Si eligió a perla como buff no se le resta por fallar repetidas veces
-            if (buffMulti.localeCompare("Perla.png") !== 0) {
-              if (contadorMal2 >= 2) {
-                suma2 = -25;
-                puntos2 += suma2;
-              }
-            }
-          }
-          plato3.onload = function () {
-            contextBg2.drawImage(plato3, 30, 60);
-          }
-        } else if (playing2.tecla[0] === 76 || playing2.tecla[0] === 192) {
-          if ((keysPlayer2[playing2.tecla[0]] && keysPlayer2[playing2.tecla[1]]) && (!compruebaActivas(keysPlayer2, multiplayer, playing2.tecla[0], 2)) && keysPlayer2.filter(Boolean).length === 2) {
-            compruebaAcierto(playing2, 2);
-            keysPlayer2 = [];
-            keys[playing2.tecla[0]] = false;
-            keys[playing2.tecla[1]] = false;
-          }
-          else {
-            if (keysPlayer2.filter(Boolean).length === 2) {
-              //Si eligió el buff mantener racha
-              if ((buffMulti.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado2) {
-                buffUsado2 = true;
-              }
-              else {
-                contadorMal2++;
-                contadorBien2 = 0;
-                racha2 = 0;
-                //Si eligió a perla como buff no se le resta por fallar repetidas veces
-                if (buffMulti.localeCompare("Perla.png") !== 0) {
-                  if (contadorMal2 >= 2) {
-                    suma2 = -25;
-                    puntos2 += suma2;
-                  }
-                }
-              }
-              plato3.onload = function () {
-                contextBg2.drawImage(plato3, 30, 60);
-              }
-              keysPlayer2 = [];
-              keys[74] = false;
-              keys[75] = false;
-              keys[76] = false;
-              keys[192] = false;
-            }
-          }
-        }
-      }
-    }
-  }
-  else {
-    //Caso un jugador para dango
-    if (!multiplayer) {
-      if (playing.x <= 115 && (evt.keyCode === 68 || evt.keyCode === 70 || evt.keyCode === 74 || evt.keyCode === 75)) {
-        pulsacionesDango1 += 1;
-      }
-    }
-    //Multijugador para dango
-    else {
-      if (playing.x <= 115 && (evt.keyCode === 65 || evt.keyCode === 83 || evt.keyCode === 68 || evt.keyCode === 70)) {
-        pulsacionesDango1 += 1;
-      }
-      if (playing2.x <= 115 && (evt.keyCode === 74 || evt.keyCode === 75 || evt.keyCode === 76 || evt.keyCode === 192)) {
-        pulsacionesDango2 += 1;
-      }
-    }
-    keys = [];
-  }
+// Loads the images that represent the different types of circles
+function loadDorayakis() {
+  let imgDorayaki = new Image();
+  let imgSushi = new Image();
+  let imgDango = new Image();
+  imgDorayaki.src = "../img/dorayaki.png";
+  imgSushi.src = "../img/sushi.png";
+  imgDango.src = "../img/dango.png";
+  return [imgDorayaki, imgSushi, imgDango];
 }
-//Funcion que comprueba si aparte de las teclas correctas ha pulsado las incorrectas. Devuelve true si lo ha hecho mal
-function compruebaActivas(keys, multi, tecla, jugador) {
-  let resul = false;
-  if (!multi) {
-    if (tecla === 68 || tecla === 75) {
-      if (keys[70] || keys[74]) resul = true;
-    }
-    else if (tecla === 70 || tecla === 74) {
-      if (keys[68] || keys[75]) resul = true;
-    }
+
+function animate(time, context, canvas, particles, imgs) {
+  // set startTime if it isn't already set
+  if (startTime === null) {
+    startTime = time;
   }
-  else {
-    if (jugador === 1) {
-      if (tecla === 68 || tecla === 83) {
-        if (keys[70] || keys[65]) resul = true;
-      }
-      else if (tecla === 70 || tecla === 65) {
-        if (keys[68] || keys[83]) resul = true;
-      }
+  // Calculate elapsedTime
+  let elapsedTime = time - startTime;
+
+  // Clear what is drawn in the canvas
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Assume no further animating is necessary
+  // The for-loop may change the assumption 
+  let continueAnimating = false;
+
+  for (let i = 0; i < particles.length; i++) {
+    let part = particles[i];
+
+    // Update this circle and report if it was moved
+    let wasMoved = update(part, elapsedTime);
+    // if it was moved, then change assumption to continueAnimating
+    if (wasMoved || part.moving) {
+      continueAnimating = true;
     }
-    else {
-      if (tecla === 74 || tecla === 192) {
-        if (keys[76] || keys[75]) resul = true;
-      }
-      else if (tecla === 75 || tecla === 76) {
-        if (keys[192] || keys[74]) resul = true;
-      }
-    }
+
+    // draw this circle at its current position
+    drawParticle(part, context, imgs);
   }
-  return resul;
-}
-function cambiaTeclas(keys, player) {
-  if (keys[65] || keys[83] || keys[68] || keys[70]) {
-    //Las teclas del jugador 1 estan activas por lo que movemos esas teclas a un array propio
-    if (keys[65])
-      keysPlayer1[65] = true;
-    if (keys[83])
-      keysPlayer1[83] = true;
-    if (keys[68])
-      keysPlayer1[68] = true;
-    if (keys[70])
-      keysPlayer1[70] = true;
-  }
-  if (keys[74] || keys[75] || keys[76] || keys[192]) {
-    if (keys[74])
-      keysPlayer2[74] = true;
-    if (keys[75])
-      keysPlayer2[75] = true;
-    if (keys[76])
-      keysPlayer2[76] = true;
-    if (keys[192])
-      keysPlayer2[192] = true;
+
+  // If update() reported that it moved something then request another animation loop
+  if (continueAnimating) {
+    window.requestAnimationFrame(function (time) {
+      animate(time, context, canvas, particles, imgs)
+    });
   }
 }
 
-
-//A esta función solo se llega si se han pulsado las teclas adecuadas. Se encarga de comprobar si la posicion del alimento coincide con el plato, y en qué medida
-function compruebaAcierto(playing, player) {
-  let plato2 = new Image();
-  plato2.src = '../img/Plato2.png';
-  let plato3 = new Image();
-  plato3.src = '../img/Plato3.png';
-  let res, res2;
-  if (!multiplayer) {
-    if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
-      contadorMal = 0;
-      contadorBien++;
-      res = rachas(50, contadorBien);
-      racha = res[0];
-      if (racha != 0) {
-        //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-        if (buff.localeCompare("Blue.png") === 0) {
-          suma = res[1] * 1.5;
-          puntos += suma;
+function update(part, elapsedTime) {
+  if (elapsedTime >= part.timing) {
+    if (part.size !== 1000) {
+      if (part.x > -part.size / 2) {
+        part.x -= part.speed;
+        if (part.x <= -part.size / 2) {
+          part.moving = false;
         }
-        else {
-          suma = res[1];
-          puntos += suma;
+        return (true);
+      } else return (true);
+    } else {
+      if (part.x > -728) {
+        part.x -= part.speed;
+        if (part.x <= -728 / 2) {
+          part.moving = false;
         }
-      }
-      plato2.onload = function () {
-        contextBg.drawImage(plato2, 30, 60);
-      }
-    } else if (playing.x >= 70 && playing.x <= 90) {
-      contadorMal = 0;
-      contadorBien++;
-      res = rachas(100, contadorBien);
-      racha = res[0];
-      if (racha != 0) {
-        //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-        if (buff.localeCompare("Blue.png") === 0) {
-          suma = res[1] * 1.5;
-          puntos += suma;
-        }
-        else {
-          suma = res[1];
-          puntos += suma;
-        }
-      }
-
-      plato2.onload = function () {
-        contextBg.drawImage(plato2, 30, 60);
-      }
-    }
-    //Si elige el buff de logan el rango de acierto se amplia
-    else if ((buff.localeCompare("Logan.png") === 0) && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)) {
-      contadorMal = 0;
-      contadorBien++;
-      res = rachas(50, contadorBien);
-      racha = res[0];
-      if (racha != 0) {
-        suma = res[1];
-        puntos += suma;
-      }
-      plato2.onload = function () {
-        contextBg.drawImage(plato2, 30, 60);
-      }
-    }
-    else {
-      //Si eligió el buff mantener racha
-      if ((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado) {
-        res = rachas(100, contadorBien);
-        racha = res[0];
-        buffUsado = true;
-        suma = null;
-      }
-      else {
-        contadorMal++;
-        contadorBien = 0;
-        racha = 0;
-        //Si eligió a perla como buff no se le resta por fallar repetidas veces
-        if (buff.localeCompare("Perla.png") !== 0) {
-          if (contadorMal >= 2) {
-            suma = -25;
-            puntos += suma;
-          }
-          else suma = null;
-        }
-      }
-      plato3.onload = function () {
-        contextBg.drawImage(plato3, 30, 60);
-      }
-    }
-  } else {
-    if (player === 1) {
-      if ((playing.x >= 20 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 140)) {
-        contadorMal = 0;
-        contadorBien++;
-        res = rachas(50, contadorBien);
-        racha = res[0];
-        if (racha != 0) {
-          //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if (buff.localeCompare("Blue.png") === 0) {
-            suma = res[1] * 1.5;
-            puntos += suma;
-          }
-          else {
-            suma = res[1];
-            puntos += suma;
-          }
-        }
-        plato2.onload = function () {
-          contextBg.drawImage(plato2, 30, 60);
-        }
-      } else if (playing.x >= 70 && playing.x <= 90) {
-        contadorMal = 0;
-        contadorBien++;
-        res = rachas(100, contadorBien);
-        racha = res[0];
-        if (racha != 0) {
-          //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if (buff.localeCompare("Blue.png") === 0) {
-            suma = res[1] * 1.5;
-            puntos += suma;
-          }
-          else {
-            suma = res[1];
-            puntos += suma;
-          }
-        }
-        plato2.onload = function () {
-          contextBg.drawImage(plato2, 30, 60);
-        }
-      }
-      //Si elige el buff de logan el rango de acierto se amplia
-      else if ((buff.localeCompare("Logan.png") === 0) && (playing.x >= 5 && playing.x <= 69) || (playing.x >= 91 && playing.x <= 155)) {
-        contadorMal = 0;
-        contadorBien++;
-        res = rachas(50, contadorBien);
-        racha = res[0];
-        if (racha != 0) {
-          suma = res[1];
-          puntos += suma;
-        }
-        plato2.onload = function () {
-          contextBg.drawImage(plato2, 30, 60);
-        }
-      }
-      //Jugador 1 falla
-      else {
-        //Si eligió el buff mantener racha
-        if ((buff.localeCompare("Pelusa.png") === 0) && racha >= 4 && !buffUsado) {
-          res = rachas(100, contadorBien);
-          racha = res[0];
-          buffUsado = true;
-          suma = null;
-        }
-        else {
-          contadorMal++;
-          contadorBien = 0;
-          racha = 0;
-          if (buff.localeCompare("Perla.png") !== 0) {
-            if (contadorMal >= 2) {
-              suma = -25;
-              puntos += suma;
-            }
-            else suma = null;
-          }
-        }
-        plato3.onload = function () {
-          contextBg.drawImage(plato3, 30, 60);
-        }
-      }
-    } else if (player === 2) {
-      if ((playing2.x >= 20 && playing2.x <= 69) || (playing2.x >= 91 && playing2.x <= 140)) {
-        contadorMal2 = 0;
-        contadorBien2++;
-        res2 = rachas(50, contadorBien2);
-        racha2 = res2[0];
-        if (racha2 != 0) {
-          //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if (buffMulti.localeCompare("Blue.png") === 0) {
-            suma2 = res2[1] * 1.5;
-            puntos2 += suma2;
-          }
-          else {
-            suma2 = res2[1];
-            puntos2 += suma2;
-          }
-        }
-        plato2.onload = function () {
-          contextBg2.drawImage(plato2, 30, 60);
-        }
-      } else if (playing2.x >= 70 && playing2.x <= 90) {
-        contadorMal2 = 0;
-        contadorBien2++;
-        res2 = rachas(100, contadorBien2);
-        racha2 = res2[0];
-        if (racha2 != 0) {
-          //Si eligió el buff multiplicador, multiplicamos sus puntos por 1.5
-          if (buffMulti.localeCompare("Blue.png") === 0) {
-            suma2 = res2[1] * 1.5;
-            puntos2 += suma2;
-          }
-          else {
-            suma2 = res2[1];
-            puntos2 += suma2;
-          }
-        }
-        plato2.onload = function () {
-          contextBg2.drawImage(plato2, 30, 60);
-        }
-      }
-      //Si elige el buff de logan el rango de acierto se amplia
-      else if ((buffMulti.localeCompare("Logan.png") === 0) && (playing2.x >= 5 && playing2.x <= 69) || (playing2.x >= 91 && playing2.x <= 155)) {
-        contadorMal2 = 0;
-        contadorBien2++;
-        res2 = rachas(50, contadorBien2);
-        racha2 = res2[0];
-        if (racha2 != 0) {
-          suma2 = res2[1];
-          puntos2 += suma2;
-        }
-        plato2.onload = function () {
-          contextBg2.drawImage(plato2, 30, 60);
-        }
-      }
-      else {
-        //Si eligió el buff mantener racha
-        if ((buffMulti.localeCompare("Pelusa.png") === 0) && racha2 >= 4 && !buffUsado2) {
-          res2 = rachas(100, contadorBien);
-          racha2 = res2[0];
-          buffUsado2 = true;
-          suma2 = null;
-        }
-        else {
-          contadorMal2++;
-          contadorBien2 = 0;
-          racha2 = 0;
-          if (buffMulti.localeCompare("Perla.png") !== 0) {
-            if (contadorMal2 >= 2) {
-              suma2 = -25;
-              puntos2 += suma2;
-            }
-            else suma2 = null;
-          }
-        }
-        plato3.onload = function () {
-          contextBg2.drawImage(plato3, 30, 60);
-        }
-      }
+        return (true);
+      } else return (true);
     }
   }
+  return (false);
+}
 
-  go(puntos, suma, false);
+// Draws the specific type of circle checking its type and size
+function drawParticle(part, context, imgs) {
+  context.beginPath();
+  let tam = [0, 0];
+  let y = 0;
 
+  if (part.size === 300) { // Small circles
+    tam = [100, 100];
+    y = 100;
+  } else if (part.size === 600) { // Big circles
+    tam = [170, 170];
+    y = 60;
+  } else if (part.size === 1000) { // Dango
+    context.drawImage(imgs[2], part.x, 60, 728, 170);
+  }
 
   if (multiplayer) {
-    go(puntos2, suma2, true);
+    if (part.keys[0] === 83 || part.keys[0] === 68 || part.keys[0] === 75 || part.keys[0] === 76) { // Sushis
+      context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
+    } else if (part.keys[0] === 65 || part.keys[0] === 70 || part.keys[0] === 74 || part.keys[0] === 192) { // Dorayaki
+      context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
+    }
+  } else { // single player
+    if (part.keys[0] === 68 || part.keys[0] === 75) { // Dorayakis
+      context.drawImage(imgs[0], part.x, y, tam[0], tam[1]);
+    } else if (part.keys[0] === 70 || part.keys[0] === 74) { // Sushis
+      context.drawImage(imgs[1], part.x, y, tam[0], tam[1]);
+    }
   }
 }
 
-//Devuelve el computo de puntos y la racha
-function rachas(puntos, contadorBien) {
-  if (contadorBien >= 2 && contadorBien < 6)
-    return [2, puntos * 2];
-  else if (contadorBien >= 6 && contadorBien < 10)
-    return [3, puntos * 3];
-  else if (contadorBien >= 10)
-    return [4, puntos * 4];
-  else return [1, puntos];
+
+
+// Checks if the key pressed is correct and none of the incorrect keys are pressed
+function click(evt) {
+  let keystrokes = [];
+
+  if (multiplayer) {
+    keystrokes[evt.keyCode] = true;
+
+    if (keystrokes[65] || keystrokes[83] || keystrokes[68] || keystrokes[70]) { // player 1
+      playing.clicked = true;
+      let player1Strokes = getIndividualPlayerStrokes(keystrokes, 1);
+
+      if (playing.size === 300) { // small circle
+        if (player1Strokes[playing.keys[0]] || player1Strokes[playing.keys[1]] && (!incorrectKeysPressed(player1Strokes, multiplayer, playing.keys[0], 1))) {
+          checkHitRange(playing, 1);
+        } else miss(1);
+
+      } else if (playing.size === 600) { // big circle
+        if ((player1Strokes[playing.keys[0]] && player1Strokes[playing.keys[1]]) && (!incorrectKeysPressed(player1Strokes, multiplayer, playing.keys[0], 2)) && player1Strokes.filter(Boolean).length === 2) {
+          checkHitRange(playing, 1);
+        } else miss(1);
+
+      } else if (playing.size === 1000) { // dango
+        if (playing.x <= 115 && (evt.keyCode === 65 || evt.keyCode === 83 || evt.keyCode === 68 || evt.keyCode === 70)) {
+          dangoStrokes1 += 1;
+        }
+      }
+
+      keystrokes = [];
+      player1Strokes = [];
+
+    } else if (keystrokes[74] || keystrokes[75] || keystrokes[76] || keystrokes[192]) { // player 2
+      playing2.clicked = true;
+      let player2Strokes = getIndividualPlayerStrokes(keystrokes, 1);
+
+      if (playing2.size === 300) { // small circle
+        if (player2Strokes[playing2.keys[0]] || player2Strokes[playing2.keys[1]] && (!incorrectKeysPressed(player2Strokes, multiplayer, playing2.keys[0], 1))) {
+          checkHitRange(playing2, 2);
+        } else miss(2);
+
+      } else if (playing2.size === 600) { // big circle
+        if ((player2Strokes[playing2.keys[0]] && player2Strokes[playing2.keys[1]]) && (!incorrectKeysPressed(player2Strokes, multiplayer, playing2.keys[0], 2)) && player2Strokes.filter(Boolean).length === 2) {
+          checkHitRange(playing2, 2);
+        } else miss(2);
+
+      } else if (playing2.size === 1000) { // dango
+        if (playing2.x <= 115 && (evt.keyCode === 74 || evt.keyCode === 75 || evt.keyCode === 76 || evt.keyCode === 192)) {
+          dangoStrokes2 += 1;
+        }
+      }
+
+      keystrokes = [];
+      player2Strokes = [];
+    }
+  } else { // single player
+    playing.clicked = true;
+    keystrokes[evt.keyCode] = true;
+
+    if (playing.size === 300) { // small circle (only one keystroke needed)
+      if ((keystrokes[playing.keys[0]] || keystrokes[playing.keys[1]]) && (!incorrectKeysPressed(keystrokes, multiplayer, playing.keys[0], 1))) {
+        checkHitRange(playing, 1);
+      } else miss(1);
+
+    } else if (playing.size === 600) { // big circle (simultaneous strokes needed)
+      if ((keystrokes[playing.keys[0]] && keystrokes[playing.keys[1]]) && (!incorrectKeysPressed(keystrokes, multiplayer, playing.keys[0], 1)) && keystrokes.filter(Boolean).length === 2) {
+        checkHitRange(playing, 1);
+      } else miss(1);
+
+    } else if (playing.size === 1000) { // dango
+      if (playing.x <= 115 && (evt.keyCode === 68 || evt.keyCode === 70 || evt.keyCode === 74 || evt.keyCode === 75)) {
+        dangoStrokes1 += 1;
+      }
+    }
+
+    keystrokes = [];
+  }
 }
 
-function comprobar() {
-  setInterval(comprueba, 1);
+// Returns an individual array of keystrokes for the specified player
+function getIndividualPlayerStrokes(keys, player) {
+  let playerKeyStrokes = [];
+
+  if (player === 1) { // player 1
+    if (keys[65])
+      playerKeyStrokes[65] = true;
+    if (keys[83])
+      playerKeyStrokes[83] = true;
+    if (keys[68])
+      playerKeyStrokes[68] = true;
+    if (keys[70])
+      playerKeyStrokes[70] = true;
+
+  } else if (player === 2) { // player 2
+    if (keys[74])
+      playerKeyStrokes[74] = true;
+    if (keys[75])
+      playerKeyStrokes[75] = true;
+    if (keys[76])
+      playerKeyStrokes[76] = true;
+    if (keys[192])
+      playerKeyStrokes[192] = true;
+  }
+
+  return playerKeyStrokes;
+}
+
+// Checks if the incorrect keys have been pressed or not, returns true if any of the incorrect keys have been pressed
+function incorrectKeysPressed(keystrokes, multi, circleKey, player) {
+  let incorrect = false;
+
+  if (multi) {
+    if (player === 1) {
+      if (circleKey === 65 || circleKey === 70) { // Dorayaki player 1
+        incorrect = (keystrokes[83] || keystrokes[68]);
+      } else if (circleKey === 83 || circleKey === 68) { // Sushi player 1
+        incorrect = (keystrokes[65] || keystrokes[70]);
+      }
+    } else { // player 2
+      if (circleKey === 74 || circleKey === 192) { // Dorayaki player 2
+        incorrect = (keystrokes[75] || keystrokes[76]);
+      } else if (circleKey === 75 || circleKey === 76) { // Sushi player 2
+        incorrect = (keystrokes[74] || keystrokes[192]);
+      }
+    }
+
+  } else { // single player
+    if (circleKey === 68 || circleKey === 75) { // Dorayaki
+      incorrect = (keystrokes[70] || keystrokes[74]);
+    } else if (circleKey === 70 || circleKey === 74) { // Sushi
+      incorrect = (keystrokes[68] || keystrokes[75]);
+    }
+  }
+
+  return incorrect;
+}
+
+// Checks how near or far the circle is from the target position
+function checkHitRange(circle, player) {
+
+  if (multiplayer) {
+
+    if (player === 1) { // player 1
+      if ((circle.x >= 20 && circle.x <= 69) || (circle.x >= 91 && circle.x <= 140)) { // far hit
+        strokeInsideHitRange(50, 1);
+
+      } else if (circle.x >= 70 && circle.x <= 90) { // close hit
+        strokeInsideHitRange(100, 1);
+
+      } else if ((avatar.localeCompare("Logan.png") === 0) && (circle.x >= 5 && circle.x <= 69) || (circle.x >= 91 && circle.x <= 155)) { // far hit
+        strokeInsideHitRange(50, 1);
+
+      } else { // miss
+        streak = streakAndPoints(100, hits)[0];
+        sum = 0;
+
+        miss(1);
+      }
+
+      scoreAnimations(score, sum, false);
+
+    } else if (player === 2) { // player 2
+      if ((circle.x >= 20 && circle.x <= 69) || (circle.x >= 91 && circle.x <= 140)) { // far hit
+        strokeInsideHitRange(50, 2);
+
+      } else if (circle.x >= 70 && circle.x <= 90) { // close hit
+        strokeInsideHitRange(100, 2);
+
+      } else if ((avatar2.localeCompare("Logan.png") === 0) && (circle.x >= 5 && circle.x <= 69) || (circle.x >= 91 && circle.x <= 155)) { // far hit
+        strokeInsideHitRange(50, 2);
+
+      } else { // miss
+        streak2 = streakAndPoints(100, hits2)[0];
+        sum2 = 0;
+
+        miss(2);
+      }
+
+      scoreAnimations(score2, sum2, true);
+    }
+
+  } else { // single player
+
+    if ((circle.x >= 20 && circle.x <= 69) || (circle.x >= 91 && circle.x <= 140)) { // far hit
+      strokeInsideHitRange(50, 1);
+
+    } else if (circle.x >= 70 && circle.x <= 90) { // close hit
+      strokeInsideHitRange(100, 1);
+
+    } else if ((avatar.localeCompare("Logan.png") === 0) && (circle.x >= 5 && circle.x <= 69) || (circle.x >= 91 && circle.x <= 155)) { // far hit
+      strokeInsideHitRange(50, 1);
+
+    } else { // miss
+      steak = streakAndPoints(100, hits)[0];
+      sum = 0;
+
+      miss(1);
+    }
+
+    scoreAnimations(score, sum, false);
+  }
+}
+
+// When a player presses the incorrect key 
+function miss(player) {
+  let redPlate = new Image();
+  redPlate.src = '../img/PlatoRojo.png';
+
+  if (player === 1) { // player 1
+    if ((avatar.localeCompare("Pelusa.png") === 0) && streak >= 4 && !usedAvatar) { // saves the player from loosing their streak
+      usedAvatar = true;
+    } else {
+      misses++;
+      hits = 0;
+      streak = 0;
+
+      if (avatar.localeCompare("Perla.png") !== 0) { // Saves the player from the penalty for missing
+        if (misses >= 2) {
+          sum = -25;
+          score += sum;
+        }
+      }
+    }
+
+    scoreAnimations(score, sum, false);
+
+    redPlate.onload = function () {
+      backgroundContext.drawImage(redPlate, 30, 60);
+    }
+
+  } else if (player === 2) { // player 2
+    if ((avatar2.localeCompare("Pelusa.png") === 0) && streak2 >= 4 && !usedAvatar2) { // saves the player from loosing their streak
+      usedAvatar2 = true;
+    } else {
+      misses2++;
+      hits2 = 0;
+      streak2 = 0;
+
+      if (avatar2.localeCompare("Perla.png") !== 0) { // Saves the player from the penalty for missing
+        if (misses2 >= 2) {
+          sum2 = -25;
+          score2 += sum2;
+        }
+      }
+    }
+
+    scoreAnimations(score2, sum2, true);
+    
+    redPlate.onload = function () {
+      backgroundContext2.drawImage(redPlate, 30, 60);
+    }
+  }
 }
 
 
-function comprueba() {
-  if (playing.size !== 1000) {
+// Increases the hits of the players by 1 and updates the streak and score
+function strokeInsideHitRange(points, player) {
+  let greenPlate = new Image();
+  greenPlate.src = '../img/PlatoVerde.png';
+
+  if (player === 1) { // player 1
+    misses = 0;
+    hits++;
+    let result = streakAndPoints(points, hits);
+    streak = result[0];
+    if (streak != 0) {
+      if (avatar.localeCompare("Blue.png") === 0) {
+        sum = result[1] * 1.5;
+        score += sum;
+      } else {
+        sum = result[1];
+        score += sum;
+      }
+    }
+
+    greenPlate.onload = function () {
+      backgroundContext.drawImage(greenPlate, 30, 60);
+    }
+
+  } else if (player === 2) { // player 2
+    misses2 = 0;
+    hits2++;
+    let result2 = streakAndPoints(points, hits2);
+    streak2 = result2[0];
+    if (streak2 != 0) {
+      if (avatar2.localeCompare("Blue.png") === 0) {
+        sum2 = result2[1] * 1.5;
+        score2 += sum2;
+      } else {
+        sum2 = result2[1];
+        score2 += sum2;
+      }
+    }
+
+    greenPlate.onload = function () {
+      backgroundContext2.drawImage(greenPlate, 30, 60);
+    }
+  }
+}
+
+
+// Returns the streak of the player based on their hits and the points achieved on the stroke based on that streak
+function streakAndPoints(points, hits) {
+  if (hits >= 2 && hits < 6)
+    return [2, points * 2];
+
+  else if (hits >= 6 && hits < 10)
+    return [3, points * 3];
+
+  else if (hits >= 10)
+    return [4, points * 4];
+
+  else return [1, points];
+}
+
+// Checks if the playing circle has not been clicked and updates it to the next circle
+function checkMissedCircleAndUpdate() {
+
+  if (playing.size === 1000) { // dango
+
+    if (multiplayer) {
+      if (playing2 !== -1 && playing2.x < -500) {
+        if (avatar2.localeCompare("Blue.png") === 0) {
+          sum2 = dangoStrokes2 * 100 * 1.5;
+          score2 += sum2;
+        } else if (avatar2.localeCompare("Mery.png") === 0) {
+          sum2 = dangoStrokes2 * 300;
+          score2 += sum2;
+        } else {
+          sum2 = dangoStrokes2 * 100;
+          score2 += sum2;
+        }
+
+        actual2 += 1;
+        scoreAnimations(score2, sum2, true);
+
+        if (actual2 < particles2.length) {
+          playing2 = particles2[actual2];
+        } else playing2 = -1;
+      }
+
+    }else{ // single player
+
+      if (playing !== -1 && playing.x < -500) {
+        if (avatar.localeCompare("Blue.png") === 0) {
+          sum = dangoStrokes1 * 100 * 1.5;
+          score += sum;
+        } else if (avatar.localeCompare("Mery.png") === 0) {
+          sum = dangoStrokes1 * 300;
+          score += sum;
+        } else {
+          sum = dangoStrokes1 * 100;
+          score += sum;
+        }
+  
+        actual += 1;
+        scoreAnimations(score, sum, false);
+  
+        if (actual < particles.length) {
+          playing = particles[actual];
+        } else playing = -1;
+      }
+    }
+
+  }else{ // other types of circles
+
     if (playing !== -1 && playing.x <= 0) {
       actual += 1;
       if (!playing.clicked) {
         let platoNormal = new Image();
         platoNormal.src = '../img/Plato.png';
         platoNormal.onload = function () {
-          contextBg.drawImage(platoNormal, 30, 60);
+          backgroundContext.drawImage(platoNormal, 30, 60);
         }
-        racha = 0;
-        contadorBien = 0;
-        contadorMal++;
-        suma = -25;
-        puntos += suma;
-        go(puntos, suma, false);
+
+        streak = 0;
+        hits = 0;
+        misses++;
+        sum = -25;
+        score += sum;
+        scoreAnimations(score, sum, false);
       }
+
       if (actual < particles.length) {
         playing = particles[actual];
       } else playing = -1;
     }
 
-    if (racha === 2) {
-      document.getElementById("one").style.display = "inline";
-      document.getElementById("number2").style.display = "inline";
-    }
-    else if (racha === 3) {
-      document.getElementById("three").style.display = "inline";
-      document.getElementById("number3").style.display = "inline";
-      document.getElementById("number2").style.display = "none";
-    }
-    else if (racha === 4) {
-      document.getElementById("five").style.display = "inline";
-      document.getElementById("number4").style.display = "inline";
-      document.getElementById("max").style.display = "inline";
-      document.getElementById("number3").style.display = "none";
-    }
-    else if (racha === 0) {
-      document.getElementById("one").style.display = "none";
-      document.getElementById("three").style.display = "none";
-      document.getElementById("five").style.display = "none";
-      document.getElementById("number2").style.display = "none";
-      document.getElementById("number3").style.display = "none";
-      document.getElementById("number4").style.display = "none";
-      document.getElementById("max").style.display = "none";
-    }
+    updateVisualStreak(streak);
 
     if (multiplayer) {
+
       if (playing2 !== -1 && playing2.x <= 0) {
         actual2 += 1;
         if (!playing2.clicked) {
           let platoNormal2 = new Image();
           platoNormal2.src = '../img/Plato.png';
           platoNormal2.onload = function () {
-            contextBg2.drawImage(platoNormal2, 30, 60);
+            backgroundContext2.drawImage(platoNormal2, 30, 60);
           }
-          racha2 = 0;
-          contadorBien2 = 0;
-          contadorMal2 += 1;
-          suma2 = -25;
-          puntos2 += suma2;
-          go(puntos2, suma2, true);
+          streak2 = 0;
+          hits2 = 0;
+          misses2 += 1;
+          sum2 = -25;
+          score2 += sum2;
+          scoreAnimations(score2, sum2, true);
         }
+
         if (actual2 < particles2.length) {
           playing2 = particles2[actual2];
-        }
-        else playing2 = -1;
+        } else playing2 = -1;
       }
-      if (racha2 === 2) {
-        document.getElementById("one2").style.display = "inline";
-        document.getElementById("number22").style.display = "inline";
-      }
-      else if (racha2 === 3) {
-        document.getElementById("three2").style.display = "inline";
-        document.getElementById("number32").style.display = "inline";
-        document.getElementById("number22").style.display = "none";
-      }
-      else if (racha2 === 4) {
-        document.getElementById("five2").style.display = "inline";
-        document.getElementById("number42").style.display = "inline";
-        document.getElementById("max2").style.display = "inline";
-        document.getElementById("number32").style.display = "none";
-      }
-      else if (racha2 === 0) {
-        document.getElementById("one2").style.display = "none";
-        document.getElementById("three2").style.display = "none";
-        document.getElementById("five2").style.display = "none";
-        document.getElementById("number22").style.display = "none";
-        document.getElementById("number32").style.display = "none";
-        document.getElementById("number42").style.display = "none";
-        document.getElementById("max2").style.display = "none";
-      }
-    }
-  }
-  //Dango
-  else {
-    if (playing !== -1 && playing.x < -500) {
-      if (buff.localeCompare("Blue.png") === 0) {
-        suma = pulsacionesDango1 * 100 * 1.5;
-        puntos += suma;
-      }
-      else if (buff.localeCompare("Mery.png") === 0) {
-        suma = pulsacionesDango1 * 300;
-        puntos += suma;
-      }
-      else {
-        suma = pulsacionesDango1 * 100;
-        puntos += suma;
-      }
-      actual += 1;
-      go(puntos, suma, false);
 
-      if (actual < particles.length) {
-        playing = particles[actual];
-      } else playing = -1;
-      if (multiplayer) {
-        if (playing2 !== -1 && playing2.x < -500) {
-          if (buffMulti.localeCompare("Blue.png") === 0) {
-            suma2 = pulsacionesDango2 * 100 * 1.5;
-            puntos2 += suma2;
-          }
-          else if (buffMulti.localeCompare("Mery.png") === 0) {
-            suma2 = pulsacionesDango2 * 300;
-            puntos2 += suma2;
-          }
-          else {
-            suma2 = pulsacionesDango2 * 100;
-            puntos2 += suma2;
-          }
-          actual2 += 1;
-          go(puntos2, suma2, true);
-          if (actual2 < particles2.length) {
-            playing2 = particles2[actual2];
-          } else playing2 = -1;
-        }
-      }
+      updateVisualStreak(streak2);
     }
   }
 }
 
-function seleccionaGif(buffParam, canvasParam) {
-  let ruta = "";
-  if (buffParam.localeCompare("Pelusa.png") === 0)
-    ruta = '../img/Pelusa.gif';
-  else if (buffParam.localeCompare("Logan.png") === 0)
-    ruta = '../img/Logan.gif';
-  else if (buffParam.localeCompare("Mery.png") === 0)
-    ruta = '../img/Mery.gif';
-  else if (buffParam.localeCompare("Chesire.png") === 0)
-    ruta = '../img/Chesire.gif';
-  else if (buffParam.localeCompare("Blue.png") === 0)
-    ruta = '../img/Blue.gif';
-  else if (buffParam.localeCompare("Perla.png") === 0)
-    ruta = '../img/Perla.gif';
-  gifler(ruta).animate(canvasParam);
-}
 
-//Prueba puntuaciones
+// Animates the addition or substraction of points to the player's score
+function scoreAnimations(points, sum, multi) {
 
-function go(points, sum, multi) {
   if (sum !== undefined && sum !== null && sum !== "undefined") {
     let newsum;
-    if (Math.sign(sum) === 1) newsum = "+" + sum;
+    let scoreElem = "",
+      tag = "";
+
+    if (Math.sign(sum) === 1) // positive points
+      newsum = "+" + sum;
+
     else newsum = sum;
-    let stri = "", ta = "";
-    if (multi) { stri = "#puntos-p2"; ta = "#tag2"; }
-    else { stri = "#puntos-p1"; ta = "#tag1"; }
-    $({ puntos: points - sum }).animate({ puntos: points }, {
+
+
+    if (multi) {
+      scoreElem = "#puntos-p2";
+      tag = "#tag2";
+    } else {
+      scoreElem = "#puntos-p1";
+      tag = "#tag1";
+    }
+
+    $({
+      score: points - sum
+    }).animate({
+      score: points
+    }, {
       duration: 1000,
       easing: "linear",
       step: function (now, fx) {
-        $(stri).html(Math.floor(now));
+        $(scoreElem).html(Math.floor(now));
       },
       queue: false
     });
-    $(ta).fadeIn({
+
+    $(tag).fadeIn({
       duration: 700,
       easing: "linear",
       step: function (now, fx) {
@@ -1122,5 +787,30 @@ function go(points, sum, multi) {
         $(this).css("top", -55 * (2 - now) + "px");
       }
     }).html(newsum);
+  }
+}
+
+// Updates the screen with the corresponding number of streaks
+function updateVisualStreak(streak){
+  if (streak === 2) {
+    document.getElementById("one").style.display = "inline";
+    document.getElementById("number2").style.display = "inline";
+  } else if (streak === 3) {
+    document.getElementById("three").style.display = "inline";
+    document.getElementById("number3").style.display = "inline";
+    document.getElementById("number2").style.display = "none";
+  } else if (streak === 4) {
+    document.getElementById("five").style.display = "inline";
+    document.getElementById("number4").style.display = "inline";
+    document.getElementById("max").style.display = "inline";
+    document.getElementById("number3").style.display = "none";
+  } else if (streak === 0) {
+    document.getElementById("one").style.display = "none";
+    document.getElementById("three").style.display = "none";
+    document.getElementById("five").style.display = "none";
+    document.getElementById("number2").style.display = "none";
+    document.getElementById("number3").style.display = "none";
+    document.getElementById("number4").style.display = "none";
+    document.getElementById("max").style.display = "none";
   }
 }
