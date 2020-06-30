@@ -9,7 +9,7 @@ o similares. Esto arrancará un servidor local en el puerto 3000,
 accesible a través del navegador mediante localhost:3000.
 
 Cabe destacar que es necesario tener activa una conexión a MongoDB
-y haber importado las tablas que se incluyen en la entrega.
+y haber importado las tablas que se encuentran en el siguiente enlace: https://drive.google.com/drive/folders/1y5ifSkKNgjuhPvqev1Box4_I3AHZ8e6y?usp=sharing
 
 Teniendo en cuenta la dificultad de los pasos a seguir para lanzar
 el juego, sería una buena idea empaquetarlo o subirlo a un servidor.
